@@ -13,7 +13,7 @@ import csv
 __author__ = "Alessandro Panella (apanel2@uic.edu)"
 
 
-def plot_monthly_requests(request_type):
+def plot_monthly_requests(request_type, data_folder='/mnt/data1/Indices/portal_311'):
   """ Plot the 311 data of a particular aggregated by month and day of the
   week, starting in January 2011. """
 
@@ -23,8 +23,8 @@ def plot_monthly_requests(request_type):
   dayofweeks_names = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
 
   # Open the json data file
-  data_file = '311-' + request_type + '.json'
-  f =  open('../data/'+data_file, 'r')
+  data_file = request_type + '.json'
+  f =  open(data_folder++data_file, 'r')
 
   # Read in the json database (returns a dictionary)
   req_data = json.load(f)
@@ -57,12 +57,14 @@ def plot_monthly_requests(request_type):
   # Aggregate data by weekday
   weekdays_i = [datetime.date(int(e[0:4]),int(e[5:7]),int(e[8:10])).weekday()
     for e in dates_s]
+  plt.savefig('../plots/' + request_type + '-monthly.png')
 
   # Plot 
   plt.figure()
   plt.hist(weekdays_i, range(8), rwidth=0.7, color='#3399CC')
   plt.xticks(np.array(range(8))+0.5, dayofweeks_names)
-  plt.show()
+  plt.savefig('../plots/' + request_type + '-dayofweek.png')
+  #plt.show()
 
 
 def plot_vs_income_by_area():
@@ -101,10 +103,10 @@ def plot_vs_income_by_area():
     plt.title(k)
 
   plt.suptitle("Requests per 10,000 citizen vs. median income")
-  plt.show()
+  #plt.show()
 
 
-def plot_pothole_locations(year, daily=True):
+def plot_pothole_locations(year, daily=True, data_folder='/mnt/data1/Indices/portal_311'):
   """ Plot pothole locations in the specified year.
   If the argument "daily" is set to True, then generate a snapshot for each day
   of the year, with a red dot representing  an open pothole, and a blue one
@@ -117,7 +119,7 @@ def plot_pothole_locations(year, daily=True):
 
   # Open the json data file
   data_file = '311-potholes.json'
-  f =  open('../data/'+data_file, 'r')
+  f =  open(data_folder + '/' + data_file, 'r')
 
   # Read in the json database (returns a dictionary)
   req_data = json.load(f)

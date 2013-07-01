@@ -4,16 +4,18 @@
 """
 import json
 import matplotlib.pyplot as plt
-from itertools import groupby
-import datetime
+from itertools import groupby, izip
+from datetime import date
 import numpy as np
 import sys
 import csv
+import pickle
+import scipy
 
 __author__ = "Alessandro Panella (apanel2@uic.edu)"
 
 
-def plot_monthly_requests(request_type):
+def plot_monthly_requests(request_type, filter_same_day=False):
   """ Plot the 311 data of a particular aggregated by month and day of the
   week, starting in January 2011. """
 
@@ -30,15 +32,43 @@ def plot_monthly_requests(request_type):
   req_data = json.load(f)
   f.close()
 
-  # Retrieve the year-month-day as a string
-  dates_s = [e[8] for e in req_data['data'][:-1] if int(e[8][0:4]) > 2010]
+  # Retrieve the creation and completion date column indexes
+  columns = [e['fieldName'] for e in req_data['meta']['view']['columns']]
+  cr_col = columns.index('creation_date')
+  co_col = columns.index('completion_date')
+  srn_col = columns.index('service_request_number')
+
+  # Create a cuter data structure from the data
+  data = []
+  for e in req_data['data'][:-1][::-1]:
+    cr = e[cr_col]
+    co = e[co_col]
+    cr_date = date(int(cr[0:4]), int(cr[5:7]), int(cr[8:10]))
+    co_date = date(int(co[0:4]), int(co[5:7]), int(co[8:10]))\
+      if co != None else None
+    if cr_date.year > 2010:
+      data.append({
+        'srs': e[srn_col],
+        'cr_date': cr_date,
+        'co_date': co_date
+      })
+  # If needed, filter out the city-issued requests
+  if filter_same_day:
+    data = [e for e in data if e['co_date'] != None and e['cr_date'] < e['co_date']]
+  # Retrieve the year-month-day creation and completion dates as a string
+  #crea_dates_s = [e[cr_col] for e in req_data['data'][:-1]\
+  #  if int(e[co_col][0:4]) > 2010 and e[co_col] != None]
+  #comp_dates_s = [e[completed_col] for e in req_data['data'][:-1]\
+  #  if int(e[cr_col][0:4]) > 2010 and e[co_col] != None]
 
   # Aggregate data by month
   # Convert year-month to integers and reverse the order (lower to higher)
-  dates_i = [int(e[0:4]+e[5:7]) for e in dates_s][::-1]
+  #cr_dates_i = [int('{0}{1}'.format(e['cr_date'].year, e['cr_date'].month))\
+  cr_dates = [e['cr_date'] for e in data]
 
-  # Count the number of reports per month
-  counts = [(k, len(list(g))) for (k, g) in groupby(dates_i)]
+  # Count the number of reports per month, filtering out the city-issued
+  # requests, if needed
+  counts = [(k, len(list(g))) for (k, g) in groupby(cr_dates)]
 
   # Plot the counts
   plt.figure()
@@ -48,21 +78,25 @@ def plot_monthly_requests(request_type):
   plt.plot([e[1] for e in counts], 'o-', linewidth=2, color='#3399CC')
   # Lambda function that returns "motnh labels" (the year is attached if
   # the month is January
-  m_label = lambda ym: str(ym/100) + ' ' + month_names[ym%100-1] \
+  m_label = lambda ym: str(ym/100) + ' ' + month_names[ym%100-1]\
     if ym%100 == 1 else month_names[ym%100-1]
   month_labels = [m_label(e[0]) for e in counts] 
   plt.xticks(range(len(counts)), month_labels, rotation='vertical')
   plt.xlim(-0.5, len(counts)-0.5)
 
   # Aggregate data by weekday
-  weekdays_i = [datetime.date(int(e[0:4]),int(e[5:7]),int(e[8:10])).weekday()
-    for e in dates_s]
+  #weekdays_i = [datetime.date(int(e[0:4]),int(e[5:7]),int(e[8:10])).weekday()
+  #  for e in crea_dates_s]
+  weekdays_i = [e['cr_date'].weekday() for e in date\
+    if e['cr_date'] < e['co_date']]
 
   # Plot 
   plt.figure()
   plt.hist(weekdays_i, range(8), rwidth=0.7, color='#3399CC')
   plt.xticks(np.array(range(8))+0.5, dayofweeks_names)
   plt.show()
+
+  return
 
 
 def plot_vs_income_by_area():
@@ -224,6 +258,28 @@ def plot_vs_latinos(request_type):
     s=[(float(e)/3000.0)**2 for e in areas_info['income']], alpha=0.6)
 
   plt.show()
+
+
+def generate_request_histograms():
+  data = pickle.load(open("../data/dat.pkl"))
+  data = scipy.delete(data, 2, 1)
+  data = scipy.delete(data, 0, 1)
+  #now we have our data!
+
+  f = open('../data/request_types.pkl', 'r')
+  headers = f.readline().split(',')
+  headers = headers[3:]
+
+  new_data = data[:, 1:]
+
+  for i in xrange(len(headers)-1):
+    # Generate the histograms
+    plt.cla()
+    plt.hist(new_data[:,i], bins = 300)
+    plt.title(headers[i])
+    filename = "../plots/hist_by_type/" + str(i+1) + ".png"
+    plt.savefig(filename)
+
 
 
 

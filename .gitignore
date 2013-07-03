@@ -1,4 +1,6 @@
-CallTypeBeTractPerTHousandResidents.csv
-data/CallTypeBeTractPerTHousandResidents.csv
+CallTypeBeTractPerThousandResidents.csv
+data/CallTypeBeTractPerThousandResidents.csv
 data/request_types.pkl
 CallTypeBeTracts.csv
+sensitive_data/
+data/

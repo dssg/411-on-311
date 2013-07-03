@@ -14,8 +14,8 @@ import scipy
 
 __author__ = "Alessandro Panella (apanel2@uic.edu)"
 
-
-def plot_monthly_requests(request_type, filter_same_day=False):
+def plot_monthly_requests(request_type, save_fig=True, \
+  data_folder='/mnt/data1/Indices/portal_311', filter_same_day=False):
   """ Plot the 311 data of a particular aggregated by month and day of the
   week, starting in January 2011. """
 
@@ -26,13 +26,13 @@ def plot_monthly_requests(request_type, filter_same_day=False):
 
   # Open the json data file
   data_file = '311-' + request_type + '.json'
-  f =  open('../data/'+data_file, 'r')
+  f =  open(data_folder + '/' + data_file, 'r')
 
   # Read in the json database (returns a dictionary)
   req_data = json.load(f)
   f.close()
 
-  # Retrieve the creation and completion date column indexes
+  # Retrieve the creation and completion date, and SRN column indexes
   columns = [e['fieldName'] for e in req_data['meta']['view']['columns']]
   cr_col = columns.index('creation_date')
   co_col = columns.index('completion_date')
@@ -63,12 +63,12 @@ def plot_monthly_requests(request_type, filter_same_day=False):
 
   # Aggregate data by month
   # Convert year-month to integers and reverse the order (lower to higher)
-  #cr_dates_i = [int('{0}{1}'.format(e['cr_date'].year, e['cr_date'].month))\
-  cr_dates = [e['cr_date'] for e in data]
+  cr_dates_i = [int('{0}{1:02d}'.format(e['cr_date'].year, e['cr_date'].month)) for\
+    e in data]
 
   # Count the number of reports per month, filtering out the city-issued
   # requests, if needed
-  counts = [(k, len(list(g))) for (k, g) in groupby(cr_dates)]
+  counts = [(k, len(list(g))) for (k, g) in groupby(cr_dates_i)]
 
   # Plot the counts
   plt.figure()
@@ -83,33 +83,36 @@ def plot_monthly_requests(request_type, filter_same_day=False):
   month_labels = [m_label(e[0]) for e in counts] 
   plt.xticks(range(len(counts)), month_labels, rotation='vertical')
   plt.xlim(-0.5, len(counts)-0.5)
+  if save_fig:
+    plt.savefig('../plots/' + request_type + '-monthly.png')
 
   # Aggregate data by weekday
-  #weekdays_i = [datetime.date(int(e[0:4]),int(e[5:7]),int(e[8:10])).weekday()
-  #  for e in crea_dates_s]
-  weekdays_i = [e['cr_date'].weekday() for e in date\
-    if e['cr_date'] < e['co_date']]
+  weekdays_i = [e['cr_date'].weekday() for e in data\
+    if e['co_date'] is None or e['cr_date'] < e['co_date']]
 
   # Plot 
   plt.figure()
   plt.hist(weekdays_i, range(8), rwidth=0.7, color='#3399CC')
   plt.xticks(np.array(range(8))+0.5, dayofweeks_names)
+  if save_fig:
+    plt.savefig('../plots/' + request_type + '-dayofweek.png')
+  
   plt.show()
 
   return
 
 
-def plot_vs_income_by_area():
+def plot_vs_income_by_area(data_folder='/mnt/data1/Indices/portal_311'):
   """ Plot the amount of 311 requests (normalized by population count) for each
   community area, and each type of request. The x-axis correspond to the median
   household income """
 
   # Open the 311 call data file
   data_file = 'comm-area-call-volume.csv'
-  f =  open('../data/'+data_file, 'r')
+  f =  open(data_folder + '/' + data_file, 'r')
 
   # Read in the csv file
-  calls_csv_reader = csv.reader(f, delimiter='\t')
+  calls_csv_reader = csv.reader(f, delimiter=',')
   # Create a data structure with the info (dictionary)
   calls_type_area = {}
   calls_csv_reader.next() # Consume headers
@@ -118,7 +121,7 @@ def plot_vs_income_by_area():
   f.close()
 
   # Open and read the area info file
-  f = open('../data/chicago-community-areas.csv', 'r')
+  f = open(data_folder + '/chicago-community-areas.csv', 'r')
   f.readline()
   areas_info = {}
   l = f.readline().split(',')
@@ -135,10 +138,10 @@ def plot_vs_income_by_area():
     plt.title(k)
 
   plt.suptitle("Requests per 10,000 citizen vs. median income")
-  plt.show()
+  #plt.show()
 
 
-def plot_pothole_locations(year, daily=True):
+def plot_pothole_locations(year, daily=True, data_folder='/mnt/data1/Indices/portal_311'):
   """ Plot pothole locations in the specified year.
   If the argument "daily" is set to True, then generate a snapshot for each day
   of the year, with a red dot representing  an open pothole, and a blue one
@@ -151,7 +154,7 @@ def plot_pothole_locations(year, daily=True):
 
   # Open the json data file
   data_file = '311-potholes.json'
-  f =  open('../data/'+data_file, 'r')
+  f =  open(data_folder + '/' + data_file, 'r')
 
   # Read in the json database (returns a dictionary)
   req_data = json.load(f)
@@ -219,17 +222,17 @@ def plot_pothole_locations(year, daily=True):
       png_name = str(year) + '/' + str(i) + '.png'
       plt.savefig(png_name)
 
-def plot_vs_latinos(request_type):
+def plot_vs_latinos(request_type, data_folder='/mnt/data1/Indices/portal_311'):
   """ This function plots a type of request against percentage of latinos, for
   any of the 77 community areas """
 
 
   # Open the 311 call data file
   data_file = 'comm-area-call-volume.csv'
-  f =  open('../data/'+data_file, 'r')
+  f =  open(data_folder + '/' + data_file, 'r')
 
   # Read in the csv file
-  calls_csv_reader = csv.reader(f, delimiter='\t')
+  calls_csv_reader = csv.reader(f, delimiter=',')
   # Create a data structure with the info (dictionary)
   calls_type_area = {}
   calls_csv_reader.next() # Consume headers
@@ -238,7 +241,7 @@ def plot_vs_latinos(request_type):
   f.close()
 
   # Open and read the area info file
-  f = open('../data/chicago-community-areas.csv', 'r')
+  f = open(data_folder + '/chicago-community-areas.csv', 'r')
   f.readline()
   areas_info = {}
   l = f.readline().split(',')
@@ -260,13 +263,13 @@ def plot_vs_latinos(request_type):
   plt.show()
 
 
-def generate_request_histograms():
-  data = pickle.load(open("../data/dat.pkl"))
+def generate_request_histograms(data_folder='/mnt/data1/Indices/portal_311'):
+  data = pickle.load(open(data_folder + '/dat.pkl'))
   data = scipy.delete(data, 2, 1)
   data = scipy.delete(data, 0, 1)
   #now we have our data!
 
-  f = open('../data/request_types.pkl', 'r')
+  f = open(data_folder + '/request_types.csv', 'r')
   headers = f.readline().split(',')
   headers = headers[3:]
 
@@ -279,8 +282,4 @@ def generate_request_histograms():
     plt.title(headers[i])
     filename = "../plots/hist_by_type/" + str(i+1) + ".png"
     plt.savefig(filename)
-
-
-
-
 

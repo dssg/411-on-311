@@ -1,0 +1,34 @@
+""" This script downloads the 311 requests log from the Chicago data portal """
+
+import json
+import requests
+
+__author__ = "Alessandro Panella (apanel2@uic.edu)"
+
+db_codes = {
+  'tree-debris': 'mab8-y9h3',
+  'tree-trims': 'uxic-zsuj',
+  'graffiti-removal': 'hec5-y4x5',
+  'rodent-baiting': '97t6-zrhs',
+  'garbage-carts': '9ksk-na4q',
+  'abandoned-vehicles': '3c9v-pnva',
+  'vacant-abandoned-buildings': '7nil-7srd',
+  'sanitation-code-complaints': 'me59-5fac',
+  'potholes': '7as2-ds3y',
+  'alley-lights-out': 't28b-ys7j',
+  'street-lights-one-out': '3aav-uy2v',
+  'street-lights-all-out': 'zuxi-7xem'
+}
+
+for (i, k) in enumerate(db_codes.keys()):
+  print 'Fetching 311 DB: ' + k + ' (' + db_codes[k] + ')'
+  # Form query
+  query = 'http://data.cityofchicago.org/views/' + db_codes[k] + '/rows.json'
+  # Submit request
+  r = requests.get(query).json()
+  # Save json db on file
+  out_file_name = '/mnt/data1/Indices/portal_311/' + k + '.json'
+  out_file = open(out_file_name, 'w')
+  json.dump(r, out_file)
+  out_file.close()
+

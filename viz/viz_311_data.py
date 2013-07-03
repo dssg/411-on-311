@@ -275,6 +275,18 @@ def generate_request_histograms(data_folder='/mnt/data1/Indices/portal_311'):
 
   new_data = data[:, 1:]
 
+def generate_request_histograms():
+  data = pickle.load(open("../data/dat.pkl"))
+  data = scipy.delete(data, 2, 1)
+  data = scipy.delete(data, 0, 1)
+  #now we have our data!
+
+  f = open('../data/request_types.pkl', 'r')
+  headers = f.readline().split(',')
+  headers = headers[3:]
+
+  new_data = data[:, 1:]
+
   for i in xrange(len(headers)-1):
     # Generate the histograms
     plt.cla()

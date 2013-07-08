@@ -25,7 +25,7 @@ def plot_monthly_requests(request_type, save_fig=True, \
   dayofweeks_names = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
 
   # Open the json data file
-  data_file = '311-' + request_type + '.json'
+  data_file = request_type + '.json'
   f =  open(data_folder + '/' + data_file, 'r')
 
   # Read in the json database (returns a dictionary)
@@ -83,8 +83,9 @@ def plot_monthly_requests(request_type, save_fig=True, \
   month_labels = [m_label(e[0]) for e in counts] 
   plt.xticks(range(len(counts)), month_labels, rotation='vertical')
   plt.xlim(-0.5, len(counts)-0.5)
+  plt.title(request_type)
   if save_fig:
-    plt.savefig('../plots/' + request_type + '-monthly.png')
+    plt.savefig('plots/' + request_type + '-monthly.png')
 
   # Aggregate data by weekday
   weekdays_i = [e['cr_date'].weekday() for e in data\
@@ -94,8 +95,9 @@ def plot_monthly_requests(request_type, save_fig=True, \
   plt.figure()
   plt.hist(weekdays_i, range(8), rwidth=0.7, color='#3399CC')
   plt.xticks(np.array(range(8))+0.5, dayofweeks_names)
+  plt.title(request_type)
   if save_fig:
-    plt.savefig('../plots/' + request_type + '-dayofweek.png')
+    plt.savefig('plots/' + request_type + '-dayofweek.png')
   
   plt.show()
 
@@ -259,7 +261,9 @@ def plot_vs_latinos(request_type, data_folder='/mnt/data1/Indices/portal_311'):
   plt.figure()
   plt.scatter(areas_info['latinos'], calls_type_area[request_type], \
     s=[(float(e)/3000.0)**2 for e in areas_info['income']], alpha=0.6)
-
+  plt.xlabel('Prop. hispanic')
+  plt.ylabel('Graffiti req / 10,000 pop.')
+  plt.title(request_type)
   plt.show()
 
 
@@ -292,6 +296,6 @@ def generate_request_histograms():
     plt.cla()
     plt.hist(new_data[:,i], bins = 300)
     plt.title(headers[i])
-    filename = "../plots/hist_by_type/" + str(i+1) + ".png"
+    filename = "plots/hist_by_type/" + str(i+1) + ".png"
     plt.savefig(filename)
 

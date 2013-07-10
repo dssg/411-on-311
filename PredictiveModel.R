@@ -1,10 +1,12 @@
 rm(list = ls())
-setwd("C:/Users/Zach/Documents/UrbanCCD/PredictiveModel/")
+
+sink("/home/zseeskin/log.txt")
+
+setwd("/mnt/data1/Indices/PredictiveModel")
 
 #Load Necessary Packages
 library(rbugs)
 library(coda)
-library(ggplot2)
 library(doBy)
 
 #Open ACS Data
@@ -19,7 +21,7 @@ Potholes <- Calls_Tract[Calls_Tract$V3 == "PHF",]
 #Remove Huge Dataset from Workspace
 rm(Calls_Tract)
 
-#Aggregate Pothole Calls by Month and Tract
+#Create Month and Year Variables
 Potholes$month <- as.numeric(substr(Potholes$V2, 6, 7))
 Potholes$year <- as.numeric(substr(Potholes$V2, 1, 4))
 
@@ -166,18 +168,19 @@ inits <- list(list(alpha0=rnorm(1, 0, 0.1), alpha=rnorm(n, 0, 0.1), itau2.alpha=
                    ))
 parameters <- c("alpha", "itau2.alpha", "beta1", "beta2", "beta3", "beta4", "beta5", "beta6", "gamma2", "gamma3", "gamma4", "gamma5", "gamma6", "gamma7", "gamma8", "gamma9", "gamma10", "gamma11", "gamma12", "itau2.beta1", "itau2.beta2", "itau2.beta3", "itau2.beta4", "itau2.beta5", "itau2.beta6", "itau2.gamma2", "itau2.gamma3", "itau2.gamma4", "itau2.gamma5", "itau2.gamma6", "itau2.gamma7", "itau2.gamma8", "itau2.gamma9", "itau2.gamma10", "itau2.gamma11", "itau2.gamma12", "isigma2", "logsigma2", "itau2.sigma")
 
-
-
 data <- list(Y=Y, x1=x1, x2=x2, x3=x3, x4=x4, x5=x5, x6=x6, s2=s2, s3=s3, s4=s4, s5=s5, s6=s6, s7=s7, s8=s8, s9=s9, s10=s10, s11=s11, s12=s12, d=d, n=n) 
 load.sim <- rbugs(data, inits, parameters, "model.bug", 
                     verbose=T, 
                     n.chains=1, n.iter=2000, 
-                    bugsWorkingDir="C:\\Users\\Zach\\Documents\\UrbanCCD\\PredictiveModel", bugs="C:\\Program Files\\OpenBUGS\\OpenBUGS322\\OpenBUGS.exe", 
+                    bugsWorkingDir="/mnt/data1/Indices/PredictiveModel", bugs="/usr/local/bin/OpenBUGS", 
                     cleanBugsWorkingDir = T)
 
 load.mcmc <- rbugs2coda(load.sim)
 summary(load.mcmc)
 effectiveSize(load.mcmc)
 
+save.image()
+
+sink()
 
 

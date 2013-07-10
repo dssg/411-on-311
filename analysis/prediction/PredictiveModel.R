@@ -1,6 +1,6 @@
 rm(list = ls())
 
-sink("/home/zseeskin/log.txt")
+sink("/mnt/data1/Indices/PredictiveModel/predictive_model_log.txt")
 
 setwd("/mnt/data1/Indices/PredictiveModel")
 
@@ -8,6 +8,7 @@ setwd("/mnt/data1/Indices/PredictiveModel")
 library(rbugs)
 library(coda)
 library(doBy)
+library(reshape)
 
 #Open ACS Data
 ACS_2007_11 <- read.csv(file="ACS_2007_11_Tract_KeyVars.csv", head=TRUE)
@@ -171,9 +172,9 @@ parameters <- c("alpha", "itau2.alpha", "beta1", "beta2", "beta3", "beta4", "bet
 data <- list(Y=Y, x1=x1, x2=x2, x3=x3, x4=x4, x5=x5, x6=x6, s2=s2, s3=s3, s4=s4, s5=s5, s6=s6, s7=s7, s8=s8, s9=s9, s10=s10, s11=s11, s12=s12, d=d, n=n) 
 load.sim <- rbugs(data, inits, parameters, "model.bug", 
                     verbose=T, 
-                    n.chains=1, n.iter=2000, 
+                    n.chains=1, n.iter=100, 
                     bugsWorkingDir="/mnt/data1/Indices/PredictiveModel", bugs="/usr/local/bin/OpenBUGS", 
-                    cleanBugsWorkingDir = T)
+                    cleanBugsWorkingDir = F)
 
 load.mcmc <- rbugs2coda(load.sim)
 summary(load.mcmc)

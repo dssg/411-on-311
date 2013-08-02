@@ -10,6 +10,7 @@ library(coda)
 library(doBy)
 library(reshape)
 library(glmmML)
+library(BaylorEdPsych)
 
 #Open ACS Data
 ACS_2007_11 <- read.csv(file="ACS_2007_11_Tract_KeyVars.csv", head=TRUE)
@@ -260,9 +261,12 @@ Data <- as.data.frame(cbind(counts, counts_lag1, counts_lag2, s_2, s_3, s_4, s_5
 
 #Poisson AR(2) Model
 Model <- glmmML(counts ~ counts_lag1 + counts_lag2 + s_2 + s_3 + s_4 + s_5 + s_6 + s_7 + s_8 + s_9 + s_10 + s_11 + s_12 + x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7, family=poisson, data=Data, cluster=group)
+Model2 <- glm(counts ~ counts_lag1 + counts_lag2 + s_2 + s_3 + s_4 + s_5 + s_6 + s_7 + s_8 + s_9 + s_10 + s_11 + s_12 + x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7, family=poisson, data=Data)
 
 #Model Summary
 summary(Model)
+summary(Model2)
+PseudoR2(Model2)
 
 
 

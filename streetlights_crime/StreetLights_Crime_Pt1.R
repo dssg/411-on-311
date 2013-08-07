@@ -106,213 +106,207 @@ Crimes.Alley.During      <- numeric(m)
 Crimes.Alley.Before      <- numeric(m)
 Crimes.Alley.After       <- numeric(m)
 Crimes.All.During        <- numeric(m)
-Crimes.All.During.NoDay1 <- numeric(m)
 Crimes.All.Before        <- numeric(m)
 Crimes.All.After         <- numeric(m)
 
 
 for (i in 1:m) {
   Thefts.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                           (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                          as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
-                          as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
-                          as.numeric(Crime$Primary.Type == "THEFT")) 
+                                             (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                            as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
+                            as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
+                            as.numeric(Crime$Primary.Type == "THEFT")) 
   
   Thefts.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                           (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                          as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
-                          as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
-                          as.numeric(Crime$Primary.Type == "THEFT")) 
+                                             (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                            as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
+                            as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
+                            as.numeric(Crime$Primary.Type == "THEFT")) 
   
   Thefts.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                           (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                          as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
-                          as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
-                          as.numeric(Crime$Primary.Type == "THEFT")) 
+                                             (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                            as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
+                            as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
+                            as.numeric(Crime$Primary.Type == "THEFT")) 
   
   Narcotics.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                                (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                               as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
+                               as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
+                               as.numeric(Crime$Primary.Type == "NARCOTICS")) 
+  
+  Narcotics.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                                (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                               as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
+                               as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
+                               as.numeric(Crime$Primary.Type == "NARCOTICS")) 
+  
+  Narcotics.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                                (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                               as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
+                               as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
+                               as.numeric(Crime$Primary.Type == "NARCOTICS")) 
+  
+  Battery.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
                                               (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
                              as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
                              as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
-                             as.numeric(Crime$Primary.Type == "NARCOTICS")) 
+                             as.numeric(Crime$Primary.Type == "BATTERY")) 
   
-  Narcotics.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+  Battery.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
                                               (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
                              as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
                              as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
-                             as.numeric(Crime$Primary.Type == "NARCOTICS")) 
+                             as.numeric(Crime$Primary.Type == "BATTERY")) 
   
-  Narcotics.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+  Battery.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
                                               (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
                              as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
                              as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
-                             as.numeric(Crime$Primary.Type == "NARCOTICS")) 
-  
-  Battery.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                            (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                           as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
-                           as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
-                           as.numeric(Crime$Primary.Type == "BATTERY")) 
-  
-  Battery.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                            (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                           as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
-                           as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
-                           as.numeric(Crime$Primary.Type == "BATTERY")) 
-  
-  Battery.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                            (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                           as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
-                           as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
-                           as.numeric(Crime$Primary.Type == "BATTERY")) 
+                             as.numeric(Crime$Primary.Type == "BATTERY")) 
   
   CriminalDamage.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                                     (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                                    as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
+                                    as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
+                                    as.numeric(Crime$Primary.Type == "CRIMINAL DAMAGE")) 
+  
+  CriminalDamage.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                                     (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                                    as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
+                                    as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
+                                    as.numeric(Crime$Primary.Type == "CRIMINAL DAMAGE")) 
+  
+  CriminalDamage.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                                     (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                                    as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
+                                    as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
+                                    as.numeric(Crime$Primary.Type == "CRIMINAL DAMAGE")) 
+  
+  MotorVehicleTheft.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                                        (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                                       as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
+                                       as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
+                                       as.numeric(Crime$Primary.Type == "MOTOR VEHICLE THEFT")) 
+  
+  MotorVehicleTheft.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                                        (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                                       as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
+                                       as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
+                                       as.numeric(Crime$Primary.Type == "MOTOR VEHICLE THEFT")) 
+  
+  MotorVehicleTheft.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                                        (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                                       as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
+                                       as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
+                                       as.numeric(Crime$Primary.Type == "MOTOR VEHICLE THEFT")) 
+  
+  Robbery.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                             as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
+                             as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
+                             as.numeric(Crime$Primary.Type == "ROBBERY")) 
+  
+  Robbery.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                             as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
+                             as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
+                             as.numeric(Crime$Primary.Type == "ROBBERY")) 
+  
+  Robbery.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                             as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
+                             as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
+                             as.numeric(Crime$Primary.Type == "ROBBERY")) 
+  
+  Assault.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                             as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
+                             as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
+                             as.numeric(Crime$Primary.Type == "ASSAULT")) 
+  
+  Assault.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                             as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
+                             as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
+                             as.numeric(Crime$Primary.Type == "ASSAULT")) 
+  
+  Assault.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                             as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
+                             as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
+                             as.numeric(Crime$Primary.Type == "ASSAULT")) 
+  
+  Burglary.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                              as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
+                              as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
+                              as.numeric(Crime$Primary.Type == "BURGLARY")) 
+  
+  Burglary.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                              as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
+                              as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
+                              as.numeric(Crime$Primary.Type == "BURGLARY")) 
+  
+  Burglary.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                              as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
+                              as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
+                              as.numeric(Crime$Primary.Type == "BURGLARY")) 
+  
+  Homicide.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                              as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
+                              as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
+                              as.numeric(Crime$Primary.Type == "HOMICIDE")) 
+  
+  Homicide.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                              as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
+                              as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
+                              as.numeric(Crime$Primary.Type == "HOMICIDE")) 
+  
+  Homicide.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                              as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
+                              as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
+                              as.numeric(Crime$Primary.Type == "HOMICIDE")) 
+  
+  Crimes.Alley.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
                                                    (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
                                   as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
                                   as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
-                                  as.numeric(Crime$Primary.Type == "CRIMINAL DAMAGE")) 
+                                  as.numeric(Crime$Location.Description == "ALLEY")) 
   
-  CriminalDamage.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+  Crimes.Alley.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
                                                    (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
                                   as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
                                   as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
-                                  as.numeric(Crime$Primary.Type == "CRIMINAL DAMAGE")) 
+                                  as.numeric(Crime$Location.Description == "ALLEY")) 
   
-  CriminalDamage.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+  Crimes.Alley.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
                                                    (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
                                   as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
                                   as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
-                                  as.numeric(Crime$Primary.Type == "CRIMINAL DAMAGE")) 
-  
-  MotorVehicleTheft.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                                      (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                                     as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
-                                     as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
-                                     as.numeric(Crime$Primary.Type == "MOTOR VEHICLE THEFT")) 
-  
-  MotorVehicleTheft.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                                      (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                                     as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
-                                     as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
-                                     as.numeric(Crime$Primary.Type == "MOTOR VEHICLE THEFT")) 
-  
-  MotorVehicleTheft.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                                      (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                                     as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
-                                     as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
-                                     as.numeric(Crime$Primary.Type == "MOTOR VEHICLE THEFT")) 
-  
-  Robbery.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                            (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                           as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
-                           as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
-                           as.numeric(Crime$Primary.Type == "ROBBERY")) 
-  
-  Robbery.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                            (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                           as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
-                           as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
-                           as.numeric(Crime$Primary.Type == "ROBBERY")) 
-  
-  Robbery.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                            (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                           as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
-                           as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
-                           as.numeric(Crime$Primary.Type == "ROBBERY")) 
-  
-  Assault.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                            (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                           as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
-                           as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
-                           as.numeric(Crime$Primary.Type == "ASSAULT")) 
-  
-  Assault.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                            (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                           as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
-                           as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
-                           as.numeric(Crime$Primary.Type == "ASSAULT")) 
-  
-  Assault.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                            (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                           as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
-                           as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
-                           as.numeric(Crime$Primary.Type == "ASSAULT")) 
-  
-  Burglary.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                             (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                            as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
-                            as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
-                            as.numeric(Crime$Primary.Type == "BURGLARY")) 
-  
-  Burglary.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                             (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                            as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
-                            as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
-                            as.numeric(Crime$Primary.Type == "BURGLARY")) 
-  
-  Burglary.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                             (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                            as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
-                            as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
-                            as.numeric(Crime$Primary.Type == "BURGLARY")) 
-  
-  Homicide.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                             (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                            as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
-                            as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
-                            as.numeric(Crime$Primary.Type == "HOMICIDE")) 
-  
-  Homicide.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                             (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                            as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
-                            as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
-                            as.numeric(Crime$Primary.Type == "HOMICIDE")) 
-  
-  Homicide.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                             (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                            as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
-                            as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
-                            as.numeric(Crime$Primary.Type == "HOMICIDE")) 
-  
-  Crimes.Alley.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                                (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                                as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
-                                as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime) *
-                                as.numeric(Crime$Location.Description == "ALLEY")) 
-  
-  Crimes.Alley.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                                (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                                as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
-                                as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) *
-                                as.numeric(Crime$Location.Description == "ALLEY")) 
-  
-  Crimes.Alley.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                                 (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                                as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
-                                as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37) *
-                                as.numeric(Crime$Location.Description == "ALLEY")) 
+                                  as.numeric(Crime$Location.Description == "ALLEY")) 
   
   Crimes.All.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                               (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                              as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
-                              as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime)) 
-  
-  Crimes.All.During.NoDay1[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                                      (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                                     as.numeric(Alley.Lights$DateCreated[i] < Crime$DateCrime) * 
-                                     as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime)) 
+                                                 (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                                as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
+                                as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime)) 
   
   Crimes.All.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                               (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                              as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
-                              as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7) 
+                                                 (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                                as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime + 37) * 
+                                as.numeric(Alley.Lights$DateCreated[i] > Crime$DateCrime + 7)) 
   
   Crimes.All.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                               (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
-                              as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
-                              as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37)
-
-  if(i%%250==0)  cat("loop", i, "\n")
+                                                 (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                                as.numeric(Alley.Lights$DateCompleted[i] < Crime$DateCrime - 7) * 
+                                as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime - 37))
+  
+  if(i%%100==0)  cat("loop", i, "\n")
 }
 
 Sys.time()
@@ -347,13 +341,613 @@ Alley.Lights$Homicide.After           <- Homicide.After
 Alley.Lights$Crimes.Alley.During      <- Crimes.Alley.During 
 Alley.Lights$Crimes.Alley.Before      <- Crimes.Alley.Before
 Alley.Lights$Crimes.Alley.After       <- Crimes.Alley.After
+Alley.Lights$Crimes.All.During        <- Crimes.All.During 
+Alley.Lights$Crimes.All.Before        <- Crimes.All.Before
+Alley.Lights$Crimes.All.After         <- Crimes.All.After
+
+
+#Loop -- Street Lights - One Out
+m <- nrow(Street.Lights.OneOut)
+m
+Sys.time()
+Thefts.During            <- numeric(m)
+Thefts.Before            <- numeric(m)
+Thefts.After             <- numeric(m)
+Narcotics.During         <- numeric(m)
+Narcotics.Before         <- numeric(m)
+Narcotics.After          <- numeric(m)
+Battery.During           <- numeric(m)
+Battery.Before           <- numeric(m)
+Battery.After            <- numeric(m)
+CriminalDamage.During    <- numeric(m)
+CriminalDamage.Before    <- numeric(m)
+CriminalDamage.After     <- numeric(m)
+MotorVehicleTheft.During <- numeric(m)
+MotorVehicleTheft.Before <- numeric(m)
+MotorVehicleTheft.After  <- numeric(m)
+Robbery.During           <- numeric(m)
+Robbery.Before           <- numeric(m)
+Robbery.After            <- numeric(m)
+Assault.During           <- numeric(m)
+Assault.Before           <- numeric(m)
+Assault.After            <- numeric(m)
+Burglary.During          <- numeric(m)
+Burglary.Before          <- numeric(m)
+Burglary.After           <- numeric(m)
+Homicide.During          <- numeric(m)
+Homicide.Before          <- numeric(m)
+Homicide.After           <- numeric(m)
+Crimes.Sidewalk.During   <- numeric(m)
+Crimes.Sidewalk.Before   <- numeric(m)
+Crimes.Sidewalk.After    <- numeric(m)
+Crimes.Street.During     <- numeric(m)
+Crimes.Street.Before     <- numeric(m)
+Crimes.Street.After      <- numeric(m)
+Crimes.All.During        <- numeric(m)
+Crimes.All.Before        <- numeric(m)
+Crimes.All.After         <- numeric(m)
+
+for (i in 1:m) {
+  Thefts.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                             (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                            as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime) * 
+                            as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime) *
+                            as.numeric(Crime$Primary.Type == "THEFT")) 
+  
+  Thefts.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                             (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                            as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                            as.numeric(Street.Lights.OneOut$DateCreated[i] > Crime$DateCrime + 7) *
+                            as.numeric(Crime$Primary.Type == "THEFT")) 
+  
+  Thefts.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                             (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                            as.numeric(Street.Lights.OneOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                            as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                            as.numeric(Crime$Primary.Type == "THEFT")) 
+  
+  Narcotics.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                               as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime) * 
+                               as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime) *
+                               as.numeric(Crime$Primary.Type == "NARCOTICS")) 
+  
+  Narcotics.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                               as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                               as.numeric(Street.Lights.OneOut$DateCreated[i] > Crime$DateCrime + 7) *
+                               as.numeric(Crime$Primary.Type == "NARCOTICS")) 
+  
+  Narcotics.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                               as.numeric(Street.Lights.OneOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                               as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                               as.numeric(Crime$Primary.Type == "NARCOTICS")) 
+  
+  Battery.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                             as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime) * 
+                             as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime) *
+                             as.numeric(Crime$Primary.Type == "BATTERY")) 
+  
+  Battery.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                             as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                             as.numeric(Street.Lights.OneOut$DateCreated[i] > Crime$DateCrime + 7) *
+                             as.numeric(Crime$Primary.Type == "BATTERY")) 
+  
+  Battery.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                             as.numeric(Street.Lights.OneOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                             as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                             as.numeric(Crime$Primary.Type == "BATTERY")) 
+  
+  CriminalDamage.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                     (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                    as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime) * 
+                                    as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime) *
+                                    as.numeric(Crime$Primary.Type == "CRIMINAL DAMAGE")) 
+  
+  CriminalDamage.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                     (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                    as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                                    as.numeric(Street.Lights.OneOut$DateCreated[i] > Crime$DateCrime + 7) *
+                                    as.numeric(Crime$Primary.Type == "CRIMINAL DAMAGE")) 
+  
+  CriminalDamage.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                     (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                    as.numeric(Street.Lights.OneOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                                    as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                                    as.numeric(Crime$Primary.Type == "CRIMINAL DAMAGE")) 
+  
+  MotorVehicleTheft.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                        (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                       as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime) * 
+                                       as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime) *
+                                       as.numeric(Crime$Primary.Type == "MOTOR VEHICLE THEFT")) 
+  
+  MotorVehicleTheft.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                        (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                       as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                                       as.numeric(Street.Lights.OneOut$DateCreated[i] > Crime$DateCrime + 7) *
+                                       as.numeric(Crime$Primary.Type == "MOTOR VEHICLE THEFT")) 
+  
+  MotorVehicleTheft.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                        (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                       as.numeric(Street.Lights.OneOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                                       as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                                       as.numeric(Crime$Primary.Type == "MOTOR VEHICLE THEFT")) 
+  
+  Robbery.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                             as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime) * 
+                             as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime) *
+                             as.numeric(Crime$Primary.Type == "ROBBERY")) 
+  
+  Robbery.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                             as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                             as.numeric(Street.Lights.OneOut$DateCreated[i] > Crime$DateCrime + 7) *
+                             as.numeric(Crime$Primary.Type == "ROBBERY")) 
+  
+  Robbery.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                             as.numeric(Street.Lights.OneOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                             as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                             as.numeric(Crime$Primary.Type == "ROBBERY")) 
+  
+  Assault.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                             as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime) * 
+                             as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime) *
+                             as.numeric(Crime$Primary.Type == "ASSAULT")) 
+  
+  Assault.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                             as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                             as.numeric(Street.Lights.OneOut$DateCreated[i] > Crime$DateCrime + 7) *
+                             as.numeric(Crime$Primary.Type == "ASSAULT")) 
+  
+  Assault.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                             as.numeric(Street.Lights.OneOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                             as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                             as.numeric(Crime$Primary.Type == "ASSAULT")) 
+  
+  Burglary.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                              as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime) * 
+                              as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime) *
+                              as.numeric(Crime$Primary.Type == "BURGLARY")) 
+  
+  Burglary.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                              as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                              as.numeric(Street.Lights.OneOut$DateCreated[i] > Crime$DateCrime + 7) *
+                              as.numeric(Crime$Primary.Type == "BURGLARY")) 
+  
+  Burglary.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                              as.numeric(Street.Lights.OneOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                              as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                              as.numeric(Crime$Primary.Type == "BURGLARY")) 
+  
+  Homicide.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                              as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime) * 
+                              as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime) *
+                              as.numeric(Crime$Primary.Type == "HOMICIDE")) 
+  
+  Homicide.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                              as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                              as.numeric(Street.Lights.OneOut$DateCreated[i] > Crime$DateCrime + 7) *
+                              as.numeric(Crime$Primary.Type == "HOMICIDE")) 
+  
+  Homicide.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                              as.numeric(Street.Lights.OneOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                              as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                              as.numeric(Crime$Primary.Type == "HOMICIDE")) 
+  
+  Crimes.Sidewalk.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                      (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                     as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime) * 
+                                     as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime) *
+                                     as.numeric(Crime$Location.Description == "SIDEWALK")) 
+  
+  Crimes.Sidewalk.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                      (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                     as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                                     as.numeric(Street.Lights.OneOut$DateCreated[i] > Crime$DateCrime + 7) *
+                                     as.numeric(Crime$Location.Description == "SIDEWALK")) 
+  
+  Crimes.Sidewalk.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                      (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                     as.numeric(Street.Lights.OneOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                                     as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                                     as.numeric(Crime$Location.Description == "SIDEWALK")) 
+  
+  Crimes.Street.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                    (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                   as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime) * 
+                                   as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime) *
+                                   as.numeric(Crime$Location.Description == "STREET")) 
+  
+  Crimes.Street.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                    (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                   as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                                   as.numeric(Street.Lights.OneOut$DateCreated[i] > Crime$DateCrime + 7) *
+                                   as.numeric(Crime$Location.Description == "STREET")) 
+  
+  Crimes.Street.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                    (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                   as.numeric(Street.Lights.OneOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                                   as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                                   as.numeric(Crime$Location.Description == "STREET")) 
+  
+  Crimes.All.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                 (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime) * 
+                                as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime)) 
+  
+  Crimes.All.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                 (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                                as.numeric(Street.Lights.OneOut$DateCreated[i] > Crime$DateCrime + 7)) 
+  
+  Crimes.All.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                 (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                as.numeric(Street.Lights.OneOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                                as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime - 37))
+  
+  if(i%%100==0)  cat("loop", i, "\n")
+}
+
+Sys.time()
+
+Street.Lights.OneOut$Thefts.During            <- Thefts.During 
+Street.Lights.OneOut$Thefts.Before            <- Thefts.Before
+Street.Lights.OneOut$Thefts.After             <- Thefts.After
+Street.Lights.OneOut$Narcotics.During         <- Narcotics.During 
+Street.Lights.OneOut$Narcotics.Before         <- Narcotics.Before
+Street.Lights.OneOut$Narcotics.After          <- Narcotics.After
+Street.Lights.OneOut$Battery.During           <- Battery.During 
+Street.Lights.OneOut$Battery.Before           <- Battery.Before
+Street.Lights.OneOut$Battery.After            <- Battery.After
+Street.Lights.OneOut$CriminalDamage.During    <- CriminalDamage.During 
+Street.Lights.OneOut$CriminalDamage.Before    <- CriminalDamage.Before
+Street.Lights.OneOut$CriminalDamage.After     <- CriminalDamage.After
+Street.Lights.OneOut$MotorVehicleTheft.During <- MotorVehicleTheft.During 
+Street.Lights.OneOut$MotorVehicleTheft.Before <- MotorVehicleTheft.Before
+Street.Lights.OneOut$MotorVehicleTheft.After  <- MotorVehicleTheft.After
+Street.Lights.OneOut$Robbery.During           <- Robbery.During 
+Street.Lights.OneOut$Robbery.Before           <- Robbery.Before
+Street.Lights.OneOut$Robbery.After            <- Robbery.After
+Street.Lights.OneOut$Assault.During           <- Assault.During 
+Street.Lights.OneOut$Assault.Before           <- Assault.Before
+Street.Lights.OneOut$Assault.After            <- Assault.After
+Street.Lights.OneOut$Burglary.During          <- Burglary.During 
+Street.Lights.OneOut$Burglary.Before          <- Burglary.Before
+Street.Lights.OneOut$Burglary.After           <- Burglary.After
+Street.Lights.OneOut$Homicide.During          <- Homicide.During 
+Street.Lights.OneOut$Homicide.Before          <- Homicide.Before
+Street.Lights.OneOut$Homicide.After           <- Homicide.After
+Street.Lights.OneOut$Crimes.Sidewalk.During   <- Crimes.Sidewalk.During 
+Street.Lights.OneOut$Crimes.Sidewalk.Before   <- Crimes.Sidewalk.Before
+Street.Lights.OneOut$Crimes.Sidewalk.After    <- Crimes.Sidewalk.After
+Street.Lights.OneOut$Crimes.Street.During     <- Crimes.Street.During 
+Street.Lights.OneOut$Crimes.Street.Before     <- Crimes.Street.Before
+Street.Lights.OneOut$Crimes.Street.After      <- Crimes.Street.After
+Street.Lights.OneOut$Crimes.All.During        <- Crimes.All.During 
+Street.Lights.OneOut$Crimes.All.Before        <- Crimes.All.Before
+Street.Lights.OneOut$Crimes.All.After         <- Crimes.All.After
+
+
+#Loop -- Street Lights - All Out
+m <- nrow(Street.Lights.AllOut)
+m
+Sys.time()
+Thefts.During            <- numeric(m)
+Thefts.Before            <- numeric(m)
+Thefts.After             <- numeric(m)
+Narcotics.During         <- numeric(m)
+Narcotics.Before         <- numeric(m)
+Narcotics.After          <- numeric(m)
+Battery.During           <- numeric(m)
+Battery.Before           <- numeric(m)
+Battery.After            <- numeric(m)
+CriminalDamage.During    <- numeric(m)
+CriminalDamage.Before    <- numeric(m)
+CriminalDamage.After     <- numeric(m)
+MotorVehicleTheft.During <- numeric(m)
+MotorVehicleTheft.Before <- numeric(m)
+MotorVehicleTheft.After  <- numeric(m)
+Robbery.During           <- numeric(m)
+Robbery.Before           <- numeric(m)
+Robbery.After            <- numeric(m)
+Assault.During           <- numeric(m)
+Assault.Before           <- numeric(m)
+Assault.After            <- numeric(m)
+Burglary.During          <- numeric(m)
+Burglary.Before          <- numeric(m)
+Burglary.After           <- numeric(m)
+Homicide.During          <- numeric(m)
+Homicide.Before          <- numeric(m)
+Homicide.After           <- numeric(m)
+Crimes.Sidewalk.During   <- numeric(m)
+Crimes.Sidewalk.Before   <- numeric(m)
+Crimes.Sidewalk.After    <- numeric(m)
+Crimes.Street.During     <- numeric(m)
+Crimes.Street.Before     <- numeric(m)
+Crimes.Street.After      <- numeric(m)
+Crimes.All.During        <- numeric(m)
+Crimes.All.Before        <- numeric(m)
+Crimes.All.After         <- numeric(m)
+
+for (i in 1:m) {
+  Thefts.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                             (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                            as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime) * 
+                            as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime) *
+                            as.numeric(Crime$Primary.Type == "THEFT")) 
+  
+  Thefts.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                             (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                            as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                            as.numeric(Street.Lights.AllOut$DateCreated[i] > Crime$DateCrime + 7) *
+                            as.numeric(Crime$Primary.Type == "THEFT")) 
+  
+  Thefts.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                             (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                            as.numeric(Street.Lights.AllOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                            as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                            as.numeric(Crime$Primary.Type == "THEFT")) 
+  
+  Narcotics.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                               as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime) * 
+                               as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime) *
+                               as.numeric(Crime$Primary.Type == "NARCOTICS")) 
+  
+  Narcotics.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                               as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                               as.numeric(Street.Lights.AllOut$DateCreated[i] > Crime$DateCrime + 7) *
+                               as.numeric(Crime$Primary.Type == "NARCOTICS")) 
+  
+  Narcotics.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                               as.numeric(Street.Lights.AllOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                               as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                               as.numeric(Crime$Primary.Type == "NARCOTICS")) 
+  
+  Battery.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                             as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime) * 
+                             as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime) *
+                             as.numeric(Crime$Primary.Type == "BATTERY")) 
+  
+  Battery.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                             as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                             as.numeric(Street.Lights.AllOut$DateCreated[i] > Crime$DateCrime + 7) *
+                             as.numeric(Crime$Primary.Type == "BATTERY")) 
+  
+  Battery.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                             as.numeric(Street.Lights.AllOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                             as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                             as.numeric(Crime$Primary.Type == "BATTERY")) 
+  
+  CriminalDamage.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                     (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                    as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime) * 
+                                    as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime) *
+                                    as.numeric(Crime$Primary.Type == "CRIMINAL DAMAGE")) 
+  
+  CriminalDamage.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                     (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                    as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                                    as.numeric(Street.Lights.AllOut$DateCreated[i] > Crime$DateCrime + 7) *
+                                    as.numeric(Crime$Primary.Type == "CRIMINAL DAMAGE")) 
+  
+  CriminalDamage.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                     (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                    as.numeric(Street.Lights.AllOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                                    as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                                    as.numeric(Crime$Primary.Type == "CRIMINAL DAMAGE")) 
+  
+  MotorVehicleTheft.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                        (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                       as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime) * 
+                                       as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime) *
+                                       as.numeric(Crime$Primary.Type == "MOTOR VEHICLE THEFT")) 
+  
+  MotorVehicleTheft.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                        (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                       as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                                       as.numeric(Street.Lights.AllOut$DateCreated[i] > Crime$DateCrime + 7) *
+                                       as.numeric(Crime$Primary.Type == "MOTOR VEHICLE THEFT")) 
+  
+  MotorVehicleTheft.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                        (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                       as.numeric(Street.Lights.AllOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                                       as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                                       as.numeric(Crime$Primary.Type == "MOTOR VEHICLE THEFT")) 
+  
+  Robbery.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                             as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime) * 
+                             as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime) *
+                             as.numeric(Crime$Primary.Type == "ROBBERY")) 
+  
+  Robbery.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                             as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                             as.numeric(Street.Lights.AllOut$DateCreated[i] > Crime$DateCrime + 7) *
+                             as.numeric(Crime$Primary.Type == "ROBBERY")) 
+  
+  Robbery.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                             as.numeric(Street.Lights.AllOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                             as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                             as.numeric(Crime$Primary.Type == "ROBBERY")) 
+  
+  Assault.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                             as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime) * 
+                             as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime) *
+                             as.numeric(Crime$Primary.Type == "ASSAULT")) 
+  
+  Assault.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                             as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                             as.numeric(Street.Lights.AllOut$DateCreated[i] > Crime$DateCrime + 7) *
+                             as.numeric(Crime$Primary.Type == "ASSAULT")) 
+  
+  Assault.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                              (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                             as.numeric(Street.Lights.AllOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                             as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                             as.numeric(Crime$Primary.Type == "ASSAULT")) 
+  
+  Burglary.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                              as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime) * 
+                              as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime) *
+                              as.numeric(Crime$Primary.Type == "BURGLARY")) 
+  
+  Burglary.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                              as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                              as.numeric(Street.Lights.AllOut$DateCreated[i] > Crime$DateCrime + 7) *
+                              as.numeric(Crime$Primary.Type == "BURGLARY")) 
+  
+  Burglary.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                              as.numeric(Street.Lights.AllOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                              as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                              as.numeric(Crime$Primary.Type == "BURGLARY")) 
+  
+  Homicide.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                              as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime) * 
+                              as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime) *
+                              as.numeric(Crime$Primary.Type == "HOMICIDE")) 
+  
+  Homicide.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                              as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                              as.numeric(Street.Lights.AllOut$DateCreated[i] > Crime$DateCrime + 7) *
+                              as.numeric(Crime$Primary.Type == "HOMICIDE")) 
+  
+  Homicide.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                              as.numeric(Street.Lights.AllOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                              as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                              as.numeric(Crime$Primary.Type == "HOMICIDE")) 
+  
+  Crimes.Sidewalk.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                      (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                     as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime) * 
+                                     as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime) *
+                                     as.numeric(Crime$Location.Description == "SIDEWALK")) 
+  
+  Crimes.Sidewalk.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                      (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                     as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                                     as.numeric(Street.Lights.AllOut$DateCreated[i] > Crime$DateCrime + 7) *
+                                     as.numeric(Crime$Location.Description == "SIDEWALK")) 
+  
+  Crimes.Sidewalk.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                      (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                     as.numeric(Street.Lights.AllOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                                     as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                                     as.numeric(Crime$Location.Description == "SIDEWALK")) 
+  
+  Crimes.Street.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                    (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                   as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime) * 
+                                   as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime) *
+                                   as.numeric(Crime$Location.Description == "STREET")) 
+  
+  Crimes.Street.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                    (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                   as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                                   as.numeric(Street.Lights.AllOut$DateCreated[i] > Crime$DateCrime + 7) *
+                                   as.numeric(Crime$Location.Description == "STREET")) 
+  
+  Crimes.Street.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                    (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                   as.numeric(Street.Lights.AllOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                                   as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime - 37) *
+                                   as.numeric(Crime$Location.Description == "STREET")) 
+  
+  Crimes.All.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                 (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime) * 
+                                as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime)) 
+  
+  Crimes.All.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                 (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime + 37) * 
+                                as.numeric(Street.Lights.AllOut$DateCreated[i] > Crime$DateCrime + 7)) 
+  
+  Crimes.All.After[i] <-  sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                 (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                as.numeric(Street.Lights.AllOut$DateCompleted[i] < Crime$DateCrime - 7) * 
+                                as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime - 37))
+  
+  if(i%%100==0)  cat("loop", i, "\n")
+}
+
+Sys.time()
+
+Street.Lights.AllOut$Thefts.During            <- Thefts.During 
+Street.Lights.AllOut$Thefts.Before            <- Thefts.Before
+Street.Lights.AllOut$Thefts.After             <- Thefts.After
+Street.Lights.AllOut$Narcotics.During         <- Narcotics.During 
+Street.Lights.AllOut$Narcotics.Before         <- Narcotics.Before
+Street.Lights.AllOut$Narcotics.After          <- Narcotics.After
+Street.Lights.AllOut$Battery.During           <- Battery.During 
+Street.Lights.AllOut$Battery.Before           <- Battery.Before
+Street.Lights.AllOut$Battery.After            <- Battery.After
+Street.Lights.AllOut$CriminalDamage.During    <- CriminalDamage.During 
+Street.Lights.AllOut$CriminalDamage.Before    <- CriminalDamage.Before
+Street.Lights.AllOut$CriminalDamage.After     <- CriminalDamage.After
+Street.Lights.AllOut$MotorVehicleTheft.During <- MotorVehicleTheft.During 
+Street.Lights.AllOut$MotorVehicleTheft.Before <- MotorVehicleTheft.Before
+Street.Lights.AllOut$MotorVehicleTheft.After  <- MotorVehicleTheft.After
+Street.Lights.AllOut$Robbery.During           <- Robbery.During 
+Street.Lights.AllOut$Robbery.Before           <- Robbery.Before
+Street.Lights.AllOut$Robbery.After            <- Robbery.After
+Street.Lights.AllOut$Assault.During           <- Assault.During 
+Street.Lights.AllOut$Assault.Before           <- Assault.Before
+Street.Lights.AllOut$Assault.After            <- Assault.After
+Street.Lights.AllOut$Burglary.During          <- Burglary.During 
+Street.Lights.AllOut$Burglary.Before          <- Burglary.Before
+Street.Lights.AllOut$Burglary.After           <- Burglary.After
+Street.Lights.AllOut$Homicide.During          <- Homicide.During 
+Street.Lights.AllOut$Homicide.Before          <- Homicide.Before
+Street.Lights.AllOut$Homicide.After           <- Homicide.After
+Street.Lights.AllOut$Crimes.Sidewalk.During   <- Crimes.Sidewalk.During 
+Street.Lights.AllOut$Crimes.Sidewalk.Before   <- Crimes.Sidewalk.Before
+Street.Lights.AllOut$Crimes.Sidewalk.After    <- Crimes.Sidewalk.After
+Street.Lights.AllOut$Crimes.Street.During     <- Crimes.Street.During 
+Street.Lights.AllOut$Crimes.Street.Before     <- Crimes.Street.Before
+Street.Lights.AllOut$Crimes.Street.After      <- Crimes.Street.After
+Street.Lights.AllOut$Crimes.All.During        <- Crimes.All.During 
+Street.Lights.AllOut$Crimes.All.Before        <- Crimes.All.Before
+Street.Lights.AllOut$Crimes.All.After         <- Crimes.All.After
 
 #EXPORT DATA SETS
+write.csv(Alley.Lights, file="Alley_Lights_and_Crime.csv")
+write.csv(Street.Lights.OneOut, file="Street_Lights_One_Out_and_Crime.csv")
+write.csv(Street.Lights.AllOut, file="Street_Lights_All_Out_and_Crime.csv")
 
-# Extra Variables -- Can Be Sent to Pt 2 Program
-# Alley.Lights$CrimeRateDuring <- 30*Alley.Lights$NumberCrimesDuring/as.numeric(Alley.Lights$DateCompleted - Alley.Lights$DateCreated + 1)
-
-
+# Extra Variables -- Can Be Sent to Pt 2 Program to Be Written
+# Alley.Lights$CrimeRateDuring <- 30*Alley.Lights$Crimes.All.During/Alley.Lights$OutageDuration
 
 
 

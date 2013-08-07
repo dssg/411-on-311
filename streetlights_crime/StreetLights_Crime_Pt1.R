@@ -946,8 +946,9 @@ write.csv(Alley.Lights, file="Alley_Lights_and_Crime.csv")
 write.csv(Street.Lights.OneOut, file="Street_Lights_One_Out_and_Crime.csv")
 write.csv(Street.Lights.AllOut, file="Street_Lights_All_Out_and_Crime.csv")
 
-# Extra Variables -- Can Be Sent to Pt 2 Program to Be Written
-# Alley.Lights$CrimeRateDuring <- 30*Alley.Lights$Crimes.All.During/Alley.Lights$OutageDuration
+save.image()
+
+
 
 
 

@@ -2,6 +2,8 @@ rm(list = ls())
 
 #Load Necessary Packages
 library(plyr)
+library(doBy)
+library(reshape)
 
 
 setwd("C:/Users/Zach/Documents/UrbanCCD/Streetlights")
@@ -19,6 +21,12 @@ Street.Lights.AllOut<- read.csv(file="Street_Lights_All_Out_and_Crime.csv", head
 Alley.Lights         <-         Alley.Lights[!duplicated(Alley.Lights$Service.Request.No),]
 Street.Lights.OneOut <- Street.Lights.OneOut[!duplicated(Street.Lights.OneOut$Service.Request.No),]
 Street.Lights.AllOut <- Street.Lights.AllOut[!duplicated(Street.Lights.AllOut$Service.Request.No),]
+
+# Remove Community Area 0
+Alley.Lights         <-         Alley.Lights[Alley.Lights$community_area        !=0,]
+Street.Lights.OneOut <- Street.Lights.OneOut[Street.Lights.OneOut$community_area!=0,]
+Street.Lights.AllOut <- Street.Lights.AllOut[Street.Lights.AllOut$community_area!=0,]
+
 
 #Create Crime Rate Variables - During
 Alley.Lights$Rate.Thefts.During            <- 30*Alley.Lights$Thefts.During           /Alley.Lights$OutageDuration
@@ -316,5 +324,223 @@ Summary.Table.AllOut$PctDiff <- 100*Summary.Table.AllOut$AbsDiff/Summary.Table.A
 Summary.Table.Alley  <- round(Summary.Table.Alley , digits=3)
 Summary.Table.OneOut <- round(Summary.Table.OneOut, digits=3)
 Summary.Table.AllOut <- round(Summary.Table.AllOut, digits=3)
+
+
+# Create Summary variables by Community Area
+Alley.Lights$Number.Outages         <- rep(1, nrow(Alley.Lights))
+Street.Lights.OneOut$Number.Outages <- rep(1, nrow(Street.Lights.OneOut))
+Street.Lights.AllOut$Number.Outages <- rep(1, nrow(Street.Lights.AllOut))
+
+Alley.Lights.CommArea <- summaryBy(Number.Outages + OutageDuration + After.Period.Duration + Thefts.During + Thefts.Before + Thefts.After + Narcotics.During +
+                                   Narcotics.Before + Narcotics.After + Battery.During + Battery.Before + Battery.After + CriminalDamage.During + 
+                                   CriminalDamage.Before + CriminalDamage.After + MotorVehicleTheft.During + MotorVehicleTheft.Before + 
+                                   MotorVehicleTheft.After + Robbery.During + Robbery.Before + Robbery.After + Assault.During + Assault.Before + 
+                                   Assault.After + Burglary.During + Burglary.Before + Burglary.After + Homicide.During + Homicide.Before + 
+                                   Homicide.After + Crimes.All.During + Crimes.All.Before + Crimes.All.After ~ 
+                                   community_area, FUN = c(sum), Alley.Lights)
+
+Street.Lights.OneOut.CommArea <- summaryBy(Number.Outages + OutageDuration + After.Period.Duration + Thefts.During + Thefts.Before + Thefts.After + Narcotics.During +
+                                           Narcotics.Before + Narcotics.After + Battery.During + Battery.Before + Battery.After + CriminalDamage.During + 
+                                           CriminalDamage.Before + CriminalDamage.After + MotorVehicleTheft.During + MotorVehicleTheft.Before + 
+                                           MotorVehicleTheft.After + Robbery.During + Robbery.Before + Robbery.After + Assault.During + Assault.Before + 
+                                           Assault.After + Burglary.During + Burglary.Before + Burglary.After + Homicide.During + Homicide.Before + 
+                                           Homicide.After + Crimes.All.During + Crimes.All.Before + Crimes.All.After ~ 
+                                           community_area, FUN = c(sum), Street.Lights.OneOut)
+
+Street.Lights.AllOut.CommArea <- summaryBy(Number.Outages + OutageDuration + After.Period.Duration + Thefts.During + Thefts.Before + Thefts.After + Narcotics.During +
+                                           Narcotics.Before + Narcotics.After + Battery.During + Battery.Before + Battery.After + CriminalDamage.During + 
+                                           CriminalDamage.Before + CriminalDamage.After + MotorVehicleTheft.During + MotorVehicleTheft.Before + 
+                                           MotorVehicleTheft.After + Robbery.During + Robbery.Before + Robbery.After + Assault.During + Assault.Before + 
+                                           Assault.After + Burglary.During + Burglary.Before + Burglary.After + Homicide.During + Homicide.Before + 
+                                           Homicide.After + Crimes.All.During + Crimes.All.Before + Crimes.All.After ~ 
+                                           community_area, FUN = c(sum), Street.Lights.AllOut)
+
+Alley.Lights.CommArea$Before.Period.Duration.sum         = rep(30, nrow(Alley.Lights.CommArea))        *Alley.Lights.CommArea$Number.Outages.sum
+Street.Lights.OneOut.CommArea$Before.Period.Duration.sum = rep(30, nrow(Street.Lights.OneOut.CommArea))*Street.Lights.OneOut.CommArea$Number.Outages.sum
+Street.Lights.AllOut.CommArea$Before.Period.Duration.sum = rep(30, nrow(Street.Lights.AllOut.CommArea))*Street.Lights.AllOut.CommArea$Number.Outages.sum
+
+Alley.Lights.CommArea$Rate.AllCrimes.Before         <- Alley.Lights.CommArea$Crimes.All.Before.sum       /Alley.Lights.CommArea$Before.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Thefts.Before            <- Alley.Lights.CommArea$Thefts.Before.sum           /Alley.Lights.CommArea$Before.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Narcotics.Before         <- Alley.Lights.CommArea$Narcotics.Before.sum        /Alley.Lights.CommArea$Before.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Battery.Before           <- Alley.Lights.CommArea$Battery.Before.sum          /Alley.Lights.CommArea$Before.Period.Duration.sum
+Alley.Lights.CommArea$Rate.CriminalDamage.Before    <- Alley.Lights.CommArea$CriminalDamage.Before.sum   /Alley.Lights.CommArea$Before.Period.Duration.sum
+Alley.Lights.CommArea$Rate.MotorVehicleTheft.Before <- Alley.Lights.CommArea$MotorVehicleTheft.Before.sum/Alley.Lights.CommArea$Before.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Robbery.Before           <- Alley.Lights.CommArea$Robbery.Before.sum          /Alley.Lights.CommArea$Before.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Assault.Before           <- Alley.Lights.CommArea$Assault.Before.sum          /Alley.Lights.CommArea$Before.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Burglary.Before          <- Alley.Lights.CommArea$Burglary.Before.sum         /Alley.Lights.CommArea$Before.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Homicide.Before          <- Alley.Lights.CommArea$Homicide.Before.sum         /Alley.Lights.CommArea$Before.Period.Duration.sum
+Alley.Lights.CommArea$Rate.AllCrimes.During         <- Alley.Lights.CommArea$Crimes.All.During.sum       /Alley.Lights.CommArea$OutageDuration.sum
+Alley.Lights.CommArea$Rate.Thefts.During            <- Alley.Lights.CommArea$Thefts.During.sum           /Alley.Lights.CommArea$OutageDuration.sum
+Alley.Lights.CommArea$Rate.Narcotics.During         <- Alley.Lights.CommArea$Narcotics.During.sum        /Alley.Lights.CommArea$OutageDuration.sum
+Alley.Lights.CommArea$Rate.Battery.During           <- Alley.Lights.CommArea$Battery.During.sum          /Alley.Lights.CommArea$OutageDuration.sum
+Alley.Lights.CommArea$Rate.CriminalDamage.During    <- Alley.Lights.CommArea$CriminalDamage.During.sum   /Alley.Lights.CommArea$OutageDuration.sum
+Alley.Lights.CommArea$Rate.MotorVehicleTheft.During <- Alley.Lights.CommArea$MotorVehicleTheft.During.sum/Alley.Lights.CommArea$OutageDuration.sum
+Alley.Lights.CommArea$Rate.Robbery.During           <- Alley.Lights.CommArea$Robbery.During.sum          /Alley.Lights.CommArea$OutageDuration.sum
+Alley.Lights.CommArea$Rate.Assault.During           <- Alley.Lights.CommArea$Assault.During.sum          /Alley.Lights.CommArea$OutageDuration.sum
+Alley.Lights.CommArea$Rate.Burglary.During          <- Alley.Lights.CommArea$Burglary.During.sum         /Alley.Lights.CommArea$OutageDuration.sum
+Alley.Lights.CommArea$Rate.Homicide.During          <- Alley.Lights.CommArea$Homicide.During.sum         /Alley.Lights.CommArea$OutageDuration.sum
+Alley.Lights.CommArea$Rate.AllCrimes.After          <- Alley.Lights.CommArea$Crimes.All.After.sum        /Alley.Lights.CommArea$After.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Thefts.After             <- Alley.Lights.CommArea$Thefts.After.sum            /Alley.Lights.CommArea$After.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Narcotics.After          <- Alley.Lights.CommArea$Narcotics.After.sum         /Alley.Lights.CommArea$After.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Battery.After            <- Alley.Lights.CommArea$Battery.After.sum           /Alley.Lights.CommArea$After.Period.Duration.sum
+Alley.Lights.CommArea$Rate.CriminalDamage.After     <- Alley.Lights.CommArea$CriminalDamage.After.sum    /Alley.Lights.CommArea$After.Period.Duration.sum
+Alley.Lights.CommArea$Rate.MotorVehicleTheft.After  <- Alley.Lights.CommArea$MotorVehicleTheft.After.sum /Alley.Lights.CommArea$After.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Robbery.After            <- Alley.Lights.CommArea$Robbery.sum                 /Alley.Lights.CommArea$After.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Assault.After            <- Alley.Lights.CommArea$Assault.After.sum           /Alley.Lights.CommArea$After.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Burglary.After           <- Alley.Lights.CommArea$Burglary.After.sum          /Alley.Lights.CommArea$After.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Homicide.After           <- Alley.Lights.CommArea$Homicide.After.sum          /Alley.Lights.CommArea$After.Period.Duration.sum
+Alley.Lights.CommArea$Rate.AllCrimes.BeforeAfter         <- (Alley.Lights.CommArea$Crimes.All.Before.sum       +Alley.Lights.CommArea$Crimes.All.After.sum)       /(Alley.Lights.CommArea$Before.Period.Duration.sum+Alley.Lights.CommArea$After.Period.Duration.sum)
+Alley.Lights.CommArea$Rate.Thefts.BeforeAfter            <- (Alley.Lights.CommArea$Thefts.Before.sum           +Alley.Lights.CommArea$Thefts.After.sum)           /(Alley.Lights.CommArea$Before.Period.Duration.sum+Alley.Lights.CommArea$After.Period.Duration.sum)
+Alley.Lights.CommArea$Rate.Narcotics.BeforeAfter         <- (Alley.Lights.CommArea$Narcotics.Before.sum        +Alley.Lights.CommArea$Narcotics.After.sum)        /(Alley.Lights.CommArea$Before.Period.Duration.sum+Alley.Lights.CommArea$After.Period.Duration.sum)
+Alley.Lights.CommArea$Rate.Battery.BeforeAfter           <- (Alley.Lights.CommArea$Battery.Before.sum          +Alley.Lights.CommArea$Battery.After.sum)          /(Alley.Lights.CommArea$Before.Period.Duration.sum+Alley.Lights.CommArea$After.Period.Duration.sum)
+Alley.Lights.CommArea$Rate.CriminalDamage.BeforeAfter    <- (Alley.Lights.CommArea$CriminalDamage.Before.sum   +Alley.Lights.CommArea$CriminalDamage.After.sum)   /(Alley.Lights.CommArea$Before.Period.Duration.sum+Alley.Lights.CommArea$After.Period.Duration.sum)
+Alley.Lights.CommArea$Rate.MotorVehicleTheft.BeforeAfter <- (Alley.Lights.CommArea$MotorVehicleTheft.Before.sum+Alley.Lights.CommArea$MotorVehicleTheft.After.sum)/(Alley.Lights.CommArea$Before.Period.Duration.sum+Alley.Lights.CommArea$After.Period.Duration.sum)
+Alley.Lights.CommArea$Rate.Robbery.BeforeAfter           <- (Alley.Lights.CommArea$Robbery.Before.sum          +Alley.Lights.CommArea$Robbery.After.sum)          /(Alley.Lights.CommArea$Before.Period.Duration.sum+Alley.Lights.CommArea$After.Period.Duration.sum)
+Alley.Lights.CommArea$Rate.Assault.BeforeAfter           <- (Alley.Lights.CommArea$Assault.Before.sum          +Alley.Lights.CommArea$Assault.After.sum)          /(Alley.Lights.CommArea$Before.Period.Duration.sum+Alley.Lights.CommArea$After.Period.Duration.sum)
+Alley.Lights.CommArea$Rate.Burglary.BeforeAfter          <- (Alley.Lights.CommArea$Burglary.Before.sum         +Alley.Lights.CommArea$Burglary.After.sum)         /(Alley.Lights.CommArea$Before.Period.Duration.sum+Alley.Lights.CommArea$After.Period.Duration.sum)
+Alley.Lights.CommArea$Rate.Homicide.BeforeAfter          <- (Alley.Lights.CommArea$Homicide.Before.sum         +Alley.Lights.CommArea$Homicide.After.sum)         /(Alley.Lights.CommArea$Before.Period.Duration.sum+Alley.Lights.CommArea$After.Period.Duration.sum)
+Alley.Lights.CommArea$AbsDiff.AllCrimes         <- Alley.Lights.CommArea$Rate.AllCrimes.During         - Alley.Lights.CommArea$Rate.AllCrimes.BeforeAfter 
+Alley.Lights.CommArea$AbsDiff.Thefts            <- Alley.Lights.CommArea$Rate.Thefts.During            - Alley.Lights.CommArea$Rate.Thefts.BeforeAfter 
+Alley.Lights.CommArea$AbsDiff.Narcotics         <- Alley.Lights.CommArea$Rate.Narcotics.During         - Alley.Lights.CommArea$Rate.Narcotics.BeforeAfter 
+Alley.Lights.CommArea$AbsDiff.Battery           <- Alley.Lights.CommArea$Rate.Battery.During           - Alley.Lights.CommArea$Rate.Battery.BeforeAfter 
+Alley.Lights.CommArea$AbsDiff.CriminalDamage    <- Alley.Lights.CommArea$Rate.CriminalDamage.During    - Alley.Lights.CommArea$Rate.CriminalDamage.BeforeAfter 
+Alley.Lights.CommArea$AbsDiff.MotorVehicleTheft <- Alley.Lights.CommArea$Rate.MotorVehicleTheft.During - Alley.Lights.CommArea$Rate.MotorVehicleTheft.BeforeAfter 
+Alley.Lights.CommArea$AbsDiff.Robbery           <- Alley.Lights.CommArea$Rate.Robbery.During           - Alley.Lights.CommArea$Rate.Robbery.BeforeAfter 
+Alley.Lights.CommArea$AbsDiff.Assault           <- Alley.Lights.CommArea$Rate.Assault.During           - Alley.Lights.CommArea$Rate.Assault.BeforeAfter 
+Alley.Lights.CommArea$AbsDiff.Burglary          <- Alley.Lights.CommArea$Rate.Burglary.During          - Alley.Lights.CommArea$Rate.Burglary.BeforeAfter 
+Alley.Lights.CommArea$AbsDiff.Homicide          <- Alley.Lights.CommArea$Rate.Homicide.During          - Alley.Lights.CommArea$Rate.Homicide.BeforeAfter 
+Alley.Lights.CommArea$PctDiff.AllCrimes          <- 100*Alley.Lights.CommArea$AbsDiff.AllCrimes        / Alley.Lights.CommArea$Rate.AllCrimes.BeforeAfter
+Alley.Lights.CommArea$PctDiff.Thefts             <- 100*Alley.Lights.CommArea$AbsDiff.Thefts           / Alley.Lights.CommArea$Rate.Thefts.BeforeAfter
+Alley.Lights.CommArea$PctDiff.Narcotics          <- 100*Alley.Lights.CommArea$AbsDiff.Narcotics        / Alley.Lights.CommArea$Rate.Narcotics.BeforeAfter
+Alley.Lights.CommArea$PctDiff.Battery            <- 100*Alley.Lights.CommArea$AbsDiff.Battery          / Alley.Lights.CommArea$Rate.Battery.BeforeAfter
+Alley.Lights.CommArea$PctDiff.CriminalDamage     <- 100*Alley.Lights.CommArea$AbsDiff.CriminalDamage   / Alley.Lights.CommArea$Rate.CriminalDamage.BeforeAfter
+Alley.Lights.CommArea$PctDiff.MotorVehicleTheft  <- 100*Alley.Lights.CommArea$AbsDiff.MotorVehicleTheft/ Alley.Lights.CommArea$Rate.MotorVehicleTheft.BeforeAfter
+Alley.Lights.CommArea$PctDiff.Robbery            <- 100*Alley.Lights.CommArea$AbsDiff.Robbery          / Alley.Lights.CommArea$Rate.Robbery.BeforeAfter
+Alley.Lights.CommArea$PctDiff.Assault            <- 100*Alley.Lights.CommArea$AbsDiff.Assault          / Alley.Lights.CommArea$Rate.Assault.BeforeAfter
+Alley.Lights.CommArea$PctDiff.Burglary           <- 100*Alley.Lights.CommArea$AbsDiff.Burglary         / Alley.Lights.CommArea$Rate.Burglary.BeforeAfter
+Alley.Lights.CommArea$PctDiff.Homicide           <- 100*Alley.Lights.CommArea$AbsDiff.Homicide         / Alley.Lights.CommArea$Rate.Homicide.BeforeAfter
+
+Street.Lights.OneOut.CommArea$Rate.AllCrimes.Before         <- Street.Lights.OneOut.CommArea$Crimes.All.Before.sum       /Street.Lights.OneOut.CommArea$Before.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Thefts.Before            <- Street.Lights.OneOut.CommArea$Thefts.Before.sum           /Street.Lights.OneOut.CommArea$Before.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Narcotics.Before         <- Street.Lights.OneOut.CommArea$Narcotics.Before.sum        /Street.Lights.OneOut.CommArea$Before.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Battery.Before           <- Street.Lights.OneOut.CommArea$Battery.Before.sum          /Street.Lights.OneOut.CommArea$Before.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.CriminalDamage.Before    <- Street.Lights.OneOut.CommArea$CriminalDamage.Before.sum   /Street.Lights.OneOut.CommArea$Before.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.MotorVehicleTheft.Before <- Street.Lights.OneOut.CommArea$MotorVehicleTheft.Before.sum/Street.Lights.OneOut.CommArea$Before.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Robbery.Before           <- Street.Lights.OneOut.CommArea$Robbery.Before.sum          /Street.Lights.OneOut.CommArea$Before.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Assault.Before           <- Street.Lights.OneOut.CommArea$Assault.Before.sum          /Street.Lights.OneOut.CommArea$Before.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Burglary.Before          <- Street.Lights.OneOut.CommArea$Burglary.Before.sum         /Street.Lights.OneOut.CommArea$Before.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Homicide.Before          <- Street.Lights.OneOut.CommArea$Homicide.Before.sum         /Street.Lights.OneOut.CommArea$Before.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.AllCrimes.During         <- Street.Lights.OneOut.CommArea$Crimes.All.During.sum       /Street.Lights.OneOut.CommArea$OutageDuration.sum
+Street.Lights.OneOut.CommArea$Rate.Thefts.During            <- Street.Lights.OneOut.CommArea$Thefts.During.sum           /Street.Lights.OneOut.CommArea$OutageDuration.sum
+Street.Lights.OneOut.CommArea$Rate.Narcotics.During         <- Street.Lights.OneOut.CommArea$Narcotics.During.sum        /Street.Lights.OneOut.CommArea$OutageDuration.sum
+Street.Lights.OneOut.CommArea$Rate.Battery.During           <- Street.Lights.OneOut.CommArea$Battery.During.sum          /Street.Lights.OneOut.CommArea$OutageDuration.sum
+Street.Lights.OneOut.CommArea$Rate.CriminalDamage.During    <- Street.Lights.OneOut.CommArea$CriminalDamage.During.sum   /Street.Lights.OneOut.CommArea$OutageDuration.sum
+Street.Lights.OneOut.CommArea$Rate.MotorVehicleTheft.During <- Street.Lights.OneOut.CommArea$MotorVehicleTheft.During.sum/Street.Lights.OneOut.CommArea$OutageDuration.sum
+Street.Lights.OneOut.CommArea$Rate.Robbery.During           <- Street.Lights.OneOut.CommArea$Robbery.During.sum          /Street.Lights.OneOut.CommArea$OutageDuration.sum
+Street.Lights.OneOut.CommArea$Rate.Assault.During           <- Street.Lights.OneOut.CommArea$Assault.During.sum          /Street.Lights.OneOut.CommArea$OutageDuration.sum
+Street.Lights.OneOut.CommArea$Rate.Burglary.During          <- Street.Lights.OneOut.CommArea$Burglary.During.sum         /Street.Lights.OneOut.CommArea$OutageDuration.sum
+Street.Lights.OneOut.CommArea$Rate.Homicide.During          <- Street.Lights.OneOut.CommArea$Homicide.During.sum         /Street.Lights.OneOut.CommArea$OutageDuration.sum
+Street.Lights.OneOut.CommArea$Rate.AllCrimes.After          <- Street.Lights.OneOut.CommArea$Crimes.All.After.sum        /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Thefts.After             <- Street.Lights.OneOut.CommArea$Thefts.After.sum            /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Narcotics.After          <- Street.Lights.OneOut.CommArea$Narcotics.After.sum         /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Battery.After            <- Street.Lights.OneOut.CommArea$Battery.After.sum           /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.CriminalDamage.After     <- Street.Lights.OneOut.CommArea$CriminalDamage.After.sum    /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.MotorVehicleTheft.After  <- Street.Lights.OneOut.CommArea$MotorVehicleTheft.After.sum /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Robbery.After            <- Street.Lights.OneOut.CommArea$Robbery.sum                 /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Assault.After            <- Street.Lights.OneOut.CommArea$Assault.After.sum           /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Burglary.After           <- Street.Lights.OneOut.CommArea$Burglary.After.sum          /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Homicide.After           <- Street.Lights.OneOut.CommArea$Homicide.After.sum          /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.AllCrimes.BeforeAfter         <- (Street.Lights.OneOut.CommArea$Crimes.All.Before.sum       +Street.Lights.OneOut.CommArea$Crimes.All.After.sum)       /(Street.Lights.OneOut.CommArea$Before.Period.Duration.sum+Street.Lights.OneOut.CommArea$After.Period.Duration.sum)
+Street.Lights.OneOut.CommArea$Rate.Thefts.BeforeAfter            <- (Street.Lights.OneOut.CommArea$Thefts.Before.sum           +Street.Lights.OneOut.CommArea$Thefts.After.sum)           /(Street.Lights.OneOut.CommArea$Before.Period.Duration.sum+Street.Lights.OneOut.CommArea$After.Period.Duration.sum)
+Street.Lights.OneOut.CommArea$Rate.Narcotics.BeforeAfter         <- (Street.Lights.OneOut.CommArea$Narcotics.Before.sum        +Street.Lights.OneOut.CommArea$Narcotics.After.sum)        /(Street.Lights.OneOut.CommArea$Before.Period.Duration.sum+Street.Lights.OneOut.CommArea$After.Period.Duration.sum)
+Street.Lights.OneOut.CommArea$Rate.Battery.BeforeAfter           <- (Street.Lights.OneOut.CommArea$Battery.Before.sum          +Street.Lights.OneOut.CommArea$Battery.After.sum)          /(Street.Lights.OneOut.CommArea$Before.Period.Duration.sum+Street.Lights.OneOut.CommArea$After.Period.Duration.sum)
+Street.Lights.OneOut.CommArea$Rate.CriminalDamage.BeforeAfter    <- (Street.Lights.OneOut.CommArea$CriminalDamage.Before.sum   +Street.Lights.OneOut.CommArea$CriminalDamage.After.sum)   /(Street.Lights.OneOut.CommArea$Before.Period.Duration.sum+Street.Lights.OneOut.CommArea$After.Period.Duration.sum)
+Street.Lights.OneOut.CommArea$Rate.MotorVehicleTheft.BeforeAfter <- (Street.Lights.OneOut.CommArea$MotorVehicleTheft.Before.sum+Street.Lights.OneOut.CommArea$MotorVehicleTheft.After.sum)/(Street.Lights.OneOut.CommArea$Before.Period.Duration.sum+Street.Lights.OneOut.CommArea$After.Period.Duration.sum)
+Street.Lights.OneOut.CommArea$Rate.Robbery.BeforeAfter           <- (Street.Lights.OneOut.CommArea$Robbery.Before.sum          +Street.Lights.OneOut.CommArea$Robbery.After.sum)          /(Street.Lights.OneOut.CommArea$Before.Period.Duration.sum+Street.Lights.OneOut.CommArea$After.Period.Duration.sum)
+Street.Lights.OneOut.CommArea$Rate.Assault.BeforeAfter           <- (Street.Lights.OneOut.CommArea$Assault.Before.sum          +Street.Lights.OneOut.CommArea$Assault.After.sum)          /(Street.Lights.OneOut.CommArea$Before.Period.Duration.sum+Street.Lights.OneOut.CommArea$After.Period.Duration.sum)
+Street.Lights.OneOut.CommArea$Rate.Burglary.BeforeAfter          <- (Street.Lights.OneOut.CommArea$Burglary.Before.sum         +Street.Lights.OneOut.CommArea$Burglary.After.sum)         /(Street.Lights.OneOut.CommArea$Before.Period.Duration.sum+Street.Lights.OneOut.CommArea$After.Period.Duration.sum)
+Street.Lights.OneOut.CommArea$Rate.Homicide.BeforeAfter          <- (Street.Lights.OneOut.CommArea$Homicide.Before.sum         +Street.Lights.OneOut.CommArea$Homicide.After.sum)         /(Street.Lights.OneOut.CommArea$Before.Period.Duration.sum+Street.Lights.OneOut.CommArea$After.Period.Duration.sum)
+Street.Lights.OneOut.CommArea$AbsDiff.AllCrimes         <- Street.Lights.OneOut.CommArea$Rate.AllCrimes.During         - Street.Lights.OneOut.CommArea$Rate.AllCrimes.BeforeAfter 
+Street.Lights.OneOut.CommArea$AbsDiff.Thefts            <- Street.Lights.OneOut.CommArea$Rate.Thefts.During            - Street.Lights.OneOut.CommArea$Rate.Thefts.BeforeAfter 
+Street.Lights.OneOut.CommArea$AbsDiff.Narcotics         <- Street.Lights.OneOut.CommArea$Rate.Narcotics.During         - Street.Lights.OneOut.CommArea$Rate.Narcotics.BeforeAfter 
+Street.Lights.OneOut.CommArea$AbsDiff.Battery           <- Street.Lights.OneOut.CommArea$Rate.Battery.During           - Street.Lights.OneOut.CommArea$Rate.Battery.BeforeAfter 
+Street.Lights.OneOut.CommArea$AbsDiff.CriminalDamage    <- Street.Lights.OneOut.CommArea$Rate.CriminalDamage.During    - Street.Lights.OneOut.CommArea$Rate.CriminalDamage.BeforeAfter 
+Street.Lights.OneOut.CommArea$AbsDiff.MotorVehicleTheft <- Street.Lights.OneOut.CommArea$Rate.MotorVehicleTheft.During - Street.Lights.OneOut.CommArea$Rate.MotorVehicleTheft.BeforeAfter 
+Street.Lights.OneOut.CommArea$AbsDiff.Robbery           <- Street.Lights.OneOut.CommArea$Rate.Robbery.During           - Street.Lights.OneOut.CommArea$Rate.Robbery.BeforeAfter 
+Street.Lights.OneOut.CommArea$AbsDiff.Assault           <- Street.Lights.OneOut.CommArea$Rate.Assault.During           - Street.Lights.OneOut.CommArea$Rate.Assault.BeforeAfter 
+Street.Lights.OneOut.CommArea$AbsDiff.Burglary          <- Street.Lights.OneOut.CommArea$Rate.Burglary.During          - Street.Lights.OneOut.CommArea$Rate.Burglary.BeforeAfter 
+Street.Lights.OneOut.CommArea$AbsDiff.Homicide          <- Street.Lights.OneOut.CommArea$Rate.Homicide.During          - Street.Lights.OneOut.CommArea$Rate.Homicide.BeforeAfter 
+Street.Lights.OneOut.CommArea$PctDiff.AllCrimes          <- 100*Street.Lights.OneOut.CommArea$AbsDiff.AllCrimes        / Street.Lights.OneOut.CommArea$Rate.AllCrimes.BeforeAfter
+Street.Lights.OneOut.CommArea$PctDiff.Thefts             <- 100*Street.Lights.OneOut.CommArea$AbsDiff.Thefts           / Street.Lights.OneOut.CommArea$Rate.Thefts.BeforeAfter
+Street.Lights.OneOut.CommArea$PctDiff.Narcotics          <- 100*Street.Lights.OneOut.CommArea$AbsDiff.Narcotics        / Street.Lights.OneOut.CommArea$Rate.Narcotics.BeforeAfter
+Street.Lights.OneOut.CommArea$PctDiff.Battery            <- 100*Street.Lights.OneOut.CommArea$AbsDiff.Battery          / Street.Lights.OneOut.CommArea$Rate.Battery.BeforeAfter
+Street.Lights.OneOut.CommArea$PctDiff.CriminalDamage     <- 100*Street.Lights.OneOut.CommArea$AbsDiff.CriminalDamage   / Street.Lights.OneOut.CommArea$Rate.CriminalDamage.BeforeAfter
+Street.Lights.OneOut.CommArea$PctDiff.MotorVehicleTheft  <- 100*Street.Lights.OneOut.CommArea$AbsDiff.MotorVehicleTheft/ Street.Lights.OneOut.CommArea$Rate.MotorVehicleTheft.BeforeAfter
+Street.Lights.OneOut.CommArea$PctDiff.Robbery            <- 100*Street.Lights.OneOut.CommArea$AbsDiff.Robbery          / Street.Lights.OneOut.CommArea$Rate.Robbery.BeforeAfter
+Street.Lights.OneOut.CommArea$PctDiff.Assault            <- 100*Street.Lights.OneOut.CommArea$AbsDiff.Assault          / Street.Lights.OneOut.CommArea$Rate.Assault.BeforeAfter
+Street.Lights.OneOut.CommArea$PctDiff.Burglary           <- 100*Street.Lights.OneOut.CommArea$AbsDiff.Burglary         / Street.Lights.OneOut.CommArea$Rate.Burglary.BeforeAfter
+Street.Lights.OneOut.CommArea$PctDiff.Homicide           <- 100*Street.Lights.OneOut.CommArea$AbsDiff.Homicide         / Street.Lights.OneOut.CommArea$Rate.Homicide.BeforeAfter
+
+Street.Lights.AllOut.CommArea$Rate.AllCrimes.Before         <- Street.Lights.AllOut.CommArea$Crimes.All.Before.sum       /Street.Lights.AllOut.CommArea$Before.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Thefts.Before            <- Street.Lights.AllOut.CommArea$Thefts.Before.sum           /Street.Lights.AllOut.CommArea$Before.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Narcotics.Before         <- Street.Lights.AllOut.CommArea$Narcotics.Before.sum        /Street.Lights.AllOut.CommArea$Before.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Battery.Before           <- Street.Lights.AllOut.CommArea$Battery.Before.sum          /Street.Lights.AllOut.CommArea$Before.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.CriminalDamage.Before    <- Street.Lights.AllOut.CommArea$CriminalDamage.Before.sum   /Street.Lights.AllOut.CommArea$Before.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.MotorVehicleTheft.Before <- Street.Lights.AllOut.CommArea$MotorVehicleTheft.Before.sum/Street.Lights.AllOut.CommArea$Before.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Robbery.Before           <- Street.Lights.AllOut.CommArea$Robbery.Before.sum          /Street.Lights.AllOut.CommArea$Before.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Assault.Before           <- Street.Lights.AllOut.CommArea$Assault.Before.sum          /Street.Lights.AllOut.CommArea$Before.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Burglary.Before          <- Street.Lights.AllOut.CommArea$Burglary.Before.sum         /Street.Lights.AllOut.CommArea$Before.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Homicide.Before          <- Street.Lights.AllOut.CommArea$Homicide.Before.sum         /Street.Lights.AllOut.CommArea$Before.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.AllCrimes.During         <- Street.Lights.AllOut.CommArea$Crimes.All.During.sum       /Street.Lights.AllOut.CommArea$OutageDuration.sum
+Street.Lights.AllOut.CommArea$Rate.Thefts.During            <- Street.Lights.AllOut.CommArea$Thefts.During.sum           /Street.Lights.AllOut.CommArea$OutageDuration.sum
+Street.Lights.AllOut.CommArea$Rate.Narcotics.During         <- Street.Lights.AllOut.CommArea$Narcotics.During.sum        /Street.Lights.AllOut.CommArea$OutageDuration.sum
+Street.Lights.AllOut.CommArea$Rate.Battery.During           <- Street.Lights.AllOut.CommArea$Battery.During.sum          /Street.Lights.AllOut.CommArea$OutageDuration.sum
+Street.Lights.AllOut.CommArea$Rate.CriminalDamage.During    <- Street.Lights.AllOut.CommArea$CriminalDamage.During.sum   /Street.Lights.AllOut.CommArea$OutageDuration.sum
+Street.Lights.AllOut.CommArea$Rate.MotorVehicleTheft.During <- Street.Lights.AllOut.CommArea$MotorVehicleTheft.During.sum/Street.Lights.AllOut.CommArea$OutageDuration.sum
+Street.Lights.AllOut.CommArea$Rate.Robbery.During           <- Street.Lights.AllOut.CommArea$Robbery.During.sum          /Street.Lights.AllOut.CommArea$OutageDuration.sum
+Street.Lights.AllOut.CommArea$Rate.Assault.During           <- Street.Lights.AllOut.CommArea$Assault.During.sum          /Street.Lights.AllOut.CommArea$OutageDuration.sum
+Street.Lights.AllOut.CommArea$Rate.Burglary.During          <- Street.Lights.AllOut.CommArea$Burglary.During.sum         /Street.Lights.AllOut.CommArea$OutageDuration.sum
+Street.Lights.AllOut.CommArea$Rate.Homicide.During          <- Street.Lights.AllOut.CommArea$Homicide.During.sum         /Street.Lights.AllOut.CommArea$OutageDuration.sum
+Street.Lights.AllOut.CommArea$Rate.AllCrimes.After          <- Street.Lights.AllOut.CommArea$Crimes.All.After.sum        /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Thefts.After             <- Street.Lights.AllOut.CommArea$Thefts.After.sum            /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Narcotics.After          <- Street.Lights.AllOut.CommArea$Narcotics.After.sum         /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Battery.After            <- Street.Lights.AllOut.CommArea$Battery.After.sum           /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.CriminalDamage.After     <- Street.Lights.AllOut.CommArea$CriminalDamage.After.sum    /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.MotorVehicleTheft.After  <- Street.Lights.AllOut.CommArea$MotorVehicleTheft.After.sum /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Robbery.After            <- Street.Lights.AllOut.CommArea$Robbery.sum                 /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Assault.After            <- Street.Lights.AllOut.CommArea$Assault.After.sum           /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Burglary.After           <- Street.Lights.AllOut.CommArea$Burglary.After.sum          /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Homicide.After           <- Street.Lights.AllOut.CommArea$Homicide.After.sum          /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.AllCrimes.BeforeAfter         <- (Street.Lights.AllOut.CommArea$Crimes.All.Before.sum       +Street.Lights.AllOut.CommArea$Crimes.All.After.sum)       /(Street.Lights.AllOut.CommArea$Before.Period.Duration.sum+Street.Lights.AllOut.CommArea$After.Period.Duration.sum)
+Street.Lights.AllOut.CommArea$Rate.Thefts.BeforeAfter            <- (Street.Lights.AllOut.CommArea$Thefts.Before.sum           +Street.Lights.AllOut.CommArea$Thefts.After.sum)           /(Street.Lights.AllOut.CommArea$Before.Period.Duration.sum+Street.Lights.AllOut.CommArea$After.Period.Duration.sum)
+Street.Lights.AllOut.CommArea$Rate.Narcotics.BeforeAfter         <- (Street.Lights.AllOut.CommArea$Narcotics.Before.sum        +Street.Lights.AllOut.CommArea$Narcotics.After.sum)        /(Street.Lights.AllOut.CommArea$Before.Period.Duration.sum+Street.Lights.AllOut.CommArea$After.Period.Duration.sum)
+Street.Lights.AllOut.CommArea$Rate.Battery.BeforeAfter           <- (Street.Lights.AllOut.CommArea$Battery.Before.sum          +Street.Lights.AllOut.CommArea$Battery.After.sum)          /(Street.Lights.AllOut.CommArea$Before.Period.Duration.sum+Street.Lights.AllOut.CommArea$After.Period.Duration.sum)
+Street.Lights.AllOut.CommArea$Rate.CriminalDamage.BeforeAfter    <- (Street.Lights.AllOut.CommArea$CriminalDamage.Before.sum   +Street.Lights.AllOut.CommArea$CriminalDamage.After.sum)   /(Street.Lights.AllOut.CommArea$Before.Period.Duration.sum+Street.Lights.AllOut.CommArea$After.Period.Duration.sum)
+Street.Lights.AllOut.CommArea$Rate.MotorVehicleTheft.BeforeAfter <- (Street.Lights.AllOut.CommArea$MotorVehicleTheft.Before.sum+Street.Lights.AllOut.CommArea$MotorVehicleTheft.After.sum)/(Street.Lights.AllOut.CommArea$Before.Period.Duration.sum+Street.Lights.AllOut.CommArea$After.Period.Duration.sum)
+Street.Lights.AllOut.CommArea$Rate.Robbery.BeforeAfter           <- (Street.Lights.AllOut.CommArea$Robbery.Before.sum          +Street.Lights.AllOut.CommArea$Robbery.After.sum)          /(Street.Lights.AllOut.CommArea$Before.Period.Duration.sum+Street.Lights.AllOut.CommArea$After.Period.Duration.sum)
+Street.Lights.AllOut.CommArea$Rate.Assault.BeforeAfter           <- (Street.Lights.AllOut.CommArea$Assault.Before.sum          +Street.Lights.AllOut.CommArea$Assault.After.sum)          /(Street.Lights.AllOut.CommArea$Before.Period.Duration.sum+Street.Lights.AllOut.CommArea$After.Period.Duration.sum)
+Street.Lights.AllOut.CommArea$Rate.Burglary.BeforeAfter          <- (Street.Lights.AllOut.CommArea$Burglary.Before.sum         +Street.Lights.AllOut.CommArea$Burglary.After.sum)         /(Street.Lights.AllOut.CommArea$Before.Period.Duration.sum+Street.Lights.AllOut.CommArea$After.Period.Duration.sum)
+Street.Lights.AllOut.CommArea$Rate.Homicide.BeforeAfter          <- (Street.Lights.AllOut.CommArea$Homicide.Before.sum         +Street.Lights.AllOut.CommArea$Homicide.After.sum)         /(Street.Lights.AllOut.CommArea$Before.Period.Duration.sum+Street.Lights.AllOut.CommArea$After.Period.Duration.sum)
+Street.Lights.AllOut.CommArea$AbsDiff.AllCrimes         <- Street.Lights.AllOut.CommArea$Rate.AllCrimes.During         - Street.Lights.AllOut.CommArea$Rate.AllCrimes.BeforeAfter 
+Street.Lights.AllOut.CommArea$AbsDiff.Thefts            <- Street.Lights.AllOut.CommArea$Rate.Thefts.During            - Street.Lights.AllOut.CommArea$Rate.Thefts.BeforeAfter 
+Street.Lights.AllOut.CommArea$AbsDiff.Narcotics         <- Street.Lights.AllOut.CommArea$Rate.Narcotics.During         - Street.Lights.AllOut.CommArea$Rate.Narcotics.BeforeAfter 
+Street.Lights.AllOut.CommArea$AbsDiff.Battery           <- Street.Lights.AllOut.CommArea$Rate.Battery.During           - Street.Lights.AllOut.CommArea$Rate.Battery.BeforeAfter 
+Street.Lights.AllOut.CommArea$AbsDiff.CriminalDamage    <- Street.Lights.AllOut.CommArea$Rate.CriminalDamage.During    - Street.Lights.AllOut.CommArea$Rate.CriminalDamage.BeforeAfter 
+Street.Lights.AllOut.CommArea$AbsDiff.MotorVehicleTheft <- Street.Lights.AllOut.CommArea$Rate.MotorVehicleTheft.During - Street.Lights.AllOut.CommArea$Rate.MotorVehicleTheft.BeforeAfter 
+Street.Lights.AllOut.CommArea$AbsDiff.Robbery           <- Street.Lights.AllOut.CommArea$Rate.Robbery.During           - Street.Lights.AllOut.CommArea$Rate.Robbery.BeforeAfter 
+Street.Lights.AllOut.CommArea$AbsDiff.Assault           <- Street.Lights.AllOut.CommArea$Rate.Assault.During           - Street.Lights.AllOut.CommArea$Rate.Assault.BeforeAfter 
+Street.Lights.AllOut.CommArea$AbsDiff.Burglary          <- Street.Lights.AllOut.CommArea$Rate.Burglary.During          - Street.Lights.AllOut.CommArea$Rate.Burglary.BeforeAfter 
+Street.Lights.AllOut.CommArea$AbsDiff.Homicide          <- Street.Lights.AllOut.CommArea$Rate.Homicide.During          - Street.Lights.AllOut.CommArea$Rate.Homicide.BeforeAfter 
+Street.Lights.AllOut.CommArea$PctDiff.AllCrimes          <- 100*Street.Lights.AllOut.CommArea$AbsDiff.AllCrimes        / Street.Lights.AllOut.CommArea$Rate.AllCrimes.BeforeAfter
+Street.Lights.AllOut.CommArea$PctDiff.Thefts             <- 100*Street.Lights.AllOut.CommArea$AbsDiff.Thefts           / Street.Lights.AllOut.CommArea$Rate.Thefts.BeforeAfter
+Street.Lights.AllOut.CommArea$PctDiff.Narcotics          <- 100*Street.Lights.AllOut.CommArea$AbsDiff.Narcotics        / Street.Lights.AllOut.CommArea$Rate.Narcotics.BeforeAfter
+Street.Lights.AllOut.CommArea$PctDiff.Battery            <- 100*Street.Lights.AllOut.CommArea$AbsDiff.Battery          / Street.Lights.AllOut.CommArea$Rate.Battery.BeforeAfter
+Street.Lights.AllOut.CommArea$PctDiff.CriminalDamage     <- 100*Street.Lights.AllOut.CommArea$AbsDiff.CriminalDamage   / Street.Lights.AllOut.CommArea$Rate.CriminalDamage.BeforeAfter
+Street.Lights.AllOut.CommArea$PctDiff.MotorVehicleTheft  <- 100*Street.Lights.AllOut.CommArea$AbsDiff.MotorVehicleTheft/ Street.Lights.AllOut.CommArea$Rate.MotorVehicleTheft.BeforeAfter
+Street.Lights.AllOut.CommArea$PctDiff.Robbery            <- 100*Street.Lights.AllOut.CommArea$AbsDiff.Robbery          / Street.Lights.AllOut.CommArea$Rate.Robbery.BeforeAfter
+Street.Lights.AllOut.CommArea$PctDiff.Assault            <- 100*Street.Lights.AllOut.CommArea$AbsDiff.Assault          / Street.Lights.AllOut.CommArea$Rate.Assault.BeforeAfter
+Street.Lights.AllOut.CommArea$PctDiff.Burglary           <- 100*Street.Lights.AllOut.CommArea$AbsDiff.Burglary         / Street.Lights.AllOut.CommArea$Rate.Burglary.BeforeAfter
+Street.Lights.AllOut.CommArea$PctDiff.Homicide           <- 100*Street.Lights.AllOut.CommArea$AbsDiff.Homicide         / Street.Lights.AllOut.CommArea$Rate.Homicide.BeforeAfter
+
 
 

@@ -1,6 +1,6 @@
-rm(list = ls())
 
-setwd("C:/Users/Zach/Documents/UrbanCCD/Streetlights")
+
+setwd("/mnt/data1/Indices/streetlights")
 
 #Open Crime Portal Data
 Crime <- read.csv(file="Crimes_-_Feb_15__2012_to_August_6__2013_-_Outdoor.csv", head=TRUE)
@@ -106,6 +106,7 @@ Crimes.Alley.During      <- numeric(m)
 Crimes.Alley.Before      <- numeric(m)
 Crimes.Alley.After       <- numeric(m)
 Crimes.All.During        <- numeric(m)
+Crimes.All.During.NoDay1 <- numeric(m)
 Crimes.All.Before        <- numeric(m)
 Crimes.All.After         <- numeric(m)
 
@@ -292,8 +293,13 @@ for (i in 1:m) {
                                   as.numeric(Crime$Location.Description == "ALLEY")) 
   
   Crimes.All.During[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
-                                                 (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                                               (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
                                 as.numeric(Alley.Lights$DateCreated[i] <= Crime$DateCrime) * 
+                                as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime)) 
+
+  Crimes.All.During.NoDay1[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
+                                               (Crime$Y.Coordinate-Alley.Lights$y_coord[i])**2) < 500) * 
+                                as.numeric(Alley.Lights$DateCreated[i] < Crime$DateCrime) * 
                                 as.numeric(Alley.Lights$DateCompleted[i] >= Crime$DateCrime)) 
   
   Crimes.All.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Alley.Lights$x_coord[i])**2 + 
@@ -342,6 +348,7 @@ Alley.Lights$Crimes.Alley.During      <- Crimes.Alley.During
 Alley.Lights$Crimes.Alley.Before      <- Crimes.Alley.Before
 Alley.Lights$Crimes.Alley.After       <- Crimes.Alley.After
 Alley.Lights$Crimes.All.During        <- Crimes.All.During 
+Alley.Lights$Crimes.All.During.NoDay1 <- Crimes.All.During.NoDay1 
 Alley.Lights$Crimes.All.Before        <- Crimes.All.Before
 Alley.Lights$Crimes.All.After         <- Crimes.All.After
 
@@ -384,6 +391,7 @@ Crimes.Street.During     <- numeric(m)
 Crimes.Street.Before     <- numeric(m)
 Crimes.Street.After      <- numeric(m)
 Crimes.All.During        <- numeric(m)
+Crimes.All.During.NoDay1 <- numeric(m)
 Crimes.All.Before        <- numeric(m)
 Crimes.All.After         <- numeric(m)
 
@@ -590,6 +598,11 @@ for (i in 1:m) {
                                                  (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
                                 as.numeric(Street.Lights.OneOut$DateCreated[i] <= Crime$DateCrime) * 
                                 as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime)) 
+
+  Crimes.All.During.NoDay1[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
+                                                 (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
+                                as.numeric(Street.Lights.OneOut$DateCreated[i] < Crime$DateCrime) * 
+                                as.numeric(Street.Lights.OneOut$DateCompleted[i] >= Crime$DateCrime)) 
   
   Crimes.All.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.OneOut$x_coord[i])**2 + 
                                                  (Crime$Y.Coordinate-Street.Lights.OneOut$y_coord[i])**2) < 500) * 
@@ -640,6 +653,7 @@ Street.Lights.OneOut$Crimes.Street.During     <- Crimes.Street.During
 Street.Lights.OneOut$Crimes.Street.Before     <- Crimes.Street.Before
 Street.Lights.OneOut$Crimes.Street.After      <- Crimes.Street.After
 Street.Lights.OneOut$Crimes.All.During        <- Crimes.All.During 
+Street.Lights.OneOut$Crimes.All.During.NoDay1 <- Crimes.All.During.NoDay1
 Street.Lights.OneOut$Crimes.All.Before        <- Crimes.All.Before
 Street.Lights.OneOut$Crimes.All.After         <- Crimes.All.After
 
@@ -682,6 +696,7 @@ Crimes.Street.During     <- numeric(m)
 Crimes.Street.Before     <- numeric(m)
 Crimes.Street.After      <- numeric(m)
 Crimes.All.During        <- numeric(m)
+Crimes.All.During.NoDay1 <- numeric(m)
 Crimes.All.Before        <- numeric(m)
 Crimes.All.After         <- numeric(m)
 
@@ -888,6 +903,11 @@ for (i in 1:m) {
                                                  (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
                                 as.numeric(Street.Lights.AllOut$DateCreated[i] <= Crime$DateCrime) * 
                                 as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime)) 
+
+  Crimes.All.During.NoDay1[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
+                                                 (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
+                                as.numeric(Street.Lights.AllOut$DateCreated[i] < Crime$DateCrime) * 
+                                as.numeric(Street.Lights.AllOut$DateCompleted[i] >= Crime$DateCrime))
   
   Crimes.All.Before[i] <- sum(as.numeric( sqrt((Crime$X.Coordinate-Street.Lights.AllOut$x_coord[i])**2 + 
                                                  (Crime$Y.Coordinate-Street.Lights.AllOut$y_coord[i])**2) < 1000) * 
@@ -938,6 +958,7 @@ Street.Lights.AllOut$Crimes.Street.During     <- Crimes.Street.During
 Street.Lights.AllOut$Crimes.Street.Before     <- Crimes.Street.Before
 Street.Lights.AllOut$Crimes.Street.After      <- Crimes.Street.After
 Street.Lights.AllOut$Crimes.All.During        <- Crimes.All.During 
+Street.Lights.AllOut$Crimes.All.During.NoDay1 <- Crimes.All.During.NoDay1
 Street.Lights.AllOut$Crimes.All.Before        <- Crimes.All.Before
 Street.Lights.AllOut$Crimes.All.After         <- Crimes.All.After
 

@@ -22,134 +22,13 @@ Alley.Lights         <-         Alley.Lights[!duplicated(Alley.Lights$Service.Re
 Street.Lights.OneOut <- Street.Lights.OneOut[!duplicated(Street.Lights.OneOut$Service.Request.No),]
 Street.Lights.AllOut <- Street.Lights.AllOut[!duplicated(Street.Lights.AllOut$Service.Request.No),]
 
+#REMOVE THIS LINE LATER
+Street.Lights.AllOut$community_area <- Street.Lights.AllOut$community_area.x
+
 # Remove Community Area 0
 Alley.Lights         <-         Alley.Lights[Alley.Lights$community_area        !=0,]
 Street.Lights.OneOut <- Street.Lights.OneOut[Street.Lights.OneOut$community_area!=0,]
 Street.Lights.AllOut <- Street.Lights.AllOut[Street.Lights.AllOut$community_area!=0,]
-
-
-#Create Crime Rate Variables - During
-Alley.Lights$Rate.Thefts.During            <- 30*Alley.Lights$Thefts.During           /Alley.Lights$OutageDuration
-Alley.Lights$Rate.Narcotics.During         <- 30*Alley.Lights$Narcotics.During        /Alley.Lights$OutageDuration
-Alley.Lights$Rate.Battery.During           <- 30*Alley.Lights$Battery.During          /Alley.Lights$OutageDuration
-Alley.Lights$Rate.CriminalDamage.During    <- 30*Alley.Lights$CriminalDamage.During   /Alley.Lights$OutageDuration
-Alley.Lights$Rate.MotorVehicleTheft.During <- 30*Alley.Lights$MotorVehicleTheft.During/Alley.Lights$OutageDuration
-Alley.Lights$Rate.Robbery.During           <- 30*Alley.Lights$Robbery.During          /Alley.Lights$OutageDuration
-Alley.Lights$Rate.Assault.During           <- 30*Alley.Lights$Assault.During          /Alley.Lights$OutageDuration
-Alley.Lights$Rate.Burglary.During          <- 30*Alley.Lights$Burglary.During         /Alley.Lights$OutageDuration
-Alley.Lights$Rate.Homicide.During          <- 30*Alley.Lights$Homicide.During         /Alley.Lights$OutageDuration
-Alley.Lights$Rate.AlleyCrimes.During       <- 30*Alley.Lights$Crimes.Alley.During     /Alley.Lights$OutageDuration
-Alley.Lights$Rate.AllCrimes.During         <- 30*Alley.Lights$Crimes.All.During       /Alley.Lights$OutageDuration
-
-Street.Lights.OneOut$Rate.Thefts.During            <- 30*Street.Lights.OneOut$Thefts.During           /Street.Lights.OneOut$OutageDuration
-Street.Lights.OneOut$Rate.Narcotics.During         <- 30*Street.Lights.OneOut$Narcotics.During        /Street.Lights.OneOut$OutageDuration
-Street.Lights.OneOut$Rate.Battery.During           <- 30*Street.Lights.OneOut$Battery.During          /Street.Lights.OneOut$OutageDuration
-Street.Lights.OneOut$Rate.CriminalDamage.During    <- 30*Street.Lights.OneOut$CriminalDamage.During   /Street.Lights.OneOut$OutageDuration
-Street.Lights.OneOut$Rate.MotorVehicleTheft.During <- 30*Street.Lights.OneOut$MotorVehicleTheft.During/Street.Lights.OneOut$OutageDuration
-Street.Lights.OneOut$Rate.Robbery.During           <- 30*Street.Lights.OneOut$Robbery.During          /Street.Lights.OneOut$OutageDuration
-Street.Lights.OneOut$Rate.Assault.During           <- 30*Street.Lights.OneOut$Assault.During          /Street.Lights.OneOut$OutageDuration
-Street.Lights.OneOut$Rate.Burglary.During          <- 30*Street.Lights.OneOut$Burglary.During         /Street.Lights.OneOut$OutageDuration
-Street.Lights.OneOut$Rate.Homicide.During          <- 30*Street.Lights.OneOut$Homicide.During         /Street.Lights.OneOut$OutageDuration
-Street.Lights.OneOut$Rate.SidewalkCrimes.During    <- 30*Street.Lights.OneOut$Crimes.Sidewalk.During  /Street.Lights.OneOut$OutageDuration
-Street.Lights.OneOut$Rate.StreetCrimes.During      <- 30*Street.Lights.OneOut$Crimes.Street.During    /Street.Lights.OneOut$OutageDuration
-Street.Lights.OneOut$Rate.AllCrimes.During         <- 30*Street.Lights.OneOut$Crimes.All.During       /Street.Lights.OneOut$OutageDuration
-
-Street.Lights.AllOut$Rate.Thefts.During            <- 30*Street.Lights.AllOut$Thefts.During           /Street.Lights.AllOut$OutageDuration
-Street.Lights.AllOut$Rate.Narcotics.During         <- 30*Street.Lights.AllOut$Narcotics.During        /Street.Lights.AllOut$OutageDuration
-Street.Lights.AllOut$Rate.Battery.During           <- 30*Street.Lights.AllOut$Battery.During          /Street.Lights.AllOut$OutageDuration
-Street.Lights.AllOut$Rate.CriminalDamage.During    <- 30*Street.Lights.AllOut$CriminalDamage.During   /Street.Lights.AllOut$OutageDuration
-Street.Lights.AllOut$Rate.MotorVehicleTheft.During <- 30*Street.Lights.AllOut$MotorVehicleTheft.During/Street.Lights.AllOut$OutageDuration
-Street.Lights.AllOut$Rate.Robbery.During           <- 30*Street.Lights.AllOut$Robbery.During          /Street.Lights.AllOut$OutageDuration
-Street.Lights.AllOut$Rate.Assault.During           <- 30*Street.Lights.AllOut$Assault.During          /Street.Lights.AllOut$OutageDuration
-Street.Lights.AllOut$Rate.Burglary.During          <- 30*Street.Lights.AllOut$Burglary.During         /Street.Lights.AllOut$OutageDuration
-Street.Lights.AllOut$Rate.Homicide.During          <- 30*Street.Lights.AllOut$Homicide.During         /Street.Lights.AllOut$OutageDuration
-Street.Lights.AllOut$Rate.SidewalkCrimes.During    <- 30*Street.Lights.AllOut$Crimes.Sidewalk.During  /Street.Lights.AllOut$OutageDuration
-Street.Lights.AllOut$Rate.StreetCrimes.During      <- 30*Street.Lights.AllOut$Crimes.Street.During    /Street.Lights.AllOut$OutageDuration
-Street.Lights.AllOut$Rate.AllCrimes.During         <- 30*Street.Lights.AllOut$Crimes.All.During       /Street.Lights.AllOut$OutageDuration
-
-
-
-#Create Crime Rate Variables - Before
-Alley.Lights$Rate.Thefts.Before            <- Alley.Lights$Thefts.Before           
-Alley.Lights$Rate.Narcotics.Before         <- Alley.Lights$Narcotics.Before        
-Alley.Lights$Rate.Battery.Before           <- Alley.Lights$Battery.Before          
-Alley.Lights$Rate.CriminalDamage.Before    <- Alley.Lights$CriminalDamage.Before   
-Alley.Lights$Rate.MotorVehicleTheft.Before <- Alley.Lights$MotorVehicleTheft.Before
-Alley.Lights$Rate.Robbery.Before           <- Alley.Lights$Robbery.Before          
-Alley.Lights$Rate.Assault.Before           <- Alley.Lights$Assault.Before          
-Alley.Lights$Rate.Burglary.Before          <- Alley.Lights$Burglary.Before         
-Alley.Lights$Rate.Homicide.Before          <- Alley.Lights$Homicide.Before         
-Alley.Lights$Rate.AlleyCrimes.Before       <- Alley.Lights$Crimes.Alley.Before     
-Alley.Lights$Rate.AllCrimes.Before         <- Alley.Lights$Crimes.All.Before           
-
-Street.Lights.OneOut$Rate.Thefts.Before            <- Street.Lights.OneOut$Thefts.Before           
-Street.Lights.OneOut$Rate.Narcotics.Before         <- Street.Lights.OneOut$Narcotics.Before        
-Street.Lights.OneOut$Rate.Battery.Before           <- Street.Lights.OneOut$Battery.Before          
-Street.Lights.OneOut$Rate.CriminalDamage.Before    <- Street.Lights.OneOut$CriminalDamage.Before   
-Street.Lights.OneOut$Rate.MotorVehicleTheft.Before <- Street.Lights.OneOut$MotorVehicleTheft.Before
-Street.Lights.OneOut$Rate.Robbery.Before           <- Street.Lights.OneOut$Robbery.Before          
-Street.Lights.OneOut$Rate.Assault.Before           <- Street.Lights.OneOut$Assault.Before          
-Street.Lights.OneOut$Rate.Burglary.Before          <- Street.Lights.OneOut$Burglary.Before         
-Street.Lights.OneOut$Rate.Homicide.Before          <- Street.Lights.OneOut$Homicide.Before         
-Street.Lights.OneOut$Rate.SidewalkCrimes.Before    <- Street.Lights.OneOut$Crimes.Sidewalk.Before  
-Street.Lights.OneOut$Rate.StreetCrimes.Before      <- Street.Lights.OneOut$Crimes.Street.Before    
-Street.Lights.OneOut$Rate.AllCrimes.Before         <- Street.Lights.OneOut$Crimes.All.Before           
-
-Street.Lights.AllOut$Rate.Thefts.Before            <- Street.Lights.AllOut$Thefts.Before           
-Street.Lights.AllOut$Rate.Narcotics.Before         <- Street.Lights.AllOut$Narcotics.Before        
-Street.Lights.AllOut$Rate.Battery.Before           <- Street.Lights.AllOut$Battery.Before          
-Street.Lights.AllOut$Rate.CriminalDamage.Before    <- Street.Lights.AllOut$CriminalDamage.Before   
-Street.Lights.AllOut$Rate.MotorVehicleTheft.Before <- Street.Lights.AllOut$MotorVehicleTheft.Before
-Street.Lights.AllOut$Rate.Robbery.Before           <- Street.Lights.AllOut$Robbery.Before          
-Street.Lights.AllOut$Rate.Assault.Before           <- Street.Lights.AllOut$Assault.Before          
-Street.Lights.AllOut$Rate.Burglary.Before          <- Street.Lights.AllOut$Burglary.Before         
-Street.Lights.AllOut$Rate.Homicide.Before          <- Street.Lights.AllOut$Homicide.Before         
-Street.Lights.AllOut$Rate.SidewalkCrimes.Before    <- Street.Lights.AllOut$Crimes.Sidewalk.Before  
-Street.Lights.AllOut$Rate.StreetCrimes.Before      <- Street.Lights.AllOut$Crimes.Street.Before    
-Street.Lights.AllOut$Rate.AllCrimes.Before         <- Street.Lights.AllOut$Crimes.All.Before           
-
-
-
-
-
-#Create Crime Rate Variables - After
-Alley.Lights$Rate.Thefts.After            <- 30*Alley.Lights$Thefts.After           /Alley.Lights$After.Period.Duration
-Alley.Lights$Rate.Narcotics.After         <- 30*Alley.Lights$Narcotics.After        /Alley.Lights$After.Period.Duration
-Alley.Lights$Rate.Battery.After           <- 30*Alley.Lights$Battery.After          /Alley.Lights$After.Period.Duration
-Alley.Lights$Rate.CriminalDamage.After    <- 30*Alley.Lights$CriminalDamage.After   /Alley.Lights$After.Period.Duration
-Alley.Lights$Rate.MotorVehicleTheft.After <- 30*Alley.Lights$MotorVehicleTheft.After/Alley.Lights$After.Period.Duration
-Alley.Lights$Rate.Robbery.After           <- 30*Alley.Lights$Robbery.After          /Alley.Lights$After.Period.Duration
-Alley.Lights$Rate.Assault.After           <- 30*Alley.Lights$Assault.After          /Alley.Lights$After.Period.Duration
-Alley.Lights$Rate.Burglary.After          <- 30*Alley.Lights$Burglary.After         /Alley.Lights$After.Period.Duration
-Alley.Lights$Rate.Homicide.After          <- 30*Alley.Lights$Homicide.After         /Alley.Lights$After.Period.Duration
-Alley.Lights$Rate.AlleyCrimes.After       <- 30*Alley.Lights$Crimes.Alley.After     /Alley.Lights$After.Period.Duration
-Alley.Lights$Rate.AllCrimes.After         <- 30*Alley.Lights$Crimes.All.After       /Alley.Lights$After.Period.Duration
-
-Street.Lights.OneOut$Rate.Thefts.After            <- 30*Street.Lights.OneOut$Thefts.After           /Street.Lights.OneOut$After.Period.Duration
-Street.Lights.OneOut$Rate.Narcotics.After         <- 30*Street.Lights.OneOut$Narcotics.After        /Street.Lights.OneOut$After.Period.Duration
-Street.Lights.OneOut$Rate.Battery.After           <- 30*Street.Lights.OneOut$Battery.After          /Street.Lights.OneOut$After.Period.Duration
-Street.Lights.OneOut$Rate.CriminalDamage.After    <- 30*Street.Lights.OneOut$CriminalDamage.After   /Street.Lights.OneOut$After.Period.Duration
-Street.Lights.OneOut$Rate.MotorVehicleTheft.After <- 30*Street.Lights.OneOut$MotorVehicleTheft.After/Street.Lights.OneOut$After.Period.Duration
-Street.Lights.OneOut$Rate.Robbery.After           <- 30*Street.Lights.OneOut$Robbery.After          /Street.Lights.OneOut$After.Period.Duration
-Street.Lights.OneOut$Rate.Assault.After           <- 30*Street.Lights.OneOut$Assault.After          /Street.Lights.OneOut$After.Period.Duration
-Street.Lights.OneOut$Rate.Burglary.After          <- 30*Street.Lights.OneOut$Burglary.After         /Street.Lights.OneOut$After.Period.Duration
-Street.Lights.OneOut$Rate.Homicide.After          <- 30*Street.Lights.OneOut$Homicide.After         /Street.Lights.OneOut$After.Period.Duration
-Street.Lights.OneOut$Rate.SidewalkCrimes.After    <- 30*Street.Lights.OneOut$Crimes.Sidewalk.After  /Street.Lights.OneOut$After.Period.Duration
-Street.Lights.OneOut$Rate.StreetCrimes.After      <- 30*Street.Lights.OneOut$Crimes.Street.After    /Street.Lights.OneOut$After.Period.Duration
-Street.Lights.OneOut$Rate.AllCrimes.After         <- 30*Street.Lights.OneOut$Crimes.All.After       /Street.Lights.OneOut$After.Period.Duration
-
-Street.Lights.AllOut$Rate.Thefts.After            <- 30*Street.Lights.AllOut$Thefts.After           /Street.Lights.AllOut$After.Period.Duration
-Street.Lights.AllOut$Rate.Narcotics.After         <- 30*Street.Lights.AllOut$Narcotics.After        /Street.Lights.AllOut$After.Period.Duration
-Street.Lights.AllOut$Rate.Battery.After           <- 30*Street.Lights.AllOut$Battery.After          /Street.Lights.AllOut$After.Period.Duration
-Street.Lights.AllOut$Rate.CriminalDamage.After    <- 30*Street.Lights.AllOut$CriminalDamage.After   /Street.Lights.AllOut$After.Period.Duration
-Street.Lights.AllOut$Rate.MotorVehicleTheft.After <- 30*Street.Lights.AllOut$MotorVehicleTheft.After/Street.Lights.AllOut$After.Period.Duration
-Street.Lights.AllOut$Rate.Robbery.After           <- 30*Street.Lights.AllOut$Robbery.After          /Street.Lights.AllOut$After.Period.Duration
-Street.Lights.AllOut$Rate.Assault.After           <- 30*Street.Lights.AllOut$Assault.After          /Street.Lights.AllOut$After.Period.Duration
-Street.Lights.AllOut$Rate.Burglary.After          <- 30*Street.Lights.AllOut$Burglary.After         /Street.Lights.AllOut$After.Period.Duration
-Street.Lights.AllOut$Rate.Homicide.After          <- 30*Street.Lights.AllOut$Homicide.After         /Street.Lights.AllOut$After.Period.Duration
-Street.Lights.AllOut$Rate.SidewalkCrimes.After    <- 30*Street.Lights.AllOut$Crimes.Sidewalk.After  /Street.Lights.AllOut$After.Period.Duration
-Street.Lights.AllOut$Rate.StreetCrimes.After      <- 30*Street.Lights.AllOut$Crimes.Street.After    /Street.Lights.AllOut$After.Period.Duration
-Street.Lights.AllOut$Rate.AllCrimes.After         <- 30*Street.Lights.AllOut$Crimes.All.After       /Street.Lights.AllOut$After.Period.Duration
 
 
 #Create Summary Tables
@@ -385,7 +264,7 @@ Alley.Lights.CommArea$Rate.Narcotics.After          <- Alley.Lights.CommArea$Nar
 Alley.Lights.CommArea$Rate.Battery.After            <- Alley.Lights.CommArea$Battery.After.sum           /Alley.Lights.CommArea$After.Period.Duration.sum
 Alley.Lights.CommArea$Rate.CriminalDamage.After     <- Alley.Lights.CommArea$CriminalDamage.After.sum    /Alley.Lights.CommArea$After.Period.Duration.sum
 Alley.Lights.CommArea$Rate.MotorVehicleTheft.After  <- Alley.Lights.CommArea$MotorVehicleTheft.After.sum /Alley.Lights.CommArea$After.Period.Duration.sum
-Alley.Lights.CommArea$Rate.Robbery.After            <- Alley.Lights.CommArea$Robbery.sum                 /Alley.Lights.CommArea$After.Period.Duration.sum
+Alley.Lights.CommArea$Rate.Robbery.After            <- Alley.Lights.CommArea$Robbery.After.sum           /Alley.Lights.CommArea$After.Period.Duration.sum
 Alley.Lights.CommArea$Rate.Assault.After            <- Alley.Lights.CommArea$Assault.After.sum           /Alley.Lights.CommArea$After.Period.Duration.sum
 Alley.Lights.CommArea$Rate.Burglary.After           <- Alley.Lights.CommArea$Burglary.After.sum          /Alley.Lights.CommArea$After.Period.Duration.sum
 Alley.Lights.CommArea$Rate.Homicide.After           <- Alley.Lights.CommArea$Homicide.After.sum          /Alley.Lights.CommArea$After.Period.Duration.sum
@@ -446,7 +325,7 @@ Street.Lights.OneOut.CommArea$Rate.Narcotics.After          <- Street.Lights.One
 Street.Lights.OneOut.CommArea$Rate.Battery.After            <- Street.Lights.OneOut.CommArea$Battery.After.sum           /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
 Street.Lights.OneOut.CommArea$Rate.CriminalDamage.After     <- Street.Lights.OneOut.CommArea$CriminalDamage.After.sum    /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
 Street.Lights.OneOut.CommArea$Rate.MotorVehicleTheft.After  <- Street.Lights.OneOut.CommArea$MotorVehicleTheft.After.sum /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
-Street.Lights.OneOut.CommArea$Rate.Robbery.After            <- Street.Lights.OneOut.CommArea$Robbery.sum                 /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
+Street.Lights.OneOut.CommArea$Rate.Robbery.After            <- Street.Lights.OneOut.CommArea$Robbery.After.sum           /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
 Street.Lights.OneOut.CommArea$Rate.Assault.After            <- Street.Lights.OneOut.CommArea$Assault.After.sum           /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
 Street.Lights.OneOut.CommArea$Rate.Burglary.After           <- Street.Lights.OneOut.CommArea$Burglary.After.sum          /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
 Street.Lights.OneOut.CommArea$Rate.Homicide.After           <- Street.Lights.OneOut.CommArea$Homicide.After.sum          /Street.Lights.OneOut.CommArea$After.Period.Duration.sum
@@ -507,7 +386,7 @@ Street.Lights.AllOut.CommArea$Rate.Narcotics.After          <- Street.Lights.All
 Street.Lights.AllOut.CommArea$Rate.Battery.After            <- Street.Lights.AllOut.CommArea$Battery.After.sum           /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
 Street.Lights.AllOut.CommArea$Rate.CriminalDamage.After     <- Street.Lights.AllOut.CommArea$CriminalDamage.After.sum    /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
 Street.Lights.AllOut.CommArea$Rate.MotorVehicleTheft.After  <- Street.Lights.AllOut.CommArea$MotorVehicleTheft.After.sum /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
-Street.Lights.AllOut.CommArea$Rate.Robbery.After            <- Street.Lights.AllOut.CommArea$Robbery.sum                 /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
+Street.Lights.AllOut.CommArea$Rate.Robbery.After            <- Street.Lights.AllOut.CommArea$Robbery.After.sum           /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
 Street.Lights.AllOut.CommArea$Rate.Assault.After            <- Street.Lights.AllOut.CommArea$Assault.After.sum           /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
 Street.Lights.AllOut.CommArea$Rate.Burglary.After           <- Street.Lights.AllOut.CommArea$Burglary.After.sum          /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
 Street.Lights.AllOut.CommArea$Rate.Homicide.After           <- Street.Lights.AllOut.CommArea$Homicide.After.sum          /Street.Lights.AllOut.CommArea$After.Period.Duration.sum
@@ -541,6 +420,276 @@ Street.Lights.AllOut.CommArea$PctDiff.Robbery            <- 100*Street.Lights.Al
 Street.Lights.AllOut.CommArea$PctDiff.Assault            <- 100*Street.Lights.AllOut.CommArea$AbsDiff.Assault          / Street.Lights.AllOut.CommArea$Rate.Assault.BeforeAfter
 Street.Lights.AllOut.CommArea$PctDiff.Burglary           <- 100*Street.Lights.AllOut.CommArea$AbsDiff.Burglary         / Street.Lights.AllOut.CommArea$Rate.Burglary.BeforeAfter
 Street.Lights.AllOut.CommArea$PctDiff.Homicide           <- 100*Street.Lights.AllOut.CommArea$AbsDiff.Homicide         / Street.Lights.AllOut.CommArea$Rate.Homicide.BeforeAfter
+
+
+#Create Datasets Formatted for Poisson Modeling and Estimation of SE's
+Alley.Lights.Pois <- Alley.Lights[rep(seq(nrow(Alley.Lights)),3),]
+Alley.Lights.Pois <- Alley.Lights.Pois[order(Alley.Lights.Pois$Service.Request.No),]
+Alley.Lights.Pois$Time              <- rep(c("BEFORE", "DURING", "AFTER"), nrow(Alley.Lights))
+Alley.Lights.Pois$AllCrimes         <- numeric(nrow(Alley.Lights.Pois))
+Alley.Lights.Pois$Thefts            <- numeric(nrow(Alley.Lights.Pois))
+Alley.Lights.Pois$Narcotics         <- numeric(nrow(Alley.Lights.Pois))
+Alley.Lights.Pois$Battery           <- numeric(nrow(Alley.Lights.Pois))
+Alley.Lights.Pois$CriminalDamage    <- numeric(nrow(Alley.Lights.Pois))
+Alley.Lights.Pois$MotorVehicleTheft <- numeric(nrow(Alley.Lights.Pois))
+Alley.Lights.Pois$Robbery           <- numeric(nrow(Alley.Lights.Pois))
+Alley.Lights.Pois$Assault           <- numeric(nrow(Alley.Lights.Pois))
+Alley.Lights.Pois$Burglary          <- numeric(nrow(Alley.Lights.Pois))
+Alley.Lights.Pois$Homicide          <- numeric(nrow(Alley.Lights.Pois))
+Alley.Lights.Pois$Duration          <- numeric(nrow(Alley.Lights.Pois))
+Alley.Lights.Pois$AllCrimes[which(Alley.Lights.Pois$Time=="BEFORE")]         <- Alley.Lights.Pois$Crimes.All.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
+Alley.Lights.Pois$Thefts[which(Alley.Lights.Pois$Time=="BEFORE")]            <- Alley.Lights.Pois$Thefts.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
+Alley.Lights.Pois$Narcotics[which(Alley.Lights.Pois$Time=="BEFORE")]         <- Alley.Lights.Pois$Narcotics.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
+Alley.Lights.Pois$Battery[which(Alley.Lights.Pois$Time=="BEFORE")]           <- Alley.Lights.Pois$Battery.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
+Alley.Lights.Pois$CriminalDamage[which(Alley.Lights.Pois$Time=="BEFORE")]    <- Alley.Lights.Pois$CriminalDamage.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
+Alley.Lights.Pois$MotorVehicleTheft[which(Alley.Lights.Pois$Time=="BEFORE")] <- Alley.Lights.Pois$MotorVehicleTheft.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
+Alley.Lights.Pois$Robbery[which(Alley.Lights.Pois$Time=="BEFORE")]           <- Alley.Lights.Pois$Robbery.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
+Alley.Lights.Pois$Assault[which(Alley.Lights.Pois$Time=="BEFORE")]           <- Alley.Lights.Pois$Assault.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
+Alley.Lights.Pois$Burglary[which(Alley.Lights.Pois$Time=="BEFORE")]          <- Alley.Lights.Pois$Burglary.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
+Alley.Lights.Pois$Homicide[which(Alley.Lights.Pois$Time=="BEFORE")]          <- Alley.Lights.Pois$Homicide.Before[which(Alley.Lights.Pois$Time=="BEFORE")]
+Alley.Lights.Pois$Duration[which(Alley.Lights.Pois$Time=="BEFORE")]          <- rep(30, length(which(Alley.Lights.Pois$Time=="BEFORE")))
+
+Alley.Lights.Pois$AllCrimes[which(Alley.Lights.Pois$Time=="DURING")]         <- Alley.Lights.Pois$Crimes.All.During[which(Alley.Lights.Pois$Time=="DURING")]
+Alley.Lights.Pois$Thefts[which(Alley.Lights.Pois$Time=="DURING")]            <- Alley.Lights.Pois$Thefts.During[which(Alley.Lights.Pois$Time=="DURING")]
+Alley.Lights.Pois$Narcotics[which(Alley.Lights.Pois$Time=="DURING")]         <- Alley.Lights.Pois$Narcotics.During[which(Alley.Lights.Pois$Time=="DURING")]
+Alley.Lights.Pois$Battery[which(Alley.Lights.Pois$Time=="DURING")]           <- Alley.Lights.Pois$Battery.During[which(Alley.Lights.Pois$Time=="DURING")]
+Alley.Lights.Pois$CriminalDamage[which(Alley.Lights.Pois$Time=="DURING")]    <- Alley.Lights.Pois$CriminalDamage.During[which(Alley.Lights.Pois$Time=="DURING")]
+Alley.Lights.Pois$MotorVehicleTheft[which(Alley.Lights.Pois$Time=="DURING")] <- Alley.Lights.Pois$MotorVehicleTheft.During[which(Alley.Lights.Pois$Time=="DURING")]
+Alley.Lights.Pois$Robbery[which(Alley.Lights.Pois$Time=="DURING")]           <- Alley.Lights.Pois$Robbery.During[which(Alley.Lights.Pois$Time=="DURING")]
+Alley.Lights.Pois$Assault[which(Alley.Lights.Pois$Time=="DURING")]           <- Alley.Lights.Pois$Assault.During[which(Alley.Lights.Pois$Time=="DURING")]
+Alley.Lights.Pois$Burglary[which(Alley.Lights.Pois$Time=="DURING")]          <- Alley.Lights.Pois$Burglary.During[which(Alley.Lights.Pois$Time=="DURING")]
+Alley.Lights.Pois$Homicide[which(Alley.Lights.Pois$Time=="DURING")]          <- Alley.Lights.Pois$Homicide.During[which(Alley.Lights.Pois$Time=="DURING")]
+Alley.Lights.Pois$Duration[which(Alley.Lights.Pois$Time=="DURING")]          <- Alley.Lights.Pois$OutageDuration[which(Alley.Lights.Pois$Time=="DURING")]
+
+Alley.Lights.Pois$AllCrimes[which(Alley.Lights.Pois$Time=="AFTER")]         <- Alley.Lights.Pois$Crimes.All.After[which(Alley.Lights.Pois$Time=="AFTER")]
+Alley.Lights.Pois$Thefts[which(Alley.Lights.Pois$Time=="AFTER")]            <- Alley.Lights.Pois$Thefts.After[which(Alley.Lights.Pois$Time=="AFTER")]
+Alley.Lights.Pois$Narcotics[which(Alley.Lights.Pois$Time=="AFTER")]         <- Alley.Lights.Pois$Narcotics.After[which(Alley.Lights.Pois$Time=="AFTER")]
+Alley.Lights.Pois$Battery[which(Alley.Lights.Pois$Time=="AFTER")]           <- Alley.Lights.Pois$Battery.After[which(Alley.Lights.Pois$Time=="AFTER")]
+Alley.Lights.Pois$CriminalDamage[which(Alley.Lights.Pois$Time=="AFTER")]    <- Alley.Lights.Pois$CriminalDamage.After[which(Alley.Lights.Pois$Time=="AFTER")]
+Alley.Lights.Pois$MotorVehicleTheft[which(Alley.Lights.Pois$Time=="AFTER")] <- Alley.Lights.Pois$MotorVehicleTheft.After[which(Alley.Lights.Pois$Time=="AFTER")]
+Alley.Lights.Pois$Robbery[which(Alley.Lights.Pois$Time=="AFTER")]           <- Alley.Lights.Pois$Robbery.After[which(Alley.Lights.Pois$Time=="AFTER")]
+Alley.Lights.Pois$Assault[which(Alley.Lights.Pois$Time=="AFTER")]           <- Alley.Lights.Pois$Assault.After[which(Alley.Lights.Pois$Time=="AFTER")]
+Alley.Lights.Pois$Burglary[which(Alley.Lights.Pois$Time=="AFTER")]          <- Alley.Lights.Pois$Burglary.After[which(Alley.Lights.Pois$Time=="AFTER")]
+Alley.Lights.Pois$Homicide[which(Alley.Lights.Pois$Time=="AFTER")]          <- Alley.Lights.Pois$Homicide.After[which(Alley.Lights.Pois$Time=="AFTER")]
+Alley.Lights.Pois$Duration[which(Alley.Lights.Pois$Time=="AFTER")]          <- Alley.Lights.Pois$After.Period.Duration[which(Alley.Lights.Pois$Time=="AFTER")]
+
+Alley.Lights.Pois <- Alley.Lights.Pois[,c("Type", "Service.Request.No","DateCreated", "DateCompleted", "Location", "Outcome", "x_coord", "y_coord", "zip_code", "ward",
+                                           "police_district", "community_area", "Time", "AllCrimes", "Thefts", "Narcotics", "Battery", "CriminalDamage", 
+                                           "MotorVehicleTheft", "Robbery", "Assault", "Burglary", "Homicide", "Duration")]
+Alley.Lights.Pois$OutageInd <- numeric(nrow(Alley.Lights.Pois))
+Alley.Lights.Pois$OutageInd[which(Alley.Lights.Pois$Time=="DURING")] <- rep(1, length(which(Alley.Lights.Pois$Time=="DURING")))
+
+Fit.Alley.AllCrimes         <- glm(AllCrimes         ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
+Fit.Alley.Thefts            <- glm(Thefts            ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
+Fit.Alley.Narcotics         <- glm(Narcotics         ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
+Fit.Alley.Battery           <- glm(Battery           ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
+Fit.Alley.CriminalDamage    <- glm(CriminalDamage    ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
+Fit.Alley.MotorVehicleTheft <- glm(MotorVehicleTheft ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
+Fit.Alley.Robbery           <- glm(Robbery           ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
+Fit.Alley.Assault           <- glm(Assault           ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
+Fit.Alley.Burglary          <- glm(Burglary          ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
+Fit.Alley.Homicide          <- glm(Homicide          ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Alley.Lights.Pois)
+Fit.Alley.AllCrimes$coefficients[2]
+summary(Fit.Alley.AllCrimes)$coef[2,4]
+Fit.Alley.Thefts$coefficients[2]
+summary(Fit.Alley.Thefts)$coef[2,4]
+Fit.Alley.Narcotics$coefficients[2]
+summary(Fit.Alley.Narcotics)$coef[2,4]
+Fit.Alley.Battery$coefficients[2]
+summary(Fit.Alley.Battery)$coef[2,4]
+Fit.Alley.CriminalDamage$coefficients[2]
+summary(Fit.Alley.CriminalDamage)$coef[2,4]
+Fit.Alley.MotorVehicleTheft$coefficients[2]
+summary(Fit.Alley.MotorVehicleTheft)$coef[2,4]
+Fit.Alley.Robbery$coefficients[2]
+summary(Fit.Alley.Robbery)$coef[2,4]
+Fit.Alley.Assault$coefficients[2]
+summary(Fit.Alley.Assault)$coef[2,4]
+Fit.Alley.Burglary$coefficients[2]
+summary(Fit.Alley.Burglary)$coef[2,4]
+Fit.Alley.Homicide$coefficients[2]
+summary(Fit.Alley.Homicide)$coef[2,4]
+
+
+
+Street.Lights.OneOut.Pois <- Street.Lights.OneOut[rep(seq(nrow(Street.Lights.OneOut)),3),]
+Street.Lights.OneOut.Pois <- Street.Lights.OneOut.Pois[order(Street.Lights.OneOut.Pois$Service.Request.No),]
+Street.Lights.OneOut.Pois$Time              <- rep(c("BEFORE", "DURING", "AFTER"), nrow(Street.Lights.OneOut))
+Street.Lights.OneOut.Pois$AllCrimes         <- numeric(nrow(Street.Lights.OneOut.Pois))
+Street.Lights.OneOut.Pois$Thefts            <- numeric(nrow(Street.Lights.OneOut.Pois))
+Street.Lights.OneOut.Pois$Narcotics         <- numeric(nrow(Street.Lights.OneOut.Pois))
+Street.Lights.OneOut.Pois$Battery           <- numeric(nrow(Street.Lights.OneOut.Pois))
+Street.Lights.OneOut.Pois$CriminalDamage    <- numeric(nrow(Street.Lights.OneOut.Pois))
+Street.Lights.OneOut.Pois$MotorVehicleTheft <- numeric(nrow(Street.Lights.OneOut.Pois))
+Street.Lights.OneOut.Pois$Robbery           <- numeric(nrow(Street.Lights.OneOut.Pois))
+Street.Lights.OneOut.Pois$Assault           <- numeric(nrow(Street.Lights.OneOut.Pois))
+Street.Lights.OneOut.Pois$Burglary          <- numeric(nrow(Street.Lights.OneOut.Pois))
+Street.Lights.OneOut.Pois$Homicide          <- numeric(nrow(Street.Lights.OneOut.Pois))
+Street.Lights.OneOut.Pois$Duration          <- numeric(nrow(Street.Lights.OneOut.Pois))
+Street.Lights.OneOut.Pois$AllCrimes[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]         <- Street.Lights.OneOut.Pois$Crimes.All.Before[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]
+Street.Lights.OneOut.Pois$Thefts[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]            <- Street.Lights.OneOut.Pois$Thefts.Before[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]
+Street.Lights.OneOut.Pois$Narcotics[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]         <- Street.Lights.OneOut.Pois$Narcotics.Before[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]
+Street.Lights.OneOut.Pois$Battery[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]           <- Street.Lights.OneOut.Pois$Battery.Before[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]
+Street.Lights.OneOut.Pois$CriminalDamage[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]    <- Street.Lights.OneOut.Pois$CriminalDamage.Before[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]
+Street.Lights.OneOut.Pois$MotorVehicleTheft[which(Street.Lights.OneOut.Pois$Time=="BEFORE")] <- Street.Lights.OneOut.Pois$MotorVehicleTheft.Before[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]
+Street.Lights.OneOut.Pois$Robbery[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]           <- Street.Lights.OneOut.Pois$Robbery.Before[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]
+Street.Lights.OneOut.Pois$Assault[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]           <- Street.Lights.OneOut.Pois$Assault.Before[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]
+Street.Lights.OneOut.Pois$Burglary[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]          <- Street.Lights.OneOut.Pois$Burglary.Before[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]
+Street.Lights.OneOut.Pois$Homicide[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]          <- Street.Lights.OneOut.Pois$Homicide.Before[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]
+Street.Lights.OneOut.Pois$Duration[which(Street.Lights.OneOut.Pois$Time=="BEFORE")]          <- rep(30, length(which(Street.Lights.OneOut.Pois$Time=="BEFORE")))
+
+Street.Lights.OneOut.Pois$AllCrimes[which(Street.Lights.OneOut.Pois$Time=="DURING")]         <- Street.Lights.OneOut.Pois$Crimes.All.During[which(Street.Lights.OneOut.Pois$Time=="DURING")]
+Street.Lights.OneOut.Pois$Thefts[which(Street.Lights.OneOut.Pois$Time=="DURING")]            <- Street.Lights.OneOut.Pois$Thefts.During[which(Street.Lights.OneOut.Pois$Time=="DURING")]
+Street.Lights.OneOut.Pois$Narcotics[which(Street.Lights.OneOut.Pois$Time=="DURING")]         <- Street.Lights.OneOut.Pois$Narcotics.During[which(Street.Lights.OneOut.Pois$Time=="DURING")]
+Street.Lights.OneOut.Pois$Battery[which(Street.Lights.OneOut.Pois$Time=="DURING")]           <- Street.Lights.OneOut.Pois$Battery.During[which(Street.Lights.OneOut.Pois$Time=="DURING")]
+Street.Lights.OneOut.Pois$CriminalDamage[which(Street.Lights.OneOut.Pois$Time=="DURING")]    <- Street.Lights.OneOut.Pois$CriminalDamage.During[which(Street.Lights.OneOut.Pois$Time=="DURING")]
+Street.Lights.OneOut.Pois$MotorVehicleTheft[which(Street.Lights.OneOut.Pois$Time=="DURING")] <- Street.Lights.OneOut.Pois$MotorVehicleTheft.During[which(Street.Lights.OneOut.Pois$Time=="DURING")]
+Street.Lights.OneOut.Pois$Robbery[which(Street.Lights.OneOut.Pois$Time=="DURING")]           <- Street.Lights.OneOut.Pois$Robbery.During[which(Street.Lights.OneOut.Pois$Time=="DURING")]
+Street.Lights.OneOut.Pois$Assault[which(Street.Lights.OneOut.Pois$Time=="DURING")]           <- Street.Lights.OneOut.Pois$Assault.During[which(Street.Lights.OneOut.Pois$Time=="DURING")]
+Street.Lights.OneOut.Pois$Burglary[which(Street.Lights.OneOut.Pois$Time=="DURING")]          <- Street.Lights.OneOut.Pois$Burglary.During[which(Street.Lights.OneOut.Pois$Time=="DURING")]
+Street.Lights.OneOut.Pois$Homicide[which(Street.Lights.OneOut.Pois$Time=="DURING")]          <- Street.Lights.OneOut.Pois$Homicide.During[which(Street.Lights.OneOut.Pois$Time=="DURING")]
+Street.Lights.OneOut.Pois$Duration[which(Street.Lights.OneOut.Pois$Time=="DURING")]          <- Street.Lights.OneOut.Pois$OutageDuration[which(Street.Lights.OneOut.Pois$Time=="DURING")]
+
+Street.Lights.OneOut.Pois$AllCrimes[which(Street.Lights.OneOut.Pois$Time=="AFTER")]         <- Street.Lights.OneOut.Pois$Crimes.All.After[which(Street.Lights.OneOut.Pois$Time=="AFTER")]
+Street.Lights.OneOut.Pois$Thefts[which(Street.Lights.OneOut.Pois$Time=="AFTER")]            <- Street.Lights.OneOut.Pois$Thefts.After[which(Street.Lights.OneOut.Pois$Time=="AFTER")]
+Street.Lights.OneOut.Pois$Narcotics[which(Street.Lights.OneOut.Pois$Time=="AFTER")]         <- Street.Lights.OneOut.Pois$Narcotics.After[which(Street.Lights.OneOut.Pois$Time=="AFTER")]
+Street.Lights.OneOut.Pois$Battery[which(Street.Lights.OneOut.Pois$Time=="AFTER")]           <- Street.Lights.OneOut.Pois$Battery.After[which(Street.Lights.OneOut.Pois$Time=="AFTER")]
+Street.Lights.OneOut.Pois$CriminalDamage[which(Street.Lights.OneOut.Pois$Time=="AFTER")]    <- Street.Lights.OneOut.Pois$CriminalDamage.After[which(Street.Lights.OneOut.Pois$Time=="AFTER")]
+Street.Lights.OneOut.Pois$MotorVehicleTheft[which(Street.Lights.OneOut.Pois$Time=="AFTER")] <- Street.Lights.OneOut.Pois$MotorVehicleTheft.After[which(Street.Lights.OneOut.Pois$Time=="AFTER")]
+Street.Lights.OneOut.Pois$Robbery[which(Street.Lights.OneOut.Pois$Time=="AFTER")]           <- Street.Lights.OneOut.Pois$Robbery.After[which(Street.Lights.OneOut.Pois$Time=="AFTER")]
+Street.Lights.OneOut.Pois$Assault[which(Street.Lights.OneOut.Pois$Time=="AFTER")]           <- Street.Lights.OneOut.Pois$Assault.After[which(Street.Lights.OneOut.Pois$Time=="AFTER")]
+Street.Lights.OneOut.Pois$Burglary[which(Street.Lights.OneOut.Pois$Time=="AFTER")]          <- Street.Lights.OneOut.Pois$Burglary.After[which(Street.Lights.OneOut.Pois$Time=="AFTER")]
+Street.Lights.OneOut.Pois$Homicide[which(Street.Lights.OneOut.Pois$Time=="AFTER")]          <- Street.Lights.OneOut.Pois$Homicide.After[which(Street.Lights.OneOut.Pois$Time=="AFTER")]
+Street.Lights.OneOut.Pois$Duration[which(Street.Lights.OneOut.Pois$Time=="AFTER")]          <- Street.Lights.OneOut.Pois$After.Period.Duration[which(Street.Lights.OneOut.Pois$Time=="AFTER")]
+
+Street.Lights.OneOut.Pois <- Street.Lights.OneOut.Pois[,c("Type", "Service.Request.No","DateCreated", "DateCompleted", "Location", "Outcome", "x_coord", "y_coord", "zip_code", "ward",
+                                          "police_district", "community_area", "Time", "AllCrimes", "Thefts", "Narcotics", "Battery", "CriminalDamage", 
+                                          "MotorVehicleTheft", "Robbery", "Assault", "Burglary", "Homicide", "Duration")]
+Street.Lights.OneOut.Pois$OutageInd <- numeric(nrow(Street.Lights.OneOut.Pois))
+Street.Lights.OneOut.Pois$OutageInd[which(Street.Lights.OneOut.Pois$Time=="DURING")] <- rep(1, length(which(Street.Lights.OneOut.Pois$Time=="DURING")))
+
+Fit.OneOut.AllCrimes         <- glm(AllCrimes         ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
+Fit.OneOut.Thefts            <- glm(Thefts            ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
+Fit.OneOut.Narcotics         <- glm(Narcotics         ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
+Fit.OneOut.Battery           <- glm(Battery           ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
+Fit.OneOut.CriminalDamage    <- glm(CriminalDamage    ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
+Fit.OneOut.MotorVehicleTheft <- glm(MotorVehicleTheft ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
+Fit.OneOut.Robbery           <- glm(Robbery           ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
+Fit.OneOut.Assault           <- glm(Assault           ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
+Fit.OneOut.Burglary          <- glm(Burglary          ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
+Fit.OneOut.Homicide          <- glm(Homicide          ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.OneOut.Pois)
+Fit.OneOut.AllCrimes$coefficients[2]
+summary(Fit.OneOut.AllCrimes)$coef[2,4]
+Fit.OneOut.Thefts$coefficients[2]
+summary(Fit.OneOut.Thefts)$coef[2,4]
+Fit.OneOut.Narcotics$coefficients[2]
+summary(Fit.OneOut.Narcotics)$coef[2,4]
+Fit.OneOut.Battery$coefficients[2]
+summary(Fit.OneOut.Battery)$coef[2,4]
+Fit.OneOut.CriminalDamage$coefficients[2]
+summary(Fit.OneOut.CriminalDamage)$coef[2,4]
+Fit.OneOut.MotorVehicleTheft$coefficients[2]
+summary(Fit.OneOut.MotorVehicleTheft)$coef[2,4]
+Fit.OneOut.Robbery$coefficients[2]
+summary(Fit.OneOut.Robbery)$coef[2,4]
+Fit.OneOut.Assault$coefficients[2]
+summary(Fit.OneOut.Assault)$coef[2,4]
+Fit.OneOut.Burglary$coefficients[2]
+summary(Fit.OneOut.Burglary)$coef[2,4]
+Fit.OneOut.Homicide$coefficients[2]
+summary(Fit.OneOut.Homicide)$coef[2,4]
+
+
+
+Street.Lights.AllOut.Pois <- Street.Lights.AllOut[rep(seq(nrow(Street.Lights.AllOut)),3),]
+Street.Lights.AllOut.Pois <- Street.Lights.AllOut.Pois[order(Street.Lights.AllOut.Pois$Service.Request.No),]
+Street.Lights.AllOut.Pois$Time              <- rep(c("BEFORE", "DURING", "AFTER"), nrow(Street.Lights.AllOut))
+Street.Lights.AllOut.Pois$AllCrimes         <- numeric(nrow(Street.Lights.AllOut.Pois))
+Street.Lights.AllOut.Pois$Thefts            <- numeric(nrow(Street.Lights.AllOut.Pois))
+Street.Lights.AllOut.Pois$Narcotics         <- numeric(nrow(Street.Lights.AllOut.Pois))
+Street.Lights.AllOut.Pois$Battery           <- numeric(nrow(Street.Lights.AllOut.Pois))
+Street.Lights.AllOut.Pois$CriminalDamage    <- numeric(nrow(Street.Lights.AllOut.Pois))
+Street.Lights.AllOut.Pois$MotorVehicleTheft <- numeric(nrow(Street.Lights.AllOut.Pois))
+Street.Lights.AllOut.Pois$Robbery           <- numeric(nrow(Street.Lights.AllOut.Pois))
+Street.Lights.AllOut.Pois$Assault           <- numeric(nrow(Street.Lights.AllOut.Pois))
+Street.Lights.AllOut.Pois$Burglary          <- numeric(nrow(Street.Lights.AllOut.Pois))
+Street.Lights.AllOut.Pois$Homicide          <- numeric(nrow(Street.Lights.AllOut.Pois))
+Street.Lights.AllOut.Pois$Duration          <- numeric(nrow(Street.Lights.AllOut.Pois))
+Street.Lights.AllOut.Pois$AllCrimes[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]         <- Street.Lights.AllOut.Pois$Crimes.All.Before[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]
+Street.Lights.AllOut.Pois$Thefts[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]            <- Street.Lights.AllOut.Pois$Thefts.Before[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]
+Street.Lights.AllOut.Pois$Narcotics[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]         <- Street.Lights.AllOut.Pois$Narcotics.Before[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]
+Street.Lights.AllOut.Pois$Battery[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]           <- Street.Lights.AllOut.Pois$Battery.Before[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]
+Street.Lights.AllOut.Pois$CriminalDamage[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]    <- Street.Lights.AllOut.Pois$CriminalDamage.Before[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]
+Street.Lights.AllOut.Pois$MotorVehicleTheft[which(Street.Lights.AllOut.Pois$Time=="BEFORE")] <- Street.Lights.AllOut.Pois$MotorVehicleTheft.Before[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]
+Street.Lights.AllOut.Pois$Robbery[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]           <- Street.Lights.AllOut.Pois$Robbery.Before[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]
+Street.Lights.AllOut.Pois$Assault[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]           <- Street.Lights.AllOut.Pois$Assault.Before[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]
+Street.Lights.AllOut.Pois$Burglary[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]          <- Street.Lights.AllOut.Pois$Burglary.Before[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]
+Street.Lights.AllOut.Pois$Homicide[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]          <- Street.Lights.AllOut.Pois$Homicide.Before[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]
+Street.Lights.AllOut.Pois$Duration[which(Street.Lights.AllOut.Pois$Time=="BEFORE")]          <- rep(30, length(which(Street.Lights.AllOut.Pois$Time=="BEFORE")))
+
+Street.Lights.AllOut.Pois$AllCrimes[which(Street.Lights.AllOut.Pois$Time=="DURING")]         <- Street.Lights.AllOut.Pois$Crimes.All.During[which(Street.Lights.AllOut.Pois$Time=="DURING")]
+Street.Lights.AllOut.Pois$Thefts[which(Street.Lights.AllOut.Pois$Time=="DURING")]            <- Street.Lights.AllOut.Pois$Thefts.During[which(Street.Lights.AllOut.Pois$Time=="DURING")]
+Street.Lights.AllOut.Pois$Narcotics[which(Street.Lights.AllOut.Pois$Time=="DURING")]         <- Street.Lights.AllOut.Pois$Narcotics.During[which(Street.Lights.AllOut.Pois$Time=="DURING")]
+Street.Lights.AllOut.Pois$Battery[which(Street.Lights.AllOut.Pois$Time=="DURING")]           <- Street.Lights.AllOut.Pois$Battery.During[which(Street.Lights.AllOut.Pois$Time=="DURING")]
+Street.Lights.AllOut.Pois$CriminalDamage[which(Street.Lights.AllOut.Pois$Time=="DURING")]    <- Street.Lights.AllOut.Pois$CriminalDamage.During[which(Street.Lights.AllOut.Pois$Time=="DURING")]
+Street.Lights.AllOut.Pois$MotorVehicleTheft[which(Street.Lights.AllOut.Pois$Time=="DURING")] <- Street.Lights.AllOut.Pois$MotorVehicleTheft.During[which(Street.Lights.AllOut.Pois$Time=="DURING")]
+Street.Lights.AllOut.Pois$Robbery[which(Street.Lights.AllOut.Pois$Time=="DURING")]           <- Street.Lights.AllOut.Pois$Robbery.During[which(Street.Lights.AllOut.Pois$Time=="DURING")]
+Street.Lights.AllOut.Pois$Assault[which(Street.Lights.AllOut.Pois$Time=="DURING")]           <- Street.Lights.AllOut.Pois$Assault.During[which(Street.Lights.AllOut.Pois$Time=="DURING")]
+Street.Lights.AllOut.Pois$Burglary[which(Street.Lights.AllOut.Pois$Time=="DURING")]          <- Street.Lights.AllOut.Pois$Burglary.During[which(Street.Lights.AllOut.Pois$Time=="DURING")]
+Street.Lights.AllOut.Pois$Homicide[which(Street.Lights.AllOut.Pois$Time=="DURING")]          <- Street.Lights.AllOut.Pois$Homicide.During[which(Street.Lights.AllOut.Pois$Time=="DURING")]
+Street.Lights.AllOut.Pois$Duration[which(Street.Lights.AllOut.Pois$Time=="DURING")]          <- Street.Lights.AllOut.Pois$OutageDuration[which(Street.Lights.AllOut.Pois$Time=="DURING")]
+
+Street.Lights.AllOut.Pois$AllCrimes[which(Street.Lights.AllOut.Pois$Time=="AFTER")]         <- Street.Lights.AllOut.Pois$Crimes.All.After[which(Street.Lights.AllOut.Pois$Time=="AFTER")]
+Street.Lights.AllOut.Pois$Thefts[which(Street.Lights.AllOut.Pois$Time=="AFTER")]            <- Street.Lights.AllOut.Pois$Thefts.After[which(Street.Lights.AllOut.Pois$Time=="AFTER")]
+Street.Lights.AllOut.Pois$Narcotics[which(Street.Lights.AllOut.Pois$Time=="AFTER")]         <- Street.Lights.AllOut.Pois$Narcotics.After[which(Street.Lights.AllOut.Pois$Time=="AFTER")]
+Street.Lights.AllOut.Pois$Battery[which(Street.Lights.AllOut.Pois$Time=="AFTER")]           <- Street.Lights.AllOut.Pois$Battery.After[which(Street.Lights.AllOut.Pois$Time=="AFTER")]
+Street.Lights.AllOut.Pois$CriminalDamage[which(Street.Lights.AllOut.Pois$Time=="AFTER")]    <- Street.Lights.AllOut.Pois$CriminalDamage.After[which(Street.Lights.AllOut.Pois$Time=="AFTER")]
+Street.Lights.AllOut.Pois$MotorVehicleTheft[which(Street.Lights.AllOut.Pois$Time=="AFTER")] <- Street.Lights.AllOut.Pois$MotorVehicleTheft.After[which(Street.Lights.AllOut.Pois$Time=="AFTER")]
+Street.Lights.AllOut.Pois$Robbery[which(Street.Lights.AllOut.Pois$Time=="AFTER")]           <- Street.Lights.AllOut.Pois$Robbery.After[which(Street.Lights.AllOut.Pois$Time=="AFTER")]
+Street.Lights.AllOut.Pois$Assault[which(Street.Lights.AllOut.Pois$Time=="AFTER")]           <- Street.Lights.AllOut.Pois$Assault.After[which(Street.Lights.AllOut.Pois$Time=="AFTER")]
+Street.Lights.AllOut.Pois$Burglary[which(Street.Lights.AllOut.Pois$Time=="AFTER")]          <- Street.Lights.AllOut.Pois$Burglary.After[which(Street.Lights.AllOut.Pois$Time=="AFTER")]
+Street.Lights.AllOut.Pois$Homicide[which(Street.Lights.AllOut.Pois$Time=="AFTER")]          <- Street.Lights.AllOut.Pois$Homicide.After[which(Street.Lights.AllOut.Pois$Time=="AFTER")]
+Street.Lights.AllOut.Pois$Duration[which(Street.Lights.AllOut.Pois$Time=="AFTER")]          <- Street.Lights.AllOut.Pois$After.Period.Duration[which(Street.Lights.AllOut.Pois$Time=="AFTER")]
+
+Street.Lights.AllOut.Pois <- Street.Lights.AllOut.Pois[,c("Type", "Service.Request.No","DateCreated", "DateCompleted", "Location", "Outcome", "x_coord", "y_coord", "zip_code", "ward",
+                                                          "police_district", "community_area", "Time", "AllCrimes", "Thefts", "Narcotics", "Battery", "CriminalDamage", 
+                                                          "MotorVehicleTheft", "Robbery", "Assault", "Burglary", "Homicide", "Duration")]
+Street.Lights.AllOut.Pois$OutageInd <- numeric(nrow(Street.Lights.AllOut.Pois))
+Street.Lights.AllOut.Pois$OutageInd[which(Street.Lights.AllOut.Pois$Time=="DURING")] <- rep(1, length(which(Street.Lights.AllOut.Pois$Time=="DURING")))
+
+Fit.AllOut.AllCrimes         <- glm(AllCrimes         ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
+Fit.AllOut.Thefts            <- glm(Thefts            ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
+Fit.AllOut.Narcotics         <- glm(Narcotics         ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
+Fit.AllOut.Battery           <- glm(Battery           ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
+Fit.AllOut.CriminalDamage    <- glm(CriminalDamage    ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
+Fit.AllOut.MotorVehicleTheft <- glm(MotorVehicleTheft ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
+Fit.AllOut.Robbery           <- glm(Robbery           ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
+Fit.AllOut.Assault           <- glm(Assault           ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
+Fit.AllOut.Burglary          <- glm(Burglary          ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
+Fit.AllOut.Homicide          <- glm(Homicide          ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=Street.Lights.AllOut.Pois)
+Fit.AllOut.AllCrimes$coefficients[2]
+summary(Fit.AllOut.AllCrimes)$coef[2,4]
+Fit.AllOut.Thefts$coefficients[2]
+summary(Fit.AllOut.Thefts)$coef[2,4]
+Fit.AllOut.Narcotics$coefficients[2]
+summary(Fit.AllOut.Narcotics)$coef[2,4]
+Fit.AllOut.Battery$coefficients[2]
+summary(Fit.AllOut.Battery)$coef[2,4]
+Fit.AllOut.CriminalDamage$coefficients[2]
+summary(Fit.AllOut.CriminalDamage)$coef[2,4]
+Fit.AllOut.MotorVehicleTheft$coefficients[2]
+summary(Fit.AllOut.MotorVehicleTheft)$coef[2,4]
+Fit.AllOut.Robbery$coefficients[2]
+summary(Fit.AllOut.Robbery)$coef[2,4]
+Fit.AllOut.Assault$coefficients[2]
+summary(Fit.AllOut.Assault)$coef[2,4]
+Fit.AllOut.Burglary$coefficients[2]
+summary(Fit.AllOut.Burglary)$coef[2,4]
+Fit.AllOut.Homicide$coefficients[2]
+summary(Fit.AllOut.Homicide)$coef[2,4]
+
+
+
 
 
 

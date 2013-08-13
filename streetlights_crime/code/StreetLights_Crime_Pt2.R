@@ -2130,20 +2130,30 @@ Summary.Table.AllOut.Mon$DecStar[which(Summary.Table.AllOut.Mon$DecPValue<0.05 &
 
 
                                             
- 
-                                                                                                                                             
+                                                                                                                                           
 Summary.Table.Alley.Mon[,-c(3,6,9,12,15,18,21,24,27,30,33,36)]   <- round(Summary.Table.Alley.Mon[,-c(3,6,9,12,15,18,21,24,27,30,33,36)] , digits=3)                                                                                                                                              
 Summary.Table.OneOut.Mon[,-c(3,6,9,12,15,18,21,24,27,30,33,36)]  <- round(Summary.Table.OneOut.Mon[,-c(3,6,9,12,15,18,21,24,27,30,33,36)] , digits=3)                                                                                                                                              
 Summary.Table.AllOut.Mon[,-c(3,6,9,12,15,18,21,24,27,30,33,36)]  <- round(Summary.Table.AllOut.Mon[,-c(3,6,9,12,15,18,21,24,27,30,33,36)] , digits=3)                                                                                                                                              
 
-## ESTIMATES RATES AND STANDARD ERRORS BY COMMUNITY AREA
-
-#for (i in 1:77) {
-#  paste("Fit.AllOut.AllCrimes.CA", i, sep = "") <- glm(AllCrimes ~ offset(log(Duration)) + OutageInd, family=poisson(link=log), data=subset(Street.Lights.AllOut.Pois, community_area==i)) 
-
-#}
 
 
+# Export Tables for GIS
+Alley.Lights.CommArea$PctDiff.AllCrimes[which(Alley.Lights.CommArea$Crimes.All.During.sum                               <8)] <- rep("NA", length(which(Alley.Lights.CommArea$Crimes.All.During.sum               <8)))
+Alley.Lights.CommArea$PctDiff.Thefts[which(Alley.Lights.CommArea$Thefts.During.sum                                      <8)] <- rep("NA", length(which(Alley.Lights.CommArea$Thefts.During.sum                   <8)))
+Alley.Lights.CommArea$PctDiff.Robbery[which(Alley.Lights.CommArea$Robbery.During.sum                                    <8)] <- rep("NA", length(which(Alley.Lights.CommArea$Robbery.During.sum                  <8)))
+Street.Lights.OneOut.CommArea$PctDiff.AllCrimes[which(Street.Lights.OneOut.CommArea$Crimes.All.During.sum               <8)] <- rep("NA", length(which(Street.Lights.OneOut.CommArea$Crimes.All.During.sum       <8)))
+Street.Lights.OneOut.CommArea$PctDiff.Thefts[which(Street.Lights.OneOut.CommArea$Thefts.During.sum                      <8)] <- rep("NA", length(which(Street.Lights.OneOut.CommArea$Thefts.During.sum           <8)))
+Street.Lights.OneOut.CommArea$PctDiff.Narcotics[which(Street.Lights.OneOut.CommArea$Narcotics.During.sum                <8)] <- rep("NA", length(which(Street.Lights.OneOut.CommArea$Narcotics.During.sum        <8)))
+Street.Lights.OneOut.CommArea$PctDiff.Battery[which(Street.Lights.OneOut.CommArea$Battery.During.sum                    <8)] <- rep("NA", length(which(Street.Lights.OneOut.CommArea$Battery.During.sum          <8)))
+Street.Lights.OneOut.CommArea$PctDiff.MotorVehicleTheft[which(Street.Lights.OneOut.CommArea$MotorVehicleTheft.During.sum<8)] <- rep("NA", length(which(Street.Lights.OneOut.CommArea$MotorVehicleTheft.During.sum<8)))
+Street.Lights.OneOut.CommArea$PctDiff.Robbery[which(Street.Lights.OneOut.CommArea$Robbery.During.sum                    <8)] <- rep("NA", length(which(Street.Lights.OneOut.CommArea$Robbery.During.sum          <8)))
+Street.Lights.AllOut.CommArea$PctDiff.AllCrimes[which(Street.Lights.AllOut.CommArea$Crimes.All.During.sum               <8)] <- rep("NA", length(which(Street.Lights.AllOut.CommArea$Crimes.All.During.sum       <8)))
+Street.Lights.AllOut.CommArea$PctDiff.Narcotics[which(Street.Lights.AllOut.CommArea$Narcotics.During.sum                <8)] <- rep("NA", length(which(Street.Lights.AllOut.CommArea$Narcotics.During.sum        <8)))
+Street.Lights.AllOut.CommArea$PctDiff.CriminalDamage[which(Street.Lights.AllOut.CommArea$CriminalDamage.During.sum      <8)] <- rep("NA", length(which(Street.Lights.AllOut.CommArea$CriminalDamage.During.sum   <8)))
+
+write.csv(Alley.Lights.CommArea, "Alley_Lights_and_Crime_by_Comm_Area.csv")
+write.csv(Street.Lights.OneOut.CommArea, "Street_Lights_One_Out_and_Crime_by_Comm_Area.csv")
+write.csv(Street.Lights.AllOut.CommArea, "Street_Lights_All_Out_and_Crime_by_Comm_Area.csv")
 
 
 

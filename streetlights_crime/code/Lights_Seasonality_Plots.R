@@ -1,6 +1,6 @@
 ###Lights Seasonality Graph
 
-lights<-read.csv("C:/Users/Jon/dssg-Indices-project/streetlights_crime/data/street-lights-one-out.csv",header=T)
+lights<-read.csv("",header=T)
 lights$Date <- as.POSIXlt(strptime(lights$Created.Date, format="%d-%B-%y"))
 lights$Month <- format(lights$Date,"%m")
 lights$Year<-format(lights$Date,"%y")
@@ -20,7 +20,7 @@ image1<- qplot(lights_month$Month_Year[-16],lights_month$Lights_Count[-16])+
         ggtitle("CDoT One Light Out")
 
 #open lights
-openlights<-read.csv("C:/Users/Jon/Desktop/311_Service_Requests_-_Street_Lights_-_One_Out.csv",header=T)
+openlights<-read.csv("",header=T)
 openlights$Date<- as.POSIXlt(strptime(openlights$Creation.Date, format="%m/%d/%Y"))
 openlights$Month <- format(openlights$Date,"%m")
 openlights$Year<-format(openlights$Date,"%y")
@@ -30,6 +30,8 @@ openlights$Count <- 1
 openlights_month<- aggregate(openlights$Count,list(openlights$Year_Month),sum)
 colnames(openlights_month)<-c("Month_Year","Lights_Count")
 openlights_month$Month_Year<-as.Date(openlights_month$Month_Year,format="%Y-%m-%d")
+
+mean(openlights_month$Lights_Count)*16
 
 library(ggplot2)
 image2<- qplot(openlights_month$Month_Year,openlights_month$Lights_Count)+
@@ -51,15 +53,17 @@ length(which(duplicated(openlights$Location)=="TRUE"))
 length(which(duplicated(lights$Location)=="TRUE"))
 
 
-###no location dupes
+###no location dupes/no incompletes
 
 lilights <- lights[which(duplicated(lights$Location)=="FALSE"),]
+
 
 lilights_month<- aggregate(lilights$Count,list(lilights$Year_Month),sum)
 colnames(lilights_month)<-c("Month_Year","Lights_Count")
 lilights_month$Month_Year<-as.Date(lilights_month$Month_Year,format="%Y-%m-%d")
 
 lilopenlights <-openlights[which(duplicated(openlights$Location)=="FALSE"),]
+lilopenlights <- lilopenlights[which(lilopenlights$Status=="Completed"),]
 
 lilopenlights_month<- aggregate(lilopenlights$Count,list(lilopenlights$Year_Month),sum)
 colnames(lilopenlights_month)<-c("Month_Year","Lights_Count")
@@ -70,7 +74,7 @@ lilimage1<- qplot(lilights_month$Month_Year[-16],lilights_month$Lights_Count[-16
   geom_line()+
   ylab("Total Number of Lights Out")+
   xlab("Month")+
-  ylim(250,1500)+
+  ylim(0,1500)+
   ggtitle("CDoT One Light Out No Dups")
 
 library(ggplot2)
@@ -80,13 +84,14 @@ lilimage2<- qplot(lilopenlights_month$Month_Year,lilopenlights_month$Lights_Coun
   xlab("Month")+
   xlim(as.Date("2012-04-01",format="%Y-%m-%d"),
        as.Date("2013-08-01",format="%Y-%m-%d"))+
-  ggtitle("Open Portal One Lights Out No Dups")
-ylim(250,1500)
+  ggtitle("Open Portal One Lights Out No Dups")+
+  ylim(0,1500)
 
 library(gridExtra)
-grid.arrange(image1, image2, ncol=2)
+grid.arrange(lilimage1, lilimage2, ncol=2)
 
-setwd("C:/Users/Jon/Desktop")
-ggsave(file="CDoT_One_Light_No_Dup.jpeg", plot=lilimage1, width=10, height=8)
+setwd("")
+ggsave(file="", plot=lilimage1, width=10, height=8)
+
 
 

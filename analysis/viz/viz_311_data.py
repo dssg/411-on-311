@@ -69,6 +69,7 @@ def plot_monthly_requests(request_type, save_fig=True, \
   # Count the number of reports per month, filtering out the city-issued
   # requests, if needed
   counts = [(k, len(list(g))) for (k, g) in groupby(cr_dates_i)]
+  print counts
 
   # Plot the counts
   plt.figure()

@@ -13,10 +13,10 @@ from operator import itemgetter
 
 def plot_clusters(clusterer):
   # Load headers
-  with open('../data/request_types.csv', 'r') as headers_f:
+  with open('../../data/request_types.csv', 'r') as headers_f:
     h_reader = csv.reader(headers_f, delimiter=',', quotechar='"')
     headers = h_reader.next()[3:]
-  
+    return headers  
   plt.figure()
   k = clusterer.n_clusters
   centers = clusterer.cluster_centers_

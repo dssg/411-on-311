@@ -28,7 +28,7 @@ def bench_k_means(estimator, name, data, labels):
 
 
 if __name__ == "__main__":
-  data = pickle.load(open("../data/dat.pkl"))
+  data = pickle.load(open("../../data/dat.pkl"))
   print data.shape
   data = scipy.delete(data, 2, 1)
   data = scipy.delete(data, 0, 1)
@@ -38,7 +38,7 @@ if __name__ == "__main__":
   #new_data = pca.fit_transform(data[:, 1:])
   labels = data[:, 0]
   new_data = data[:, 1:]
- 
+  print labels
   # Scale the data
   #scaler =  pp.StandardScaler()
   #new_data = scaler.fit_transform(new_data)

@@ -14,17 +14,27 @@ In order to answer those big questions, we performed a three-step analysis, brie
 3. Construction of statistical models for the prediction of 311 requests. In particular we trained a Generalized Poisson Linear Model in order to mine the relevant predictors.
 
 ## The Project
-### <Project piece 1, i.e. "scraper scripts">
-### <Project piece 2, i.e. "models">
-### <Project piece 3, i.e. "webapp">
-### <etc>
+The three steps above constitute the three main parts of the project:
+
+### Visualization
+This part resides in the `analysis/viz` folder. It is implemented as a set of functions operating on data from the City of Chicago [open portal](http://data.cityofchicago.org). Most of this analysis is performed at the level of community areas.
+
+### Clustering
+The folder `analysis/clustering` contains code that applies the [K-Means clustering algorithm](http://en.wikipedia.org/wiki/K-means_clustering) on the space of 311 requests, aggregated by census tract. It uses the [scikit-learn](http://scikit-learn.org) machine learning Python library.
+
+### Predictive Model
+Predictive models have been built for some categories of 311 requests, namely potholes, graffiti removals, and single street light outages. The code is contained in the folder `analysis/prediction`. Two types of models have been developed, assuming either a Bayesian perspective or a frequentist one.
 
 ## The Data
-Short paragraph or two that describes the data and links to the in-depth wiki section about the data.
+Three main data sources have been used:
+ 
+1. 311 requests tables from the City of Chicago [open data portal](http://data.cityofchicago.org),
+2. A database of 311 requests obtained from Chapin Hall with a longer timespan and a larger number of request types.
+3. Census and ACS (American Community Survey) data.
 
 ## Contributing to the Project
--- Issue Tracker
--- Email Addresses (good to use google group)
+- Check out the [issue tracker](https://github.com/dssg/dssg-Indices-project/issues?page=1&state=open).
+- For any question or information, contact [Alessandro Panella](mailto:apanel2@uic.edu).
  
 ## License
 

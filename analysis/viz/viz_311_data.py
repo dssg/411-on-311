@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+# /usr/bin/env python
 
 """ Set of functions for visualizing 311 request data from the city data portal.
 """
@@ -25,7 +25,7 @@ def plot_monthly_requests(request_type, save_fig=True, \
   dayofweeks_names = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
 
   # Open the json data file
-  data_file = request_type + '.json'
+  data_file = '311-' + request_type + '.json'
   f =  open(data_folder + '/' + data_file, 'r')
 
   # Read in the json database (returns a dictionary)
@@ -105,7 +105,8 @@ def plot_monthly_requests(request_type, save_fig=True, \
   return
 
 
-def plot_vs_income_by_area(data_folder='/mnt/data1/Indices/portal_311'):
+def plot_vs_income_by_area(data_folder='/mnt/data1/Indices/portal_311',
+  color_code = True, request_type='all'):
   """ Plot the amount of 311 requests (normalized by population count) for each
   community area, and each type of request. The x-axis correspond to the median
   household income """
@@ -133,14 +134,54 @@ def plot_vs_income_by_area(data_folder='/mnt/data1/Indices/portal_311'):
   areas_info['population'] = [int(e) for e in l[1:]]
   l = f.readline().split(',')
   areas_info['income'] = [int(e) for e in l[1:]]
+  l = f.readline()
+  l = f.readline().split(',')
+  areas_info['latino'] = [float(e) for e in l[1:]]
+  l = f.readline().split(',')
+  areas_info['black'] = [float(e) for e in l[1:]]
+  l = f.readline().split(',')
+  areas_info['white'] = [float(e) for e in l[1:]]
+  l = f.readline().split(',')
+  areas_info['asian'] = [float(e) for e in l[1:]]
+  
+  # Set the race/ethnicity color codes
+  color_map = { 'X': '#AAAAAA',
+                'L': '#FEB718',
+                'B': '#D21838',
+                'W': '#325EFF',
+                'A': '#00CEAA'}
+  ethnicity = ['X'] * len(areas_info['names'])
+
+  for i in range(len(ethnicity)):
+    if areas_info['latino'][i] >= 0.5:
+      ethnicity[i] = 'L'
+    elif areas_info['black'][i] >= 0.5:
+      ethnicity[i] = 'B'
+    elif areas_info['white'][i] >= 0.5:
+      ethnicity[i] = 'W'
+    elif areas_info['asian'][i] >= 0.5:
+      ethnicity[i] = 'A'
+  colors = [color_map[e] for e in ethnicity]
 
   # Plot
-  for (i, k) in enumerate(calls_type_area.keys()):
-    plt.subplot(4, 3, i)
-    plt.scatter(areas_info['income'], calls_type_area[k])
-    plt.title(k)
+  plt.figure()
+  if request_type == 'all':
+    for (i, k) in enumerate(calls_type_area.keys()):
+      plt.subplot(4, 3, i)
+      plt.scatter(areas_info['income'], calls_type_area[k], s=30, linewidth=0,\
+        c=colors)
+      plt.title(k)
+    plt.suptitle("Requests per 10,000 citizen vs. median income")
+  elif request_type in calls_type_area.keys():
+    plt.scatter(areas_info['income'], calls_type_area[request_type], s=80, linewidth=0,\
+      c=colors)
+    plt.xlabel('Median income')
+    plt.ylabel('Request volume / 10,000 ppl')
+    plt.title(request_type)
+  else:
+    print 'Unknown reqsuest type'
+    return
 
-  plt.suptitle("Requests per 10,000 citizen vs. median income")
   #plt.show()
 
 
@@ -224,79 +265,4 @@ def plot_pothole_locations(year, daily=True, data_folder='/mnt/data1/Indices/por
       plt.ylim(min_y, max_y)
       png_name = str(year) + '/' + str(i) + '.png'
       plt.savefig(png_name)
-
-def plot_vs_latinos(request_type, data_folder='/mnt/data1/Indices/portal_311'):
-  """ This function plots a type of request against percentage of latinos, for
-  any of the 77 community areas """
-
-
-  # Open the 311 call data file
-  data_file = 'comm-area-call-volume.csv'
-  f =  open(data_folder + '/' + data_file, 'r')
-
-  # Read in the csv file
-  calls_csv_reader = csv.reader(f, delimiter=',')
-  # Create a data structure with the info (dictionary)
-  calls_type_area = {}
-  calls_csv_reader.next() # Consume headers
-  for row in calls_csv_reader:
-    calls_type_area[row[0]] = [float(e) for e in row[1:]]
-  f.close()
-
-  # Open and read the area info file
-  f = open(data_folder + '/chicago-community-areas.csv', 'r')
-  f.readline()
-  areas_info = {}
-  l = f.readline().split(',')
-  areas_info['names'] = l[1:]
-  l = f.readline().split(',')
-  areas_info['population'] = [int(e) for e in l[1:]]
-  l = f.readline().split(',')
-  areas_info['income'] = [int(e) for e in l[1:]]
-  l = f.readline().split(',')
-  areas_info['tot_calls'] = [float(e) for e in l[1:]]
-  l = f.readline().split(',')
-  areas_info['latinos'] = [float(e) for e in l[1:]]
-  f.close()
-
-  plt.figure()
-  plt.scatter(areas_info['latinos'], calls_type_area[request_type], \
-    s=[(float(e)/3000.0)**2 for e in areas_info['income']], alpha=0.6)
-  plt.xlabel('Prop. hispanic')
-  plt.ylabel('Graffiti req / 10,000 pop.')
-  plt.title(request_type)
-  plt.show()
-
-
-def generate_request_histograms(data_folder='/mnt/data1/Indices/portal_311'):
-  data = pickle.load(open(data_folder + '/dat.pkl'))
-  data = scipy.delete(data, 2, 1)
-  data = scipy.delete(data, 0, 1)
-  #now we have our data!
-
-  f = open(data_folder + '/request_types.csv', 'r')
-  headers = f.readline().split(',')
-  headers = headers[3:]
-
-  new_data = data[:, 1:]
-
-def generate_request_histograms():
-  data = pickle.load(open("../data/dat.pkl"))
-  data = scipy.delete(data, 2, 1)
-  data = scipy.delete(data, 0, 1)
-  #now we have our data!
-
-  f = open('../data/request_types.pkl', 'r')
-  headers = f.readline().split(',')
-  headers = headers[3:]
-
-  new_data = data[:, 1:]
-
-  for i in xrange(len(headers)-1):
-    # Generate the histograms
-    plt.cla()
-    plt.hist(new_data[:,i], bins = 300)
-    plt.title(headers[i])
-    filename = "plots/hist_by_type/" + str(i+1) + ".png"
-    plt.savefig(filename)
 

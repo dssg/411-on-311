@@ -2,24 +2,22 @@ rm(list = ls())
 
 set.seed(66)
 
-setwd("C:/Users/Zach/Documents/UrbanCCD/PredictiveModel/Graffiti")
-
 #Load Necessary Packages
 library(R2jags)
 library(coda)
 library(doBy)
 library(reshape)
 library(glmmML)
-library(BaylorEdPsych)
+#library(BaylorEdPsych)
 
 #Open ACS Data
-ACS_2007_11 <- read.csv(file="ACS_2007_11_Tract_KeyVars.csv", head=TRUE)
+ACS_2007_11 <- read.csv(file="data/ACS_2007_11_Tract_KeyVars.csv", head=TRUE)
 
 #Open Calls Data
-Calls_Tract <- read.csv(file="tracts_2009_countsbyday.csv", head=FALSE) 
+Calls_Tract <- read.csv(file="data/tracts_2009_countsbyday.csv", head=FALSE) 
 
 #Open Tract Neighbors Indicator File (for CAR covariance matrix)
-Tract_Neighbors <- read.csv(file="Tract Neighbors.csv", head=TRUE)
+Tract_Neighbors <- read.csv(file="data/Tract Neighbors.csv", head=TRUE)
 
 #List of Unique Tracts
 TractList <- as.data.frame(unique(Tract_Neighbors$src_GEOID1))
@@ -64,7 +62,7 @@ Tract_Neighbors1 <- merge(Tract_Neighbors, TractList, by=c("src_GEOID1"))
 TractList$nbr_GEOID1 <- TractList$src_GEOID1
 TractList <- TractList[,c(1,3)]
 Tract_Neighbors2 <- merge(Tract_Neighbors1, TractList, by=c("nbr_GEOID1"))
-  # Tract Neighbors Data Still Off by One from PreMerge2 Dataset; Need to Remove to Extra Tract from Merge
+# Tract Neighbors Data Still Off by One from PreMerge2 Dataset; Need to Remove to Extra Tract from Merge
 TractList <- as.data.frame(unique(Tract_Neighbors2$src_GEOID1))
 TractList$num <- seq(from=1, to=nrow(TractList))
 TractList$GEO.id2 <- TractList[,1] 
@@ -218,12 +216,12 @@ inits <- list(list(alpha0=runif(1, 0, 1), alpha=rnorm(1, 0, 1), itau2.alpha=rgam
 parameters <- c("alpha0", "alpha", "itau2.alpha", "phi1", "phi2", "beta1", "beta2", "beta3", "beta4", "beta5", "beta6", "beta7", "gamma_2", "gamma_3", "gamma_4", "gamma_5", "gamma_6", "gamma_7", "gamma_8", "gamma_9", "gamma_10", "gamma_11", "gamma_12", "itau2.phi1", "itau2.phi2", "itau2.beta1", "itau2.beta2", "itau2.beta3", "itau2.beta4", "itau2.beta5", "itau2.beta6", "itau2.beta7", "itau2.gamma_2", "itau2.gamma_3", "itau2.gamma_4", "itau2.gamma_5", "itau2.gamma_6", "itau2.gamma_7", "itau2.gamma_8", "itau2.gamma_9", "itau2.gamma_10", "itau2.gamma_11", "itau2.gamma_12", "isigma2", "logsigma2", "itau2.sigma")
 
 data <- list(Y=Y, Y_lag1=Y_lag1, Y_lag2=Y_lag2, x1=x1, x2=x2, x3=x3, x4=x4, x5=x5, x6=x6, x7=x7, s2=s2, s3=s3, s4=s4, s5=s5, s6=s6, s7=s7, s8=s8, s9=s9, s10=s10, s11=s11, s12=s12, d=d, n=n) 
-load.sim <- jags(data, inits, parameters, "model.bug", n.chains=1, n.iter=2000, n.burnin=200, progress.bar="text")
+#load.sim <- jags(data, inits, parameters, "model.bug", n.chains=1, n.iter=2000, n.burnin=200, progress.bar="text")
 
-traceplot(load.sim)
+#traceplot(load.sim)
 
-sim.mcmc <- as.mcmc(load.sim)
-summary(sim.mcmc)
+#sim.mcmc <- as.mcmc(load.sim)
+#summary(sim.mcmc)
 
 
 # Set Up Data for Poisson GLM
@@ -266,7 +264,7 @@ Model2 <- glm(counts ~ counts_lag1 + counts_lag2 + s_2 + s_3 + s_4 + s_5 + s_6 +
 #Model Summary
 summary(Model)
 summary(Model2)
-PseudoR2(Model2)
+#PseudoR2(Model2)
 
 
 

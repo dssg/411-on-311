@@ -1,3 +1,5 @@
+## Merges 4 files from American Factfinder for ACS 2007-11 5 year data by Chicago census tracts
+
 rm(list = ls())
 setwd("C:/Users/Zach/Documents/UrbanCCD/ACS_2007_11")
 

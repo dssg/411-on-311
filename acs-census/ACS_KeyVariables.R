@@ -1,4 +1,5 @@
-##  Organizes key variables from ACS 2007-11 ACS for Chicago census tracts
+##  Organizes key variables from ACS 2007-11 ACS for Chicago census tracts.  
+## Run after ACS_2007_11.R
 
 rm(list = ls())
 setwd("C:/Users/Zach/Documents/UrbanCCD/ACS_2007_11")

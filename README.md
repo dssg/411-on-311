@@ -1,6 +1,6 @@
 # 311 Requests and Demographics in Chicago
-<a href="http://www.cityofchicago.org"><img src="http://dssg.io/img/partners/city.jpg" width="50"></a>
-<a href="http://www.chapinhall.org"><img src="http://dssg.io/img/partners/chapin.jpg"></a>
+<a href="http://www.cityofchicago.org"><img src="http://dssg.io/img/partners/city.jpg" width="200"></a>
+<a href="http://www.chapinhall.org"><img src="http://dssg.io/img/partners/chapin.jpg" width="250"></a>
 
 Exploratory analysis and predictive models of how Chicago's neighborhoods interact with the City's 311 service requests.
 

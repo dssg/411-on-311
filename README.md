@@ -1,5 +1,10 @@
 # 311 Requests and Demographics in Chicago
-This is a Data Science for Social Good data science project that examines 311 (non-emergency) service requests in the city of Chicago, trying to understand the underlying patterns and the correlations with demographic characteristics through visualization, machine learning, and statistical modeling.
+<a href="http://www.cityofchicago.org"><img src="http://dssg.io/img/partners/city.jpg" align="left"></a>
+<a href="http://www.chapinhall.org"><img src="http://dssg.io/img/partners/chapin.jpg" align="left"></a>
+
+Exploratory analysis and predictive models of how Chicago's neighborhoods interact with the City's 311 service requests.
+
+This is project is a part of the 2013 [Data Science for Social Good](http://www.dssg.io) fellowship, in partnership with [City of Chicago](http://www.cityofchicago.org) and the [Chaping Hall at the University of Chicago](http://www.chapinhall.org).
 
 ## The Problem:
 Through the 311 system, every Chicago citizen can request city services such as graffiti removal and pothole filling, among many other types. The records of 311 service requests reflect the needs of the city and its inhabitants.

@@ -1,4 +1,4 @@
-# City services and Chicago neighborhoods
+# City services & Chicago neighborhoods
 <a href="http://www.cityofchicago.org"><img src="http://dssg.io/img/partners/city.jpg" width="200"></a>
 <a href="http://www.chapinhall.org"><img src="http://dssg.io/img/partners/chapin.jpg" width="400"></a>
 
@@ -30,7 +30,7 @@ The code that implements our exploratory analysis lives in the `analysis/viz` fo
 ### Clustering
 The folder `analysis/clustering` contains code that applies the [k-means clustering algorithm](http://en.wikipedia.org/wiki/K-means_clustering) on a highly-dimensional space of 311 requests, aggregated by census tract. It uses the [scikit-learn](http://scikit-learn.org) machine learning Python library.
 
-~[sci-kit-learn](http://scikit-learn.org/stable/_static/scikit-learn-logo-small.png)
+![sci-kit-learn](http://scikit-learn.org/stable/_static/scikit-learn-logo-small.png)
 
 ### Predictive Model
 The code that implements our predictive models is contained in the folder `analysis/prediction`. Two types of models have been developed, assuming either a **Bayesian** perspective or a **frequentist** one.
@@ -43,7 +43,7 @@ We used the main data sources:
 3. 2010 Census and ACS (American Community Survey) data.
 
 ## Team
-![311 team](http://dssg.io/img/people/teams/311.png)
+[![311 team](http://dssg.io/img/people/teams/311.png)](http://dssg.io/people)
 
 ## Contributing to the Project
 - Check out the [issue tracker](https://github.com/dssg/dssg-Indices-project/issues?page=1&state=open).

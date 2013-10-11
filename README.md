@@ -21,11 +21,20 @@ To answer those big questions, we performed a three-step analysis:
 2. Applied [k-means clustering](en.wikipedia.org/wiki/K-means_clustering), an unsupervised machine learning technique, to identify Chicago census tracts with similar service request patterns. This part of the analysis revealed clear clusters of census tracts that request 311 service in similar ways. These service-request clusters also tend to be geographically next to each other, and overlap with Chicago's race boundaries - a clear sign that Chicago's neighborhoods request services in distinct ways.
 3. Built statistical models to predict 311 requests levels across census tracts. We trained a [Generalized Poisson Linear Model](http://en.wikipedia.org/wiki/Poisson_regression) on relevant demographic, economic, and temporal predictors. We're not trying to predict all kinds of service requests - the City of Chicago has hundreds - but specifically potholes, graffiti removals, and single streetlight outages. These predictive models could eventually be used to make the City's public services more proactive and responsive to street problems.
 
+
+## The Data: 311 service requests and census data
+We used the main data sources:
+ 
+1. Open 311 data from the City of Chicago [open data portal](http://data.cityofchicago.org). The City publishes to most popular service requests as open data, but only for the last few years.
+2. A database of 311 requests obtained from Chapin Hall. This dataset is an extract of the City's 311 system - it contains every service request type (there are hundreds) and goes back to when the 311 system was launched in 1999.
+3. 2010 Census and ACS (American Community Survey) data.
+
+
 ## Project layout
 The three steps above constitute the three main parts of the project:
 
 ### Exploratory analysis
-The code that implements our exploratory analysis lives in the `analysis/viz` folder. It's a set of functions that operates on 311 service request data from the City of Chicago [open portal](http://data.cityofchicago.org). Most of this analysis is performed at the level of [community areas](en.wikipedia.org/wiki/Community_areas_in_Chicago).
+The code that implements our exploratory analysis lives in the `analysis/viz` folder. It's a set of functions that operates on 311 service request data from the City of Chicago [open data portal](http://data.cityofchicago.org). Most of this analysis is performed at the level of [community areas](en.wikipedia.org/wiki/Community_areas_in_Chicago).
 
 ### Clustering
 The folder `analysis/clustering` contains code that applies the [k-means clustering algorithm](http://en.wikipedia.org/wiki/K-means_clustering) on a highly-dimensional space of 311 requests, aggregated by census tract. It uses the [scikit-learn](http://scikit-learn.org) machine learning Python library.
@@ -34,13 +43,6 @@ The folder `analysis/clustering` contains code that applies the [k-means cluster
 
 ### Predictive Model
 The code that implements our predictive models is contained in the folder `analysis/prediction`. Two types of models have been developed, assuming either a **Bayesian** perspective or a **frequentist** one.
-
-## The Data: 311 service requests and census data
-We used the main data sources:
- 
-1. Open 311 data from the City of Chicago [open data portal](http://data.cityofchicago.org). The City publishes to most popular service requests as open data, but only for the last few years.
-2. A database of 311 requests obtained from Chapin Hall. This dataset is an extract of the City's 311 system - it contains every service request type (there are hundreds) and goes back to when the 311 system was launched in 1999.
-3. 2010 Census and ACS (American Community Survey) data.
 
 ## Team
 [![311 team](http://dssg.io/img/people/teams/311.png)](http://dssg.io/people)

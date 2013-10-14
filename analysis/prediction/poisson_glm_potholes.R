@@ -2,14 +2,6 @@ rm(list = ls())
 
 set.seed(66)
 
-#Load Necessary Packages
-library(R2jags)
-library(coda)
-library(doBy)
-library(reshape)
-library(glmmML)
-#library(BaylorEdPsych)
-
 #Open ACS Data
 ACS_2007_11 <- read.csv(file="../../data/acs_2007_11_tract_variables.csv", head=TRUE)
 

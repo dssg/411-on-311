@@ -50,7 +50,7 @@ The folder `analysis/clustering` contains code that applies the [k-means cluster
 The code that implements our predictive models is contained in the folder `analysis/prediction`. Two types of models have been developed, assuming either a **Bayesian** perspective or a **frequentist** one.
 
 ## Installation guide
-The project consists of Python scipts and modules, and R scripts.
+The project consists of Python scripts and modules, and R scripts.
 
 - To execute [Python](http://www.python.org/) scripts, install Python 2.7.x on your computer, and call the invoke directly or within a Python interpreter (we recommend [iPython](http://ipython.org/).)
 - To use Python modules (such as `analysis/viz/viz_311_data.py`), import the module within a Python file or a Python interpreter and call the functions.

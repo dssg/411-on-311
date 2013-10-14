@@ -14,10 +14,10 @@ library(glmmML)
 ACS_2007_11 <- read.csv(file="../../data/acs_2007_11_tract_variables.csv", head=TRUE)
 
 #Open Calls Data
-Calls_Tract <- read.csv(file="data/tracts_2009_countsbyday.csv", head=FALSE) 
+Calls_Tract <- read.csv(file="../../data/tracts_2009_countsbyday.csv", head=FALSE) 
 
-#Open Tract Neighbors Indicator File (for CAR covariance matrix)
-Tract_Neighbors <- read.csv(file="data/Tract Neighbors.csv", head=TRUE)
+#Open Tract Neighbors Indicator File (for CAR covariance matrix in future models)
+Tract_Neighbors <- read.csv(file="../../data/tract_neighbors.csv", head=TRUE)
 
 #List of Unique Tracts
 TractList <- as.data.frame(unique(Tract_Neighbors$src_GEOID1))

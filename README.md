@@ -14,13 +14,16 @@ We want to investigate how patterns of service requests are related to the socia
 - What do service requests tell us about the different neighborhoods in Chicago? 
 - Can we use a neighborhood's characteristics to predict future service requests volumes across the city?
 
+**Read more about [311 in Chicago](https://github.com/dssg/411-on-311/wiki/problem) in our Wiki**
+
 ## The Solution: exploratory analysis, k-means clustering, poisson regression
 To answer those big questions, we performed a three-step analysis:
 
-1. [Exploratory analysis](en.wikipedia.org/wiki/Exploratory_data_analysis) of service request data through visualization of time series and scatterplots
-2. Applied [k-means clustering](en.wikipedia.org/wiki/K-means_clustering), an unsupervised machine learning technique, to identify Chicago census tracts with similar service request patterns. This part of the analysis revealed clear clusters of census tracts that request 311 service in similar ways. These service-request clusters also tend to be geographically next to each other, and overlap with Chicago's race boundaries - a clear sign that Chicago's neighborhoods request services in distinct ways.
+1. [Exploratory analysis](http://en.wikipedia.org/wiki/Exploratory_data_analysis) of service request data through visualization of time series and scatterplots
+2. Applied [k-means clustering](http://en.wikipedia.org/wiki/K-means_clustering), an unsupervised machine learning technique, to identify Chicago census tracts with similar service request patterns. This part of the analysis revealed clear clusters of census tracts that request 311 service in similar ways. These service-request clusters also tend to be geographically next to each other, and overlap with Chicago's race boundaries - a clear sign that Chicago's neighborhoods request services in distinct ways.
 3. Built statistical models to predict 311 requests levels across census tracts. We trained a [Generalized Poisson Linear Model](http://en.wikipedia.org/wiki/Poisson_regression) on relevant demographic, economic, and temporal predictors. We're not trying to predict all kinds of service requests - the City of Chicago has hundreds - but specifically potholes, graffiti removals, and single streetlight outages. These predictive models could eventually be used to make the City's public services more proactive and responsive to street problems.
 
+**Read more about [exploratory analysis](https://github.com/dssg/411-on-311/wiki/exploratory-analysis), [clustering](https://github.com/dssg/411-on-311/wiki/clustering-analysis), and [statistical models](https://github.com/dssg/411-on-311/wiki/statistical-models) in our Wiki**
 
 ## The Data: 311 service requests and census data
 We used the main data sources:
@@ -28,6 +31,8 @@ We used the main data sources:
 1. Open 311 data from the City of Chicago [open data portal](http://data.cityofchicago.org). The City publishes to most popular service requests as open data, but only for the last few years.
 2. A database of 311 requests obtained from Chapin Hall. This dataset is an extract of the City's 311 system - it contains every service request type (there are hundreds) and goes back to when the 311 system was launched in 1999.
 3. 2010 Census and ACS (American Community Survey) data.
+
+**Read more about the [data we used](https://github.com/dssg/411-on-311/wiki/data) in our Wiki**
 
 
 ## Project layout
@@ -39,10 +44,23 @@ The code that implements our exploratory analysis lives in the `analysis/viz` fo
 ### Clustering
 The folder `analysis/clustering` contains code that applies the [k-means clustering algorithm](http://en.wikipedia.org/wiki/K-means_clustering) on a highly-dimensional space of 311 requests, aggregated by census tract. It uses the [scikit-learn](http://scikit-learn.org) machine learning Python library.
 
-![sci-kit-learn](http://scikit-learn.org/stable/_static/scikit-learn-logo-small.png)
+[![sci-kit-learn](http://scikit-learn.org/stable/_static/scikit-learn-logo-small.png)](http://scikit-learn.org)
 
-### Predictive Model
+### Predictive model
 The code that implements our predictive models is contained in the folder `analysis/prediction`. Two types of models have been developed, assuming either a **Bayesian** perspective or a **frequentist** one.
+
+## Installation guide
+The project consists of Python scipts and modules, and R scripts.
+
+- To execute [Python](http://www.python.org/) scripts, install Python 2.7.x on your computer, and call the invoke directly or within a Python interpreter (we recommend [iPython](http://ipython.org/).)
+- To use Python modules (such as `analysis/viz/viz_311_data.py`), import the module within a Python file or a Python interpreter and call the functions.
+- To execute R scripts, install [R](http://www.r-project.org/) and invoke the script directly or within the R interpreter. For editing and exploring the worksp[sci-kit-learn](http://scikit-learn.org/stable/_static/scikit-learn-logo-small.png)piace we recommend the [RStudio IDE](http://www.rstudio.com/ide/).
+
+Some external libraries are needed:
+- `Python` [scikit-learn](http://scikit-learn.org)
+- `Python` [SciPy](http://www.scipy.org/)
+- `Python` [matplotlib](http://matplotlib.org/)
+
 
 ## Team
 [![311 team](http://dssg.io/img/people/teams/311.png)](http://dssg.io/people)

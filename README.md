@@ -38,7 +38,7 @@ We used the main data sources:
 ## Project layout
 
 ### Data preparation
-The folder `munging` contains some Python and R code that retrieves and preprocess the data, aggregating it on some specified spatial and temporal resolution (e.g. by Community Area, monthly.)
+The folder `munging` contains some Python and R code that retrieves and preprocesses the data, aggregating it according to some specified spatial and temporal resolution (e.g. by Community Area, monthly.)
 
 ### Exploratory analysis
 The code that implements our exploratory analysis lives in the `analysis/viz` folder. It's a set of functions that operates on 311 service request data from the City of Chicago [open data portal](http://data.cityofchicago.org). Most of this analysis is performed at the level of [community areas](en.wikipedia.org/wiki/Community_areas_in_Chicago).
@@ -49,7 +49,7 @@ The folder `analysis/clustering` contains code that applies the [k-means cluster
 [![sci-kit-learn](http://scikit-learn.org/stable/_static/scikit-learn-logo-small.png)](http://scikit-learn.org)
 
 ### Predictive model
-The code that implements our predictive models is contained in the folder `analysis/prediction`. Two types of models have been developed, assuming either a **Bayesian** perspective or a **frequentist** one.
+The code that implements our predictive models for graffiti removal and pothole filling requests is contained in the folder `analysis/prediction`. This part of the project is implemented in R.
 
 ## Installation guide
 The project consists of Python scripts and modules, and R scripts.

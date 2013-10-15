@@ -23,7 +23,7 @@ db_codes = {
 
 for (i, k) in enumerate(db_codes.keys()):
     if sys.argv[1] == None:
-        data_folder = '/mnt/data1/Indices/portal_311'
+        data_folder = '../data'
     else:
         data_folder = sys.argv[1]
     print 'Fetching 311 DB: ' + k + ' (' + db_codes[k] + ')'

@@ -36,7 +36,9 @@ We used the main data sources:
 
 
 ## Project layout
-The three steps above constitute the three main parts of the project:
+
+### Data preparation
+The folder `munging` contains some Python and R code that retrieves and preprocess the data, aggregating it on some specified spatial and temporal resolution (e.g. by Community Area, monthly.)
 
 ### Exploratory analysis
 The code that implements our exploratory analysis lives in the `analysis/viz` folder. It's a set of functions that operates on 311 service request data from the City of Chicago [open data portal](http://data.cityofchicago.org). Most of this analysis is performed at the level of [community areas](en.wikipedia.org/wiki/Community_areas_in_Chicago).

@@ -21,7 +21,7 @@ To answer those big questions, we performed a three-step analysis:
 
 1. [Exploratory analysis](http://en.wikipedia.org/wiki/Exploratory_data_analysis) of service request data through visualization of time series and scatterplots
 2. Applied [k-means clustering](http://en.wikipedia.org/wiki/K-means_clustering), an unsupervised machine learning technique, to identify Chicago census tracts with similar service request patterns. This part of the analysis revealed clear clusters of census tracts that request 311 service in similar ways. These service-request clusters also tend to be geographically next to each other, and overlap with Chicago's race boundaries - a clear sign that Chicago's neighborhoods request services in distinct ways.
-3. Built statistical models to predict 311 requests levels across census tracts. We trained a [Generalized Poisson Linear Model](http://en.wikipedia.org/wiki/Poisson_regression) on relevant demographic, economic, and temporal predictors. We're not trying to predict all kinds of service requests - the City of Chicago has hundreds - but specifically potholes, graffiti removals, and single streetlight outages. These predictive models could eventually be used to make the City's public services more proactive and responsive to street problems.
+3. Built statistical models to predict 311 requests levels across census tracts. We trained a [Poisson Generalized Linear Models (GLM)](http://en.wikipedia.org/wiki/Poisson_regression) on relevant demographic, economic, and temporal predictors. We fitted Poisson GLM for graffiti removals pothole fillings, but the code is easily customized to work with other service request types. These predictive models could eventually be used to make the City's public services more proactive and responsive to street problems.
 
 **Read more about [exploratory analysis](https://github.com/dssg/411-on-311/wiki/exploratory-analysis), [clustering](https://github.com/dssg/411-on-311/wiki/clustering-analysis), and [statistical models](https://github.com/dssg/411-on-311/wiki/statistical-models) in our Wiki**
 
@@ -36,7 +36,9 @@ We used the main data sources:
 
 
 ## Project layout
-The three steps above constitute the three main parts of the project:
+
+### Data preparation
+The folder `munging` contains some Python and R code that retrieves and preprocesses the data, aggregating it according to some specified spatial and temporal resolution (e.g. by Community Area, monthly.)
 
 ### Exploratory analysis
 The code that implements our exploratory analysis lives in the `analysis/viz` folder. It's a set of functions that operates on 311 service request data from the City of Chicago [open data portal](http://data.cityofchicago.org). Most of this analysis is performed at the level of [community areas](en.wikipedia.org/wiki/Community_areas_in_Chicago).
@@ -47,7 +49,7 @@ The folder `analysis/clustering` contains code that applies the [k-means cluster
 [![sci-kit-learn](http://scikit-learn.org/stable/_static/scikit-learn-logo-small.png)](http://scikit-learn.org)
 
 ### Predictive model
-The code that implements our predictive models is contained in the folder `analysis/prediction`. Two types of models have been developed, assuming either a **Bayesian** perspective or a **frequentist** one.
+The code that implements our predictive models for graffiti removal and pothole filling requests is contained in the folder `analysis/prediction`. This part of the project is implemented in R.
 
 ## Installation guide
 The project consists of Python scripts and modules, and R scripts.

@@ -25,7 +25,7 @@ def plot_monthly_requests(request_type, save_fig=True, \
   dayofweeks_names = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
 
   # Open the json data file
-  data_file = '311-' + request_type + '.json'
+  data_file = request_type + '.json'
   f =  open(data_folder + '/' + data_file, 'r')
 
   # Read in the json database (returns a dictionary)

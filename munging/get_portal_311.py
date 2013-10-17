@@ -13,12 +13,15 @@ db_codes = {
     'rodent-baiting': '97t6-zrhs',
     'garbage-carts': '9ksk-na4q',
     'abandoned-vehicles': '3c9v-pnva',
-    'vacant-abandoned-buildings': '7nil-7srd',
+    'vacant-abandoned-buildings': '7nii-7srd',
     'sanitation-code-complaints': 'me59-5fac',
     'potholes': '7as2-ds3y',
     'alley-lights-out': 't28b-ys7j',
     'street-lights-one-out': '3aav-uy2v',
     'street-lights-all-out': 'zuxi-7xem'
+}
+db_codes = {
+    'vacant-abandoned-buildings': '7nii-7srd',
 }
 
 for (i, k) in enumerate(db_codes.keys()):

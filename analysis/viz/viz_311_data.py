@@ -34,8 +34,12 @@ def plot_monthly_requests(request_type, save_fig=True, \
 
   # Retrieve the creation and completion date, and SRN column indexes
   columns = [e['fieldName'] for e in req_data['meta']['view']['columns']]
-  cr_col = columns.index('creation_date')
-  co_col = columns.index('completion_date')
+  try:
+    cr_col = columns.index('creation_date')
+    co_col = columns.index('completion_date')
+  except ValueError:
+    cr_col = columns.index('date_service_request_was_received')
+    co_col = columns.index('date_service_request_was_received')
   srn_col = columns.index('service_request_number')
 
   # Create a cuter data structure from the data

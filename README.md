@@ -56,7 +56,7 @@ The project consists of Python scripts and modules, and R scripts.
 
 - To execute [Python](http://www.python.org/) scripts, install Python 2.7.x on your computer, and call the invoke directly or within a Python interpreter (we recommend [iPython](http://ipython.org/).)
 - To use Python modules (such as `analysis/viz/viz_311_data.py`), import the module within a Python file or a Python interpreter and call the functions.
-- To execute R scripts, install [R](http://www.r-project.org/) and invoke the script directly or within the R interpreter. For editing and exploring the worksp[sci-kit-learn](http://scikit-learn.org/stable/_static/scikit-learn-logo-small.png)piace we recommend the [RStudio IDE](http://www.rstudio.com/ide/).
+- To execute R scripts, install [R](http://www.r-project.org/) and invoke the script directly or within the R interpreter. For editing and exploring the workspace, we recommend the [RStudio IDE](http://www.rstudio.com/ide/).
 
 Some external libraries are needed:
 - `Python` [scikit-learn](http://scikit-learn.org)

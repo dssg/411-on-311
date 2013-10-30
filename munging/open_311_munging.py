@@ -8,6 +8,7 @@ import Polygon
 import numpy as np
 import scipy.spatial
 import shapefile
+import pickle as pkl
 
 __author__ = "Alessandro Panella (apanel2@uic.edu)"
 
@@ -30,7 +31,6 @@ class FindInside:
         # Create the tree
         self.fastlookup = scipy.spatial.cKDTree(self.centers)
 
-
     def find(self, point, k=10):
         """ Return the index of the shape containing the point,
         otherwise return -1 """
@@ -44,21 +44,22 @@ class FindInside:
                 return k
         return -1
 
-def add_tract_info(request_type='graffiti-removal', data_folder='../data/',\
+def add_tract_info(request_type='graffiti-removal', data_folder='../data',\
     write_geojson=False):
     """ Find the tract request of type request_type are generated from, and
     write a geojson file containing the information. """
 
     # Open the census tract shapefile
-    sf = shapefile.Reader(data_folder + "census_tracts/Census_Tracts")
+    sf = shapefile.Reader(data_folder +\
+        "/census_tracts_2010/CensusTractsTIGER2010")
     tract_shapes = [s.points for s in sf.iterShapes()]
-    tract_ids = [r[2] for r in sf.iterRecords()]
+    tract_ids = [r[3] for r in sf.iterRecords()]
     
     # Create the FindInside object
     finder = FindInside(tract_shapes)
 
     # Open the JSON file for the specified type of request
-    json_f = open(data_folder + '311-' + request_type + '.json')
+    json_f = open(data_folder + '/' + request_type + '.json')
     requests = json.load(json_f)
     json_f.close()
 
@@ -91,7 +92,7 @@ def add_tract_info(request_type='graffiti-removal', data_folder='../data/',\
         if i%10000 == 0:
             print i
 
-    json_out_f = open(data_folder + '311-' + request_type + '-tracts.json', 'w')
+    json_out_f = open(data_folder + '/' + request_type + '-tracts.json', 'w')
     json.dump(requests, json_out_f)
     json_out_f.close()
 
@@ -135,4 +136,159 @@ def add_tract_info(request_type='graffiti-removal', data_folder='../data/',\
                       break
         out.write('    ]\n  }')
         out.close()
+
+def aggr_tract_data(data_folder = '../data'):
+    
+    db_names = [  'abandoned-vehicles',
+                  'vacant-abandoned-buildings',
+                  'graffiti-removal',
+                  'potholes',
+                  'sanitation-code-complaints',
+                  'garbage-carts',
+                  'rodent-baiting',
+                  'street-lights-one-out',
+                  'street-lights-all-out',
+                  'alley-lights-out',  
+                  'tree-trims',
+                  'tree-debris'
+                  ]
+    
+    # Open census file containing population of each tract (and other info)
+    census_f = open(data_folder +'/acs_2007_11_tract_variables.csv', 'r')
+    census_r = csv.DictReader(census_f)
+    census_d = []
+    for r in census_r:
+        census_d.append(r);
+    census_f.close()
+
+    header = ["id", "population"] + db_names
+    out_f = open(data_folder + '/requests_by_tract.csv', 'w');
+    out_w = csv.writer(out_f);
+    out_w.writerow(header);
+    
+    aggr_vol = {}
+
+    # For each request type, aggregate the number of requests at the tract level
+    for i, db in enumerate(db_names):
+        # Open the requests json file
+        json_f = open(data_folder + '/' + db + '-tracts.json', 'r')
+        req = json.load(json_f)
+        json_f.close()
+        count = 0
+        for r in req['data']:
+            if r[-1] in aggr_vol.keys():
+                aggr_vol[r[-1]][i] += 1
+            else:
+                aggr_vol[r[-1]] = [0] * len(db_names)
+                aggr_vol[r[-1]][i] = 1
+            count += 1
+            if(count % 10000 == 0):
+                print count
+        # Now write on the csv file
+    for tract in aggr_vol.iterkeys():
+        # Find the tract pop in tract info file
+        pop = 0
+        for record in census_d:
+            if record['GEO.id2'] == tract:
+                pop = int(record['Total_Pop'])
+                break
+        row = [tract, pop] + aggr_vol[tract]
+        out_w.writerow(row)
+
+    out_f.close();
+
+def shp_to_geojson(shapename):
+    """ This code is based on
+        http://geospatialpython.com/2013/07/shapefile-to-geojson.html """
+    # read the shapefile
+    reader = shapefile.Reader(shapename)
+    fields = reader.fields[1:]
+    field_names = [field[0] for field in fields]
+    buffer = []
+    for sr in reader.shapeRecords():
+        atr = dict(zip(field_names, sr.record))
+        geom = sr.shape.__geo_interface__
+        buffer.append(dict(type="Feature", \
+            geometry=geom, properties=atr)) 
+   
+    # write the GeoJSON file
+    geojson = open(shapename + '.geojson', "w")
+    geojson.write(json.dumps({"type": "FeatureCollection",\
+    "features": buffer}, indent=2) + "\n")
+    geojson.close()
+
+def add_311_to_tracts(tracts_file, data_folder='../data'):
+    db_names = [  'abandoned-vehicles',
+                  'vacant-abandoned-buildings',
+                  'graffiti-removal',
+                  'potholes',
+                  'sanitation-code-complaints',
+                  'garbage-carts',
+                  'rodent-baiting',
+                  'street-lights-one-out',
+                  'street-lights-all-out',
+                  'alley-lights-out',  
+                  'tree-trims',
+                  'tree-debris'
+                  ]
+    
+    # Open the shapefile
+    geojson_in = open(tracts_file, 'r')
+    tracts_geojson = json.load(geojson_in)
+    geojson_in.close()
+
+    # Open the request aggragates by tract
+    req_file = open(data_folder + '/requests_by_tract.csv')
+    req_reader = csv.DictReader(req_file)
+    reqs = {} # dictionary of dictionaries
+    for r in req_reader:
+        reqs[r.pop('id')] = r
+    req_file.close()
+    clustering_data = np.zeros((len(tracts_geojson['features']), 12))
+
+
+    # For each record in the geojson file, add the 
+    for i, r in enumerate(tracts_geojson['features']):
+        tract_id = r['properties']['GEOID10']
+        if tract_id in reqs.keys() and float(reqs[tract_id]['population']) > 0:
+            for j, req_type in enumerate(db_names):
+                r['properties'][req_type] = float(reqs[tract_id][req_type]) /\
+                    float(reqs[tract_id]['population'])
+                clustering_data[i, j] = float(reqs[tract_id][req_type]) /\
+                    float(reqs[tract_id]['population'])
+        else:
+            for req_type in db_names:
+                r['properties'][req_type] = 0.0;
+
+    geojson_out = open(data_folder + '/requests_by_tract.geojson', 'w')
+    geojson_out.write(json.dumps(tracts_geojson));
+    geojson_out.close()
+
+    pkl_out = open(data_folder + '/clustering_data.pkl', 'w')
+    pkl.dump(clustering_data, pkl_out)
+    pkl_out.close()
+
+def do_all_munging(data_folder='../data'):
+    db_names = [  'abandoned-vehicles',
+                  'vacant-abandoned-buildings',
+                  'graffiti-removal',
+                  'potholes',
+                  'sanitation-code-complaints',
+                  'garbage-carts',
+                  'rodent-baiting',
+                  'street-lights-one-out',
+                  'street-lights-all-out',
+                  'alley-lights-out',  
+                  'tree-trims',
+                  'tree-debris'
+                  ]
+   
+    for service_name in db_names:
+        print('\n\n' + service_name)
+        add_tract_info(request_type=service_name, data_folder=data_folder)
+
+    aggr_tract_data(data_folder=data_folder)
+
+    add_311_to_tracts('../data/census_tracts_2010/CensusTractsTIGER2010.geojson',\
+        data_folder=data_folder)
 

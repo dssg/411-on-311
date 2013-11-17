@@ -1,4 +1,4 @@
-# City services & Chicago neighborhoods
+# Predictive analytics to smarter city services
 <a href="http://www.cityofchicago.org"><img src="http://dssg.io/img/partners/city.jpg" width="200"></a>
 <a href="http://www.chapinhall.org"><img src="http://dssg.io/img/partners/chapin.jpg" width="400"></a>
 
@@ -14,7 +14,7 @@ We want to investigate how patterns of service requests are related to the socia
 - What do service requests tell us about the different neighborhoods in Chicago? 
 - Can we use a neighborhood's characteristics to predict future service requests volumes across the city?
 
-**Read more about [311 in Chicago](https://github.com/dssg/411-on-311/wiki/problem) in our Wiki**
+**[Read more about 311 in Chicago in our Wiki](https://github.com/dssg/411-on-311/wiki/problem)**
 
 ## The Solution: exploratory analysis, k-means clustering, poisson regression
 To answer those big questions, we performed a three-step analysis:
@@ -32,7 +32,7 @@ We used the main data sources:
 2. A database of 311 requests obtained from Chapin Hall. This dataset is an extract of the City's 311 system - it contains every service request type (there are hundreds) and goes back to when the 311 system was launched in 1999.
 3. 2010 Census and ACS (American Community Survey) data.
 
-**Read more about the [data we used](https://github.com/dssg/411-on-311/wiki/data) in our Wiki**
+**[Read more about the data we used in our wiki.](https://github.com/dssg/411-on-311/wiki/data)**
 
 
 ## Project layout

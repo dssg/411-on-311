@@ -1,4 +1,4 @@
-# Predictive analytics to smarter city services
+# Predictive analytics for smarter city services
 <a href="http://www.cityofchicago.org"><img src="http://dssg.io/img/partners/city.jpg" width="200"></a>
 <a href="http://www.chapinhall.org"><img src="http://dssg.io/img/partners/chapin.jpg" width="400"></a>
 
@@ -14,7 +14,7 @@ We want to investigate how patterns of service requests are related to the socia
 - What do service requests tell us about the different neighborhoods in Chicago? 
 - Can we use a neighborhood's characteristics to predict future service requests volumes across the city?
 
-**[Read more about 311 in Chicago in our Wiki](https://github.com/dssg/411-on-311/wiki/problem)**
+**[Read more about 311 in Chicago in our wiki.](https://github.com/dssg/411-on-311/wiki/problem)**
 
 ## The Solution: exploratory analysis, k-means clustering, poisson regression
 To answer those big questions, we performed a three-step analysis:
@@ -23,7 +23,7 @@ To answer those big questions, we performed a three-step analysis:
 2. Applied [k-means clustering](http://en.wikipedia.org/wiki/K-means_clustering), an unsupervised machine learning technique, to identify Chicago census tracts with similar service request patterns. This part of the analysis revealed clear clusters of census tracts that request 311 service in similar ways. These service-request clusters also tend to be geographically next to each other, and overlap with Chicago's race boundaries - a clear sign that Chicago's neighborhoods request services in distinct ways.
 3. Built statistical models to predict 311 requests levels across census tracts. We trained a [Poisson Generalized Linear Models (GLM)](http://en.wikipedia.org/wiki/Poisson_regression) on relevant demographic, economic, and temporal predictors. We fitted Poisson GLM for graffiti removals pothole fillings, but the code is easily customized to work with other service request types. These predictive models could eventually be used to make the City's public services more proactive and responsive to street problems.
 
-**Read more about [exploratory analysis](https://github.com/dssg/411-on-311/wiki/exploratory-analysis), [clustering](https://github.com/dssg/411-on-311/wiki/clustering-analysis), and [statistical models](https://github.com/dssg/411-on-311/wiki/statistical-models) in our Wiki**
+**Read more about [exploratory analysis](https://github.com/dssg/411-on-311/wiki/exploratory-analysis), [clustering](https://github.com/dssg/411-on-311/wiki/clustering-analysis), and [statistical models](https://github.com/dssg/411-on-311/wiki/statistical-models) in our wiki.**
 
 ## The Data: 311 service requests and census data
 We used the main data sources:

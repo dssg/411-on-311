@@ -4,7 +4,7 @@
 
 **Exploratory analysis** and **predictive models** of how Chicago's neighborhoods interact with the City's 311 service requests.
 
-This is project is a part of the 2013 [Data Science for Social Good](http://www.dssg.io) fellowship, in partnership with [City of Chicago](http://www.cityofchicago.org) and the [Chaping Hall at the University of Chicago](http://www.chapinhall.org).
+This is project is a part of the 2013 [Data Science for Social Good](http://www.dssg.io) fellowship, in partnership with [City of Chicago](http://www.cityofchicago.org) and the [Chapin Hall at the University of Chicago](http://www.chapinhall.org).
 
 ## The Problem: understanding Chicago through 311, predicting 311 through Chicago
 Through the City of Chicago's 311 system, every Chicagoan can ask for city services, from graffiti removal to pothole filling to abandoned car removal. The 311 data these service requests produce reflect - albeit imperfectly - the needs of the city and its inhabitants.
